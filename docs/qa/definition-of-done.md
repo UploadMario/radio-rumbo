@@ -1,0 +1,14 @@
+# Definition Of Done
+
+Una tarea se considera terminada solo si:
+
+- Cumple el requisito solicitado.
+- Tiene validacion basica de entradas cuando aplica.
+- No rompe pruebas existentes.
+- Respeta la estructura del proyecto.
+- No introduce credenciales ni datos reales sensibles.
+- Usa consultas preparadas cuando accede a base de datos.
+- Documenta cambios relevantes.
+- Mantiene compatibilidad con DonWeb y hosting compartido.
+- Incluye pruebas cuando aplica.
+- Mantiene roles limitados a `Super Admin` y `Admin`.
