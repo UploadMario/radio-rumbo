@@ -13,15 +13,16 @@ if (is_file($autoloadPath)) {
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Panel Administrativo Radio Rumbo</title>
+    <title>Admin Interno Radio Rumbo</title>
     <link rel="stylesheet" href="../public/assets/css/base.css">
 </head>
 <body>
     <main class="page-shell">
         <section class="status-panel">
-            <p class="eyebrow">Fase 0</p>
-            <h1>Panel Administrativo Radio Rumbo</h1>
-            <p class="lead">Base administrativa en preparacion</p>
+            <p class="eyebrow">Fase 0.1</p>
+            <h1>Admin interno Radio Rumbo</h1>
+            <p class="lead">Archivo interno no destinado como entrada publica</p>
+            <p class="muted">El acceso web local y en DonWeb debe realizarse desde <strong>/admin/</strong> con document root en <strong>public/</strong>.</p>
 
             <div class="grid">
                 <article>

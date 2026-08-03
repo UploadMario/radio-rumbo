@@ -2,7 +2,7 @@
 
 ## Arquitectura
 
-Radio Rumbo usa una arquitectura MVC simple sin framework pesado. `public/index.php` actua como entrada publica, `admin/index.php` como placeholder administrativo y `app/` concentra la logica PHP.
+Radio Rumbo usa una arquitectura MVC simple sin framework pesado. `public/index.php` actua como entrada publica, `public/admin/index.php` como entrada publica placeholder del panel administrativo y `app/` concentra la logica PHP.
 
 Capas principales:
 
@@ -15,6 +15,7 @@ Capas principales:
 - `app/Helpers`: utilidades puras.
 - `config`: configuracion desacoplada de codigo.
 - `database`: SQL versionable y migraciones futuras.
+- `resources/views`: vistas PHP futuras fuera del document root.
 - `tests`: pruebas unitarias, integracion y BDD documental.
 
 ## Convenciones
@@ -36,10 +37,14 @@ composer lint
 php -S localhost:8000 -t public
 ```
 
+Extensiones PHP recomendadas: `pdo_mysql`, `mbstring`, `dom`, `xml`, `xmlwriter`, `SimpleXML` e `iconv`.
+
 ## Reglas de carpetas
 
 - No colocar logica de negocio dentro de `public/`.
+- Usar `public/` como document root. `/admin/` debe resolver a `public/admin/index.php`.
 - No colocar configuracion sensible dentro de assets.
+- No exponer `app/`, `config/`, `database/`, `docs/`, `resources/`, `tests/`, `vendor/` ni `.env`.
 - Guardar archivos subidos solo en `public/uploads/` con validaciones futuras.
 - Documentar decisiones tecnicas en `docs/architecture/`.
 - Documentar riesgos en `docs/security/`.
@@ -59,8 +64,19 @@ php -S localhost:8000 -t public
 - `password_hash()` para contrasenas futuras.
 - CSRF para formularios administrativos.
 - Escape HTML para toda salida no confiable.
+- `public/uploads/.htaccess` debe bloquear ejecucion PHP, sin reemplazar validaciones de codigo futuras.
 - Validacion de extensiones, MIME, tamano y nombre para uploads futuros.
 - Auditoria futura de acciones administrativas en `audit_logs`.
+
+## Despliegue DonWeb
+
+- Configurar el document root hacia `public/`.
+- Si el hosting no lo permite, publicar solo el contenido de `public/` como area web y ubicar el resto fuera del directorio publico cuando sea posible.
+- Crear la base de datos desde el panel DonWeb.
+- Importar `database/schema.sql` sobre la base ya creada.
+- Crear `.env` real en el hosting a partir de `.env.example`; nunca versionarlo.
+- Ejecutar Composer en hosting si esta disponible. Si no, subir `vendor/` como artefacto sin exponerlo publicamente.
+- Revisar `docs/deployment/donweb.md` antes de publicar.
 
 ## Proceso de QA
 
@@ -94,6 +110,7 @@ php -S localhost:8000 -t public
 
 - Requisito implementado sin sobredimensionar.
 - Compatible con PHP 8.1+ y hosting compartido DonWeb.
+- `/` y `/admin/` funcionan con `php -S localhost:8000 -t public`.
 - Sin frameworks pesados.
 - Sin credenciales reales.
 - Roles sin cambios no autorizados.

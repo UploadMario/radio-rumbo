@@ -18,13 +18,13 @@ if (class_exists(\Dotenv\Dotenv::class) && is_file($rootPath . '/.env')) {
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Radio Rumbo - Fase 0</title>
+    <title>Radio Rumbo - Fase 0.1</title>
     <link rel="stylesheet" href="/assets/css/base.css">
 </head>
 <body>
     <main class="page-shell">
         <section class="status-panel">
-            <p class="eyebrow">Fase 0</p>
+            <p class="eyebrow">Fase 0.1</p>
             <h1>Radio Rumbo</h1>
             <p class="lead">Base del sistema inicializada</p>
             <p class="muted">Emisora local de Huancayo, Peru. Esta pantalla es un punto de partida tecnico, no el diseno final.</p>
@@ -33,7 +33,7 @@ if (class_exists(\Dotenv\Dotenv::class) && is_file($rootPath . '/.env')) {
                 <a href="#">Home</a>
                 <a href="#">En Vivo</a>
                 <a href="#">Noticias</a>
-                <a href="../admin/index.php">Admin</a>
+                <a href="/admin/">Admin</a>
             </nav>
         </section>
     </main>

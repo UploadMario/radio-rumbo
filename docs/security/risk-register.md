@@ -10,3 +10,7 @@
 | Caida del stream | El reproductor futuro no puede transmitir audio. | Medio | Media | Configuracion externa de stream, mensajes de fallback y monitoreo manual inicial. | Identificado |
 | Exposicion de credenciales | `.env`, backups o logs quedan publicos. | Alto | Media | `.gitignore`, document root en `public/`, permisos y revision antes de despliegue. | Control inicial definido |
 | Cambios no trazables | Acciones administrativas futuras no tienen historial. | Medio | Media | Tabla `audit_logs` y registro de acciones relevantes. | Preparado en esquema |
+| Exposicion de carpetas internas | `app`, `config`, `database`, `docs`, `resources`, `tests` o `vendor` quedan navegables. | Alto | Media | Document root en `public/`, `.htaccess` raiz y checklist DonWeb. | Control reforzado Fase 0.1 |
+| Mala configuracion de document root | El dominio apunta a la raiz del proyecto en lugar de `public/`. | Alto | Media | Guia `docs/deployment/donweb.md`, bloqueos `.htaccess` y verificacion manual 403. | Control reforzado Fase 0.1 |
+| Ejecucion de archivos maliciosos en uploads | Un archivo subido se ejecuta como PHP dentro de `public/uploads`. | Alto | Media | `public/uploads/.htaccess`, validaciones futuras de extension, MIME, tamano y nombre. | Control inicial reforzado |
+| Exposicion accidental de `.env` | El archivo de entorno real queda accesible desde el navegador. | Critico | Media | Bloqueo `.htaccess`, `.gitignore`, document root `public/` y prueba manual de `/.env`. | Control reforzado Fase 0.1 |

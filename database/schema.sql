@@ -1,8 +1,10 @@
-CREATE DATABASE IF NOT EXISTS radio_rumbo
-    CHARACTER SET utf8mb4
-    COLLATE utf8mb4_unicode_ci;
-
-USE radio_rumbo;
+-- Radio Rumbo - Esquema base Fase 0.1
+-- Hosting compartido DonWeb:
+-- 1. Crear la base de datos desde el panel del hosting.
+-- 2. Seleccionar esa base en phpMyAdmin o herramienta equivalente.
+-- 3. Importar este archivo.
+-- Este script no ejecuta CREATE DATABASE ni USE para evitar conflictos con
+-- nombres asignados por el proveedor.
 
 CREATE TABLE roles (
     id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,

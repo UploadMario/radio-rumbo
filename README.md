@@ -13,13 +13,15 @@ Base Fase 0 para el sistema web de Radio Rumbo, emisora local de Huancayo, Peru.
 - PHPCS con PSR-12 para estilo
 - phpdotenv para variables de entorno
 
+Extensiones PHP recomendadas: `pdo_mysql`, `mbstring`, `dom`, `xml`, `xmlwriter`, `SimpleXML` e `iconv`.
+
 ## Objetivo del sistema
 
 Construir una plataforma web administrable para una radio local: portada, transmision en vivo, noticias, programacion, equipo, contacto, publicidad y panel administrativo. En Fase 0 solo se prepara la base tecnica y documental.
 
 ## Instalacion local
 
-1. Instalar PHP 8.1+, Composer y extensiones comunes de PHP: PDO, pdo_mysql, mbstring e iconv.
+1. Instalar PHP 8.1+, Composer y extensiones comunes de PHP: `pdo_mysql`, `mbstring`, `dom`, `xml`, `xmlwriter`, `SimpleXML` e `iconv`.
 2. Copiar `.env.example` como `.env`.
 3. Ajustar variables locales sin usar credenciales reales de produccion.
 4. Instalar dependencias:
@@ -28,7 +30,7 @@ Construir una plataforma web administrable para una radio local: portada, transm
 composer install
 ```
 
-5. Crear la base de datos local usando `database/schema.sql` y cargar datos placeholder con `database/seed.sql`.
+5. Crear la base de datos local. Para MySQL local puede usarse `database/schema.local.sql`; para hosting compartido importar `database/schema.sql` sobre una base ya creada.
 
 ## Comandos disponibles
 
@@ -48,10 +50,11 @@ php -S localhost:8000 -t public
 
 ```text
 app/            Codigo PHP de aplicacion: Core, Controllers, Models, Services, Middleware, Validators y Helpers.
-public/         Punto de entrada publico, assets y uploads publicos controlados.
-admin/          Placeholder del panel administrativo.
+public/         Document root recomendado, entrada publica, /admin, assets y uploads controlados.
+admin/          Carpeta interna no publica para preparacion administrativa futura.
 config/         Configuracion de aplicacion y base de datos.
 database/       Esquema, seed y futuras migraciones SQL.
+resources/      Vistas PHP futuras separadas del document root.
 tests/          Pruebas unitarias, integracion y BDD documental.
 docs/           Requisitos, arquitectura, seguridad, QA e ISO.
 ```
@@ -72,13 +75,19 @@ La Fase 0 incluye pruebas unitarias para helpers de seguridad, slugs y roles per
 php -S localhost:8000 -t public
 ```
 
-Abrir `http://localhost:8000`. El panel administrativo esta preparado como placeholder en `admin/index.php`; en una fase posterior se definira su publicacion segura bajo la estructura final del hosting.
+Abrir `http://localhost:8000`. El panel administrativo placeholder carga desde `http://localhost:8000/admin/`.
+
+La raiz web local y recomendada para DonWeb es siempre `public/`. Las carpetas internas como `app/`, `config/`, `database/`, `docs/`, `resources/`, `tests/` y `vendor/` no deben quedar expuestas al navegador.
 
 ## Despliegue en DonWeb
 
 - Publicar solo los archivos necesarios en el hosting.
 - Configurar el document root hacia `public/` si el plan lo permite.
-- Mantener `.env`, `vendor/`, `database/`, `docs/` y archivos de configuracion sensibles fuera de exposicion publica cuando sea posible.
+- Si DonWeb no permite cambiar el document root, publicar solo el contenido de `public/` como carpeta web y mantener el resto fuera del area publica cuando sea posible.
+- Mantener `.env`, `database/`, `docs/`, `resources/`, `tests/`, `vendor/` y archivos de configuracion sensibles fuera de exposicion publica.
 - DonWeb puede operar como hosting compartido; no asumir procesos permanentes, colas residentes, WebSockets ni Docker.
 - Usar MySQL y PHP 8.1+ disponibles en el panel.
+- Crear la base de datos desde el panel DonWeb e importar `database/schema.sql`.
+- `vendor/` no se versiona; puede subirse al hosting como artefacto si no se puede ejecutar Composer en produccion.
 - Generar credenciales y hashes de contrasena durante instalacion, nunca desde archivos versionados.
+- Ver guia completa en `docs/deployment/donweb.md`.

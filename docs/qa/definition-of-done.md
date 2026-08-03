@@ -10,5 +10,7 @@ Una tarea se considera terminada solo si:
 - Usa consultas preparadas cuando accede a base de datos.
 - Documenta cambios relevantes.
 - Mantiene compatibilidad con DonWeb y hosting compartido.
+- Mantiene `public/` como document root recomendado y evita exposicion de carpetas internas.
+- Verifica `/` y `/admin/` cuando toca entradas publicas.
 - Incluye pruebas cuando aplica.
 - Mantiene roles limitados a `Super Admin` y `Admin`.

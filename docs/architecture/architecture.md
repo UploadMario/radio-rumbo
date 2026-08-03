@@ -2,7 +2,7 @@
 
 ## Arquitectura general
 
-Radio Rumbo se plantea como una aplicacion PHP MVC simple, sin framework pesado. El objetivo es mantener bajo acoplamiento entre interfaz, logica, datos y configuracion para facilitar crecimiento gradual.
+Radio Rumbo se plantea como una aplicacion PHP MVC simple, sin framework pesado. El objetivo es mantener bajo acoplamiento entre interfaz, logica, datos y configuracion para facilitar crecimiento gradual. La raiz web recomendada es `public/`.
 
 ## Estructura de carpetas
 
@@ -14,9 +14,11 @@ Radio Rumbo se plantea como una aplicacion PHP MVC simple, sin framework pesado.
 - `app/Validators`: validacion de entrada.
 - `app/Helpers`: funciones auxiliares seguras.
 - `public`: entrada publica y assets.
-- `admin`: entrada administrativa placeholder.
+- `public/admin`: entrada publica placeholder para `/admin/`.
+- `admin`: carpeta interna protegida para preparacion administrativa futura.
 - `config`: configuracion desacoplada.
 - `database`: esquema, seed y migraciones.
+- `resources/views`: vistas PHP futuras fuera del document root.
 - `tests`: pruebas automatizadas y BDD documental.
 - `docs`: documentacion viva del proyecto.
 
@@ -26,7 +28,7 @@ El usuario ingresa por `public/index.php`. En fases futuras, el router resolvera
 
 ## Flujo administrativo
 
-`admin/index.php` es un placeholder de Fase 0. En Fase 1 se agregara login real, sesiones, CSRF, roles y dashboard. Los roles permitidos son exclusivamente `Super Admin` y `Admin`.
+`public/admin/index.php` es el placeholder publico de Fase 0.1 para `/admin/`. La logica administrativa real debe permanecer fuera de `public/`. En Fase 1 se agregara login real, sesiones, CSRF, roles y dashboard. Los roles permitidos son exclusivamente `Super Admin` y `Admin`.
 
 ## Decisiones tecnicas
 
@@ -40,6 +42,8 @@ El usuario ingresa por `public/index.php`. En fases futuras, el router resolvera
 ## Restricciones por DonWeb
 
 DonWeb se asume como hosting tradicional compartido. Por eso no se requieren procesos residentes, contenedores, microservicios, colas permanentes ni WebSockets complejos.
+
+El document root debe apuntar a `public/`. Si el plan no lo permite, se debe evitar publicar carpetas internas o confirmar que los `.htaccess` bloqueen accesos directos.
 
 ## Separacion de responsabilidades
 

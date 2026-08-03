@@ -1,0 +1,19 @@
+Options -Indexes
+
+DirectoryIndex index.php
+
+<FilesMatch "^(\.env|\.env\..*|composer\.(json|lock)|phpunit\.xml|phpstan\.neon|phpcs\.xml|.*\.(sql|log|bak|backup|ini|conf|dist|md))$">
+    <IfModule mod_authz_core.c>
+        Require all denied
+    </IfModule>
+    <IfModule !mod_authz_core.c>
+        Deny from all
+    </IfModule>
+</FilesMatch>
+
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    RewriteRule (^|/)\. - [F,L]
+</IfModule>
+
+# El document root recomendado para DonWeb debe apuntar a esta carpeta.
