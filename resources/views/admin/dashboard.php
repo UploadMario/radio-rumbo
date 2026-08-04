@@ -6,6 +6,9 @@ $dashboard = is_array($mock['dashboard'] ?? null) ? $mock['dashboard'] : [];
 $messages = is_array($dashboard['messages'] ?? null) ? $dashboard['messages'] : [];
 $plannedModules = is_array($mock['planned_modules'] ?? null) ? $mock['planned_modules'] : [];
 $station = is_array($mock['station'] ?? null) ? $mock['station'] : [];
+$audioConfigured = !empty($station['stream_audio_url']);
+$videoConfigured = !empty($station['live_video_widget_url']);
+$facebookConfigured = !empty($station['facebook_page_url']);
 $newsCounts = is_array($newsCounts ?? null) ? $newsCounts : ['total' => 0, 'published' => 0, 'draft' => 0];
 $user = is_array($user ?? null) ? $user : ['name' => 'Admin', 'role' => 'Admin'];
 $stats = [
@@ -42,8 +45,8 @@ $stats = [
 <section class="admin-grid">
     <article class="admin-panel">
         <h2>Estado del stream</h2>
-        <p>Stream configurado como valor general. La reproducción real se conectará en una fase posterior.</p>
-        <span class="status-dot">Configuración preparada</span>
+        <p>La URL de audio está configurada, pero el proveedor puede reportar Stream is Offline cuando no hay AutoDJ o señal desde cabina.</p>
+        <span class="status-dot"><?= $audioConfigured ? 'Configurado / pendiente de verificación' : 'Pendiente de configuración' ?></span>
     </article>
     <article class="admin-panel">
         <h2>Accesos rápidos</h2>
@@ -81,9 +84,11 @@ $stats = [
 <section class="admin-panel">
     <h2>Configuración de medios</h2>
     <div class="module-grid">
-        <span>Audio en vivo · <?= !empty($station['stream_audio_url']) ? 'Configurado' : 'Pendiente' ?></span>
-        <span>Video en vivo · <?= !empty($station['live_video_widget_url']) ? 'Configurado' : 'Pendiente' ?></span>
-        <span>Facebook · <?= !empty($station['facebook_page_url']) ? 'Configurado' : 'Pendiente' ?></span>
+        <span>URL de audio · <?= $audioConfigured ? $e((string) $station['stream_audio_url']) : 'Pendiente' ?></span>
+        <span>Estado audio · <?= $audioConfigured ? 'Configurado / pendiente de verificación' : 'Pendiente de configuración' ?></span>
+        <span>Sin señal detectada · Se muestra en el navegador si el audio falla</span>
+        <span>Video en vivo · <?= $videoConfigured ? 'Configurado' : 'Pendiente' ?></span>
+        <span>Facebook · <?= $facebookConfigured ? 'Configurado' : 'Pendiente' ?></span>
     </div>
 </section>
 

@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 $audioUrl = is_string($station['stream_audio_url'] ?? null) ? $station['stream_audio_url'] : '';
 ?>
-<aside class="floating-player" aria-label="Reproductor en vivo">
+<aside class="floating-player" aria-label="Reproductor en vivo" data-audio-status-root>
     <div class="player-station">
         <img class="player-logo" src="/assets/img/radio-rumbo-logo.png" alt="" width="46" height="46">
         <div>
-            <span class="live-pill"><?= $e((string) ($currentProgram['status'] ?? 'EN VIVO')) ?></span>
+            <span class="live-pill" data-audio-status-label>En vivo</span>
             <strong><?= $e((string) ($currentProgram['name'] ?? 'Programa matinal')) ?></strong>
             <small><?= $e((string) ($currentProgram['host'] ?? 'Conductor principal')) ?> · <?= $e((string) ($currentProgram['schedule'] ?? 'Horario')) ?></small>
         </div>
@@ -24,7 +24,11 @@ $audioUrl = is_string($station['stream_audio_url'] ?? null) ? $station['stream_a
     </div>
     <div class="player-actions">
         <button type="button" aria-label="Volumen visual">Volumen</button>
-        <button type="button" aria-label="Compartir visual">Compartir</button>
-        <a href="/en-vivo/" aria-label="Abrir transmisión en vivo">Abrir</a>
+        <button type="button" data-audio-retry>Intentar nuevamente</button>
+        <?php if ($audioUrl !== ''): ?>
+            <a href="<?= $e($audioUrl) ?>" target="_blank" rel="noopener noreferrer">Abrir transmisión oficial</a>
+        <?php else: ?>
+            <a href="/en-vivo/" aria-label="Abrir transmisión en vivo">Abrir</a>
+        <?php endif; ?>
     </div>
 </aside>

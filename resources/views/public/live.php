@@ -10,29 +10,57 @@ $facebookPluginUrl = is_string($station['facebook_page_plugin_url'] ?? null) ? $
 ?>
 <section class="page-hero live-hero">
     <div class="container live-panel">
-        <div>
-            <img class="section-logo" src="/assets/img/radio-rumbo-logo.png" alt="Radio Rumbo" width="112" height="112">
-            <span class="live-pill">EN VIVO</span>
-            <h1><?= $e((string) ($currentProgram['name'] ?? 'Programa matinal')) ?></h1>
-            <p><?= $e((string) ($currentProgram['summary'] ?? 'Transmisión en preparación.')) ?></p>
-            <p>Mira también la transmisión en vivo de cabina y programas especiales.</p>
-            <dl class="meta-row">
-                <div><dt>Conductor</dt><dd><?= $e((string) ($currentProgram['host'] ?? 'Conductor principal')) ?></dd></div>
-                <div><dt>Horario</dt><dd><?= $e((string) ($currentProgram['schedule'] ?? '06:00 - 09:00')) ?></dd></div>
+        <div class="live-copy">
+            <img class="section-logo live-logo" src="/assets/img/radio-rumbo-logo.png" alt="Radio Rumbo" width="96" height="96">
+            <span class="section-kicker">La radio que se ve</span>
+            <h1>Radio Rumbo en vivo</h1>
+            <p>Audio, video y noticias desde Huancayo para todos.</p>
+
+            <div class="program-summary">
+                <span>Programa actual</span>
+                <strong><?= $e((string) ($currentProgram['name'] ?? 'Programa matinal')) ?></strong>
+                <small><?= $e((string) ($currentProgram['schedule'] ?? '06:00 - 09:00')) ?> · <?= $e((string) ($currentProgram['host'] ?? 'Conductor principal')) ?></small>
+            </div>
+
+            <dl class="meta-row live-meta">
+                <div><dt>Estado</dt><dd data-audio-status-label>En vivo</dd></div>
                 <div><dt>Audio</dt><dd><?= $audioUrl !== '' ? 'Audio configurado' : 'Pendiente de configurar' ?></dd></div>
             </dl>
+
+            <p class="audio-status-message" data-audio-status-message hidden>
+                La transmisión de audio no está disponible en este momento. Puede que la radio esté fuera de horario o que la señal aún no haya sido enviada desde cabina.
+            </p>
+
+            <div class="hero-actions live-actions">
+                <button class="btn btn-primary" type="button" data-player-toggle>Escuchar audio</button>
+                <button class="btn btn-soft" type="button" data-audio-retry>Intentar nuevamente</button>
+                <?php if ($audioUrl !== ''): ?>
+                    <a class="btn btn-soft" href="<?= $e($audioUrl) ?>" target="_blank" rel="noopener noreferrer">Abrir transmisión oficial</a>
+                <?php endif; ?>
+                <?php if ($facebookUrl !== ''): ?>
+                    <a class="btn btn-soft" href="<?= $e($facebookUrl) ?>" target="_blank" rel="noopener noreferrer">Ver Facebook</a>
+                <?php endif; ?>
+            </div>
         </div>
         <?php require dirname(__DIR__) . '/partials/live-video-player.php'; ?>
     </div>
 </section>
 
 <section class="container live-media-grid">
-    <article class="media-card">
+    <article class="media-card" data-audio-status-root>
         <span class="section-kicker">Radio en vivo</span>
         <h2>Audio de Radio Rumbo</h2>
         <p>El audio permanece disponible en el reproductor flotante inferior y en este bloque secundario.</p>
+        <strong class="audio-inline-status" data-audio-status-label>En vivo</strong>
         <?php if ($audioUrl !== ''): ?>
             <audio data-audio-player preload="none" controls src="<?= $e($audioUrl) ?>"></audio>
+            <p class="audio-status-message" data-audio-status-message hidden>
+                La transmisión de audio no está disponible en este momento. Puede que la radio esté fuera de horario o que la señal aún no haya sido enviada desde cabina.
+            </p>
+            <div class="audio-fallback-actions">
+                <button class="btn btn-primary" type="button" data-audio-retry>Intentar nuevamente</button>
+                <a class="btn btn-soft admin-soft" href="<?= $e($audioUrl) ?>" target="_blank" rel="noopener noreferrer">Abrir transmisión oficial</a>
+            </div>
         <?php else: ?>
             <p class="embed-fallback">Audio en vivo pendiente de configuración.</p>
         <?php endif; ?>
