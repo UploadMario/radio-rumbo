@@ -6,11 +6,15 @@ $dashboard = is_array($mock['dashboard'] ?? null) ? $mock['dashboard'] : [];
 $stats = is_array($dashboard['stats'] ?? null) ? $dashboard['stats'] : [];
 $messages = is_array($dashboard['messages'] ?? null) ? $dashboard['messages'] : [];
 $news = is_array($mock['news'] ?? null) ? $mock['news'] : [];
+$plannedModules = is_array($mock['planned_modules'] ?? null) ? $mock['planned_modules'] : [];
 ?>
 <header class="admin-topbar">
-    <div>
-        <span>Panel Administrativo Radio Rumbo</span>
-        <h1>Dashboard visual</h1>
+    <div class="admin-title-block">
+        <img class="admin-top-logo" src="/assets/img/radio-rumbo-logo.png" alt="" width="70" height="70">
+        <div>
+            <span>Panel Administrativo Radio Rumbo</span>
+            <h1>Dashboard visual</h1>
+        </div>
     </div>
     <div class="admin-profile">
         <span>Admin / Super Admin</span>
@@ -31,14 +35,14 @@ $news = is_array($mock['news'] ?? null) ? $mock['news'] : [];
 <section class="admin-grid">
     <article class="admin-panel">
         <h2>Estado del stream</h2>
-        <p>Stream simulado. La conexion real se realizara en fases posteriores.</p>
+        <p>Stream simulado. La conexión real se realizará en fases posteriores.</p>
         <span class="status-dot">Visual activo</span>
     </article>
     <article class="admin-panel">
-        <h2>Accesos rapidos</h2>
+        <h2>Accesos rápidos</h2>
         <div class="quick-admin">
             <button type="button">Nueva noticia</button>
-            <button type="button">Editar programacion</button>
+            <button type="button">Editar programación</button>
             <button type="button">Ver mensajes</button>
         </div>
     </article>
@@ -48,7 +52,7 @@ $news = is_array($mock['news'] ?? null) ? $mock['news'] : [];
     <article class="admin-panel wide">
         <h2>Noticias recientes</h2>
         <table>
-            <thead><tr><th>Titulo</th><th>Categoria</th><th>Estado</th></tr></thead>
+            <thead><tr><th>Título</th><th>Categoría</th><th>Estado</th></tr></thead>
             <tbody>
                 <?php foreach ($news as $item): ?>
                     <tr>
@@ -73,10 +77,10 @@ $news = is_array($mock['news'] ?? null) ? $mock['news'] : [];
 </section>
 
 <section class="admin-panel">
-    <h2>Modulos del sistema</h2>
+    <h2>Módulos del sistema</h2>
     <div class="module-grid">
-        <?php foreach (['Podcasts', 'Ranking Top 20', 'La Radio que se ve', 'Estadisticas avanzadas', 'Gestion avanzada de usuarios', 'Banners avanzados', 'Avisos urgentes'] as $module): ?>
-            <span><?= $e($module) ?> · Proximamente</span>
+        <?php foreach ($plannedModules as $module): ?>
+            <span><?= $e((string) $module['name']) ?> · <?= $e((string) $module['status']) ?></span>
         <?php endforeach; ?>
     </div>
 </section>

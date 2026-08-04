@@ -20,6 +20,14 @@
 - Usar datos mock centralizados en `config/mock-data.php`.
 - Mantener formularios, botones y estados como preparacion visual, sin comportamiento real.
 
+## Alcance Fase 1.1
+
+- Integrar el logo real de Radio Rumbo en header, hero, footer, reproductor y vistas administrativas.
+- Usar como contenido base confirmado: `Radio Rumbo`, `La radio que se ve` y `Huancayo, Perú`.
+- Corregir textos visibles en español y mantener placeholders claros para datos no confirmados.
+- Refinar el reproductor flotante como componente visual principal, sin conectarlo a stream real.
+- Reforzar módulos planificados con etiquetas profesionales.
+
 ## Requisitos no funcionales
 
 - Compatible con PHP 8.1+ y MySQL.

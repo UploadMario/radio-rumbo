@@ -31,6 +31,20 @@
     text-decoration: none;
 }
 
+.admin-brand-logo,
+.admin-top-logo,
+.login-logo {
+    object-fit: cover;
+    background: rgba(9, 17, 12, 0.72);
+    border: 1px solid rgba(255, 255, 255, 0.16);
+    border-radius: var(--radius);
+}
+
+.admin-brand-logo {
+    width: 56px;
+    height: 56px;
+}
+
 .admin-brand small,
 .admin-topbar span,
 .admin-role-box small {
@@ -87,6 +101,17 @@
     justify-content: space-between;
     gap: 20px;
     margin-bottom: 24px;
+}
+
+.admin-title-block {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.admin-top-logo {
+    width: 70px;
+    height: 70px;
 }
 
 .admin-topbar h1 {
@@ -217,6 +242,11 @@ th {
     background:
         linear-gradient(135deg, rgba(9, 17, 12, 0.95), rgba(27, 44, 31, 0.9)),
         repeating-linear-gradient(90deg, rgba(145, 200, 45, 0.12) 0 1px, transparent 1px 72px);
+}
+
+.login-logo {
+    width: 92px;
+    height: 92px;
 }
 
 .login-card {

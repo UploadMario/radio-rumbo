@@ -7,7 +7,7 @@ $podcasts = is_array($mock['podcasts'] ?? null) ? $mock['podcasts'] : [];
 <section class="page-title container">
     <span class="section-kicker">Archivo sonoro</span>
     <h1>Podcasts</h1>
-    <p>Modulo en preparacion. Los episodios son placeholders para validar la experiencia visual.</p>
+    <p>Módulo en preparación. Los episodios son placeholders para validar la experiencia visual.</p>
 </section>
 <section class="container search-toolbar">
     <label>
@@ -18,7 +18,7 @@ $podcasts = is_array($mock['podcasts'] ?? null) ? $mock['podcasts'] : [];
         <button class="is-active" type="button">Todos</button>
         <button type="button">Noticias</button>
         <button type="button">Entrevistas</button>
-        <button type="button">Musica</button>
+        <button type="button">Música</button>
     </div>
 </section>
 <section class="container card-grid">

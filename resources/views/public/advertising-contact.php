@@ -9,13 +9,13 @@ $services = is_array($mock['advertising_services'] ?? null) ? $mock['advertising
         <div>
             <span class="section-kicker">Publicidad y contacto</span>
             <h1>Anuncia con nosotros</h1>
-            <p>Espacios visuales preparados para comercios, marcas y eventos locales. El formulario todavia no envia datos.</p>
-            <a class="btn btn-primary" href="#contacto">Solicitar informacion</a>
+            <p>Espacios visuales preparados para comercios, marcas y eventos locales. El formulario todavía no envía datos.</p>
+            <a class="btn btn-primary" href="#contacto">Solicitar información</a>
         </div>
         <aside class="promo-panel">
             <h2>WhatsApp comercial</h2>
             <p><?= $e((string) ($station['whatsapp_publicidad'] ?? 'WhatsApp de publicidad')) ?></p>
-            <small>Placeholder sin numero real.</small>
+            <small>Placeholder sin número real.</small>
         </aside>
     </div>
 </section>
@@ -32,14 +32,14 @@ $services = is_array($mock['advertising_services'] ?? null) ? $mock['advertising
         <form class="contact-form" action="#" method="post">
             <h2>Formulario visual de contacto</h2>
             <label>Nombre<input type="text" placeholder="Nombre o empresa"></label>
-            <label>Contacto<input type="text" placeholder="WhatsApp o correo placeholder"></label>
-            <label>Mensaje<textarea rows="4" placeholder="Cuentanos que necesitas"></textarea></label>
+            <label>Contacto<input type="text" placeholder="WhatsApp o correo institucional pendiente"></label>
+            <label>Mensaje<textarea rows="4" placeholder="Cuéntanos qué necesitas"></textarea></label>
             <button class="btn btn-primary" type="button">Enviar en futura fase</button>
         </form>
         <aside class="map-placeholder">
-            <span>Ubicacion placeholder</span>
-            <strong>Huancayo, Peru</strong>
-            <p>Mapa y redes sociales se conectaran cuando existan datos oficiales.</p>
+            <span>Ubicación placeholder</span>
+            <strong>Huancayo, Perú</strong>
+            <p>Mapa, dirección exacta y redes sociales se conectarán cuando existan datos oficiales.</p>
         </aside>
     </div>
 </section>

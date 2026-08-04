@@ -4,7 +4,7 @@
 
 Radio Rumbo se plantea como una aplicacion PHP MVC simple, sin framework pesado. El objetivo es mantener bajo acoplamiento entre interfaz, logica, datos y configuracion para facilitar crecimiento gradual. La raiz web recomendada es `public/`.
 
-La Fase 1 incorpora una capa visual conectable: layouts publicos/admin, parciales reutilizables, vistas PHP por pantalla y datos mock centralizados. Esta capa prepara la experiencia de usuario sin activar todavia persistencia ni administracion real.
+La Fase 1.1 incorpora una capa visual conectable: layouts públicos/admin, parciales reutilizables, vistas PHP por pantalla, logo real y datos mock centralizados. Esta capa prepara la experiencia de usuario sin activar todavía persistencia ni administración real.
 
 ## Estructura de carpetas
 

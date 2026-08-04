@@ -17,6 +17,6 @@ final class MockDataTest extends TestCase
         self::assertArrayHasKey('today_schedule', $data);
         self::assertArrayHasKey('news', $data);
         self::assertArrayHasKey('dashboard', $data);
-        self::assertSame('Programa Matinal', $data['current_program']['name']);
+        self::assertSame('Programa matinal', $data['current_program']['name']);
     }
 }

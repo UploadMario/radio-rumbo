@@ -8,14 +8,14 @@ $path = trim((string) parse_url($_SERVER['REQUEST_URI'] ?? '/', PHP_URL_PATH), '
 $routes = [
     '' => ['home', 'Inicio'],
     'en-vivo' => ['live', 'En Vivo'],
-    'programacion' => ['schedule', 'Programacion'],
+    'programacion' => ['schedule', 'Programación'],
     'noticias' => ['news', 'Noticias'],
     'podcasts' => ['podcasts', 'Podcasts'],
     'equipo' => ['team', 'Nuestro Equipo'],
     'publicidad-contacto' => ['advertising-contact', 'Publicidad y Contacto'],
 ];
 
-[$page, $title] = $routes[$path] ?? ['upcoming', 'Modulo en preparacion'];
+[$page, $title] = $routes[$path] ?? ['upcoming', 'Módulo en preparación'];
 
 if (!array_key_exists($path, $routes) && $path !== '') {
     http_response_code(404);

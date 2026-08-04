@@ -1,6 +1,6 @@
 # Radio Rumbo
 
-Sistema web Radio Rumbo, emisora local de Huancayo, Peru. La Fase 1 entrega una GUI conectable y presentable con datos mock controlados, construida sobre una base PHP simple, segura y compatible con hosting compartido.
+Sistema web Radio Rumbo, emisora local de Huancayo, Perú. La Fase 1.1 entrega una GUI conectable y presentable con branding real, contenido base confirmado y datos mock controlados, construida sobre una base PHP simple, segura y compatible con hosting compartido.
 
 ## Stack tecnico
 
@@ -17,7 +17,7 @@ Extensiones PHP recomendadas: `pdo_mysql`, `mbstring`, `dom`, `xml`, `xmlwriter`
 
 ## Objetivo del sistema
 
-Construir una plataforma web administrable para una radio local: portada, transmision en vivo, noticias, programacion, equipo, contacto, publicidad y panel administrativo. En Fase 1 la interfaz visual queda lista para conectar con PHP/MySQL en fases posteriores, sin implementar todavia CRUDs, login real ni datos dinamicos desde base de datos.
+Construir una plataforma web administrable para una radio local: portada, transmisión en vivo, noticias, programación, equipo, contacto, publicidad y panel administrativo. En Fase 1.1 la interfaz visual queda lista para conectar con PHP/MySQL en fases posteriores, sin implementar todavía CRUDs, login real ni datos dinámicos desde base de datos.
 
 ## Instalacion local
 
@@ -44,7 +44,7 @@ php -S localhost:8000 -t public
 - `composer test`: ejecuta PHPUnit.
 - `composer analyse`: ejecuta PHPStan sobre `app` y `tests`.
 - `composer lint`: ejecuta PHPCS con PSR-12.
-- `php -S localhost:8000 -t public`: levanta la pantalla publica minima.
+- `php -S localhost:8000 -t public`: levanta la interfaz pública y administrativa visual.
 - Las rutas visuales preparadas son `/`, `/en-vivo/`, `/programacion/`, `/noticias/`, `/podcasts/`, `/equipo/`, `/publicidad-contacto/` y `/admin/`.
 
 ## Estructura del proyecto
@@ -80,14 +80,15 @@ Abrir `http://localhost:8000`. El panel administrativo placeholder carga desde `
 
 La raiz web local y recomendada para DonWeb es siempre `public/`. Las carpetas internas como `app/`, `config/`, `database/`, `docs/`, `resources/`, `tests/` y `vendor/` no deben quedar expuestas al navegador.
 
-## Fase 1 GUI
+## Fase 1.1 GUI
 
-- La home publica ya es una pantalla presentable con hero, en vivo, noticias, programacion, publicidad, equipo y reproductor flotante visual.
+- La home pública ya es una pantalla presentable con hero, logo real, en vivo, noticias, programación, publicidad, equipo y reproductor flotante visual.
 - `/admin/` muestra un dashboard administrativo visual con datos mock; `/admin/?view=login` muestra el login visual.
-- `config/mock-data.php` centraliza placeholders. No contiene datos reales sensibles.
+- `config/mock-data.php` centraliza datos base confirmados y placeholders. No contiene datos reales sensibles.
 - `public/assets/css/main.css`, `public/assets/css/admin.css`, `public/assets/js/main.js` y `public/assets/js/player.js` concentran estilos e interacciones vanilla.
 - El reproductor no conecta aun a un stream real; solo alterna estados visuales.
 - Formularios, botones y modulos futuros estan preparados visualmente, sin comportamiento productivo.
+- Datos reales confirmados: nombre `Radio Rumbo`, lema `La radio que se ve` y ubicación `Huancayo, Perú`.
 
 ## Despliegue en DonWeb
 

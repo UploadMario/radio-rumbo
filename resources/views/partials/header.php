@@ -5,7 +5,7 @@ declare(strict_types=1);
 $navItems = [
     'home' => ['label' => 'Inicio', 'href' => '/'],
     'en-vivo' => ['label' => 'En vivo', 'href' => '/en-vivo/'],
-    'programacion' => ['label' => 'Programacion', 'href' => '/programacion/'],
+    'programacion' => ['label' => 'Programación', 'href' => '/programacion/'],
     'noticias' => ['label' => 'Noticias', 'href' => '/noticias/'],
     'podcasts' => ['label' => 'Podcasts', 'href' => '/podcasts/'],
     'equipo' => ['label' => 'Equipo', 'href' => '/equipo/'],
@@ -16,16 +16,16 @@ $navItems = [
     <a class="skip-link" href="#contenido">Saltar al contenido</a>
     <div class="container header-inner">
         <a class="brand" href="/" aria-label="Radio Rumbo inicio">
-            <img src="/assets/img/radio-rumbo-mark.svg" alt="" width="42" height="42">
+            <img class="brand-logo" src="/assets/img/radio-rumbo-logo.png" alt="" width="52" height="52">
             <span>
                 <strong><?= $e((string) ($station['name'] ?? 'Radio Rumbo')) ?></strong>
-                <small>Huancayo</small>
+                <small><?= $e((string) ($station['tagline'] ?? 'La radio que se ve')) ?></small>
             </span>
         </a>
         <button class="nav-toggle" type="button" data-nav-toggle aria-expanded="false" aria-controls="main-nav">
-            Menu
+            Menú
         </button>
-        <nav class="main-nav" id="main-nav" aria-label="Navegacion principal">
+        <nav class="main-nav" id="main-nav" aria-label="Navegación principal">
             <?php foreach ($navItems as $key => $item): ?>
                 <a class="<?= $active === $key ? 'is-active' : '' ?>" href="<?= $e($item['href']) ?>">
                     <?= $e($item['label']) ?>

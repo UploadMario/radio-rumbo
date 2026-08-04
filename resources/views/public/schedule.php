@@ -3,15 +3,15 @@
 declare(strict_types=1);
 
 $schedule = is_array($mock['today_schedule'] ?? null) ? $mock['today_schedule'] : [];
-$days = ['Hoy', 'Lunes', 'Martes', 'Miercoles', 'Jueves', 'Viernes', 'Fin de semana'];
+$days = ['Hoy', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Fin de semana'];
 ?>
 <section class="page-title container">
     <span class="section-kicker">Parrilla radial</span>
-    <h1>Programacion</h1>
+    <h1>Programación</h1>
     <p>Vista preparada para conectar horarios reales desde MySQL en fases futuras.</p>
 </section>
 <section class="container">
-    <div class="filter-row" aria-label="Filtros visuales por dia">
+    <div class="filter-row" aria-label="Filtros visuales por día">
         <?php foreach ($days as $index => $day): ?>
             <button class="<?= $index === 0 ? 'is-active' : '' ?>" type="button"><?= $e($day) ?></button>
         <?php endforeach; ?>

@@ -5,7 +5,7 @@ declare(strict_types=1);
 $team = is_array($mock['team'] ?? null) ? $mock['team'] : [];
 ?>
 <section class="page-title container">
-    <span class="section-kicker">Personas detras de la senal</span>
+    <span class="section-kicker">Personas detrás de la señal</span>
     <h1>Nuestro equipo</h1>
     <p>Perfiles placeholder, sin nombres reales no proporcionados, listos para conectar contenido oficial.</p>
 </section>

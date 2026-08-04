@@ -5,23 +5,23 @@ declare(strict_types=1);
 $items = [
     'dashboard' => 'Dashboard',
     'noticias' => 'Noticias',
-    'programacion' => 'Programacion',
+    'programacion' => 'Programación',
     'podcasts' => 'Podcasts',
     'ranking' => 'Ranking Top 20',
     'equipo' => 'Equipo',
     'banners' => 'Publicidad / Banners',
     'mensajes' => 'Mensajes',
     'avisos' => 'Avisos urgentes',
-    'configuracion' => 'Configuracion',
+    'configuracion' => 'Configuración',
     'usuarios' => 'Usuarios',
 ];
 ?>
-<aside class="admin-sidebar" aria-label="Navegacion administrativa">
+<aside class="admin-sidebar" aria-label="Navegación administrativa">
     <a class="admin-brand" href="/admin/">
-        <img src="/assets/img/radio-rumbo-mark.svg" alt="" width="40" height="40">
+        <img class="admin-brand-logo" src="/assets/img/radio-rumbo-logo.png" alt="" width="56" height="56">
         <span>
             <strong>Radio Rumbo</strong>
-            <small>Panel visual Fase 1</small>
+            <small>Panel visual Fase 1.1</small>
         </span>
     </a>
     <nav>
@@ -29,7 +29,7 @@ $items = [
             <a class="<?= $active === $key ? 'is-active' : '' ?>" href="#">
                 <?= $e($label) ?>
                 <?php if ($key !== 'dashboard'): ?>
-                    <span>Proximamente</span>
+                    <span>Próximamente</span>
                 <?php endif; ?>
             </a>
         <?php endforeach; ?>

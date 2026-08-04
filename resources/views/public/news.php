@@ -9,12 +9,12 @@ $featured = $news[0] ?? [];
     <div class="container page-title">
         <span class="section-kicker">Actualidad</span>
         <h1>Noticias</h1>
-        <p>Contenido mock con estructura lista para conectarse a publicaciones reales.</p>
+        <p>Contenido base con estructura lista para conectarse a publicaciones reales verificadas.</p>
     </div>
     <div class="container search-toolbar">
         <label>
             <span>Buscar noticia</span>
-            <input type="search" placeholder="Buscar por titulo o categoria">
+            <input type="search" placeholder="Buscar por título o categoría">
         </label>
         <div class="filter-row">
             <button class="is-active" type="button">Todas</button>
@@ -24,10 +24,10 @@ $featured = $news[0] ?? [];
         </div>
     </div>
     <article class="container featured-news">
-        <span><?= $e((string) ($featured['category'] ?? 'Huancayo')) ?> · <?= $e((string) ($featured['date'] ?? 'Fase 1')) ?></span>
-        <h2><?= $e((string) ($featured['title'] ?? 'Ultimas noticias de Huancayo')) ?></h2>
+        <span><?= $e((string) ($featured['category'] ?? 'Huancayo')) ?> · <?= $e((string) ($featured['date'] ?? 'Fase 1.1')) ?></span>
+        <h2><?= $e((string) ($featured['title'] ?? 'Últimas noticias de Huancayo')) ?></h2>
         <p><?= $e((string) ($featured['summary'] ?? 'Noticia destacada placeholder.')) ?></p>
-        <a class="btn btn-primary" href="#">Leer mas</a>
+        <a class="btn btn-primary" href="#">Leer más</a>
     </article>
     <div class="container card-grid">
         <?php foreach (array_slice($news, 1) as $item): ?>
@@ -35,7 +35,7 @@ $featured = $news[0] ?? [];
                 <span><?= $e((string) $item['category']) ?> · <?= $e((string) $item['date']) ?></span>
                 <h3><?= $e((string) $item['title']) ?></h3>
                 <p><?= $e((string) $item['summary']) ?></p>
-                <a href="#">Leer mas</a>
+                <a href="#">Leer más</a>
             </article>
         <?php endforeach; ?>
     </div>

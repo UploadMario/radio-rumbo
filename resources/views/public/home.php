@@ -5,14 +5,16 @@ declare(strict_types=1);
 $schedule = is_array($mock['today_schedule'] ?? null) ? $mock['today_schedule'] : [];
 $news = is_array($mock['news'] ?? null) ? $mock['news'] : [];
 $team = is_array($mock['team'] ?? null) ? $mock['team'] : [];
-$services = is_array($mock['advertising_services'] ?? null) ? $mock['advertising_services'] : [];
+$plannedModules = is_array($mock['planned_modules'] ?? null) ? $mock['planned_modules'] : [];
 ?>
 <section class="hero-section">
+    <img class="hero-watermark" src="/assets/img/radio-rumbo-logo.png" alt="" aria-hidden="true">
     <div class="container hero-grid">
         <div class="hero-copy">
-            <span class="section-kicker">Desde Huancayo para todos</span>
-            <h1>Radio Rumbo: moderna, clara y local.</h1>
-            <p>Una experiencia visual preparada para escuchar rapido, descubrir contenidos y conectar con la radio en futuras fases.</p>
+            <img class="hero-logo" src="/assets/img/radio-rumbo-logo.png" alt="Radio Rumbo" width="156" height="156">
+            <span class="section-kicker">Huancayo, Perú</span>
+            <h1>Radio Rumbo: La radio que se ve.</h1>
+            <p>Una señal local con identidad renovada, acceso rápido al en vivo y una base visual lista para conectar contenidos reales en las próximas fases.</p>
             <div class="hero-actions">
                 <a class="btn btn-primary" href="/en-vivo/">Escuchar en vivo</a>
                 <a class="btn btn-soft" href="/publicidad-contacto/">Escribir a cabina</a>
@@ -21,10 +23,10 @@ $services = is_array($mock['advertising_services'] ?? null) ? $mock['advertising
         <article class="live-card">
             <span class="live-pill"><?= $e((string) ($currentProgram['status'] ?? 'EN VIVO')) ?></span>
             <h2>En vivo ahora</h2>
-            <p class="program-name"><?= $e((string) ($currentProgram['name'] ?? 'Programa Matinal')) ?></p>
-            <p><?= $e((string) ($currentProgram['summary'] ?? 'Programa en preparacion.')) ?></p>
+            <p class="program-name"><?= $e((string) ($currentProgram['name'] ?? 'Programa matinal')) ?></p>
+            <p><?= $e((string) ($currentProgram['summary'] ?? 'Programa en preparación.')) ?></p>
             <dl>
-                <div><dt>Conductor</dt><dd><?= $e((string) ($currentProgram['host'] ?? 'Conductor Principal')) ?></dd></div>
+                <div><dt>Conductor</dt><dd><?= $e((string) ($currentProgram['host'] ?? 'Conductor principal')) ?></dd></div>
                 <div><dt>Horario</dt><dd><?= $e((string) ($currentProgram['schedule'] ?? '06:00 - 09:00')) ?></dd></div>
             </dl>
         </article>
@@ -32,16 +34,16 @@ $services = is_array($mock['advertising_services'] ?? null) ? $mock['advertising
 </section>
 
 <section class="quick-access container">
-    <a href="/en-vivo/">En vivo <span>Play visual</span></a>
-    <a href="/programacion/">Programacion <span>Ver horarios</span></a>
+    <a href="/en-vivo/">En vivo <span>Reproductor visual</span></a>
+    <a href="/programacion/">Programación <span>Ver horarios</span></a>
     <a href="/noticias/">Noticias <span>Leer novedades</span></a>
     <a href="/publicidad-contacto/">Publicidad local <span>Anuncia con nosotros</span></a>
 </section>
 
 <section class="section-light">
     <div class="container section-heading">
-        <span class="section-kicker">Informacion local</span>
-        <h2>Ultimas noticias</h2>
+        <span class="section-kicker">Información local</span>
+        <h2>Últimas noticias</h2>
     </div>
     <div class="container card-grid">
         <?php foreach (array_slice($news, 0, 3) as $item): ?>
@@ -49,7 +51,7 @@ $services = is_array($mock['advertising_services'] ?? null) ? $mock['advertising
                 <span><?= $e((string) $item['category']) ?></span>
                 <h3><?= $e((string) $item['title']) ?></h3>
                 <p><?= $e((string) $item['summary']) ?></p>
-                <a href="/noticias/">Leer mas</a>
+                <a href="/noticias/">Leer más</a>
             </article>
         <?php endforeach; ?>
     </div>
@@ -58,7 +60,7 @@ $services = is_array($mock['advertising_services'] ?? null) ? $mock['advertising
 <section class="container split-section">
     <div>
         <span class="section-kicker">Hoy en cabina</span>
-        <h2>Programacion de hoy</h2>
+        <h2>Programación de hoy</h2>
         <div class="schedule-list compact">
             <?php foreach (array_slice($schedule, 0, 4) as $program): ?>
                 <article>
@@ -80,18 +82,31 @@ $services = is_array($mock['advertising_services'] ?? null) ? $mock['advertising
     </aside>
 </section>
 
-<section class="section-light">
+<section class="section-light planned-section">
     <div class="container section-heading">
-        <span class="section-kicker">Voces de la radio</span>
-        <h2>Nuestro equipo</h2>
+        <span class="section-kicker">Próximas mejoras</span>
+        <h2>Módulos planificados</h2>
     </div>
-    <div class="container team-strip">
-        <?php foreach (array_slice($team, 0, 3) as $member): ?>
-            <article class="person-card">
-                <div class="avatar-placeholder"><?= $e(substr((string) $member['name'], 0, 1)) ?></div>
-                <h3><?= $e((string) $member['name']) ?></h3>
-                <p><?= $e((string) $member['role']) ?></p>
+    <div class="container module-preview">
+        <?php foreach (array_slice($plannedModules, 0, 5) as $module): ?>
+            <article>
+                <strong><?= $e((string) $module['name']) ?></strong>
+                <span><?= $e((string) $module['status']) ?></span>
             </article>
         <?php endforeach; ?>
     </div>
+</section>
+
+<section class="container section-heading">
+    <span class="section-kicker">Voces de la radio</span>
+    <h2>Nuestro equipo</h2>
+</section>
+<section class="container team-strip">
+    <?php foreach (array_slice($team, 0, 3) as $member): ?>
+        <article class="person-card">
+            <div class="avatar-placeholder"><?= $e(substr((string) $member['name'], 0, 1)) ?></div>
+            <h3><?= $e((string) $member['name']) ?></h3>
+            <p><?= $e((string) $member['role']) ?></p>
+        </article>
+    <?php endforeach; ?>
 </section>

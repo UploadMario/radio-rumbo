@@ -6,7 +6,7 @@
     function sync() {
         document.body.classList.toggle('is-paused', !isPlaying);
         icons.forEach(function (icon) {
-            icon.textContent = isPlaying ? 'II' : '▶';
+            icon.textContent = isPlaying ? 'II' : '\u25B6';
         });
         buttons.forEach(function (button) {
             button.setAttribute('aria-pressed', isPlaying ? 'true' : 'false');
