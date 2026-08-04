@@ -4,11 +4,16 @@ declare(strict_types=1);
 
 require_once dirname(__DIR__) . '/bootstrap.php';
 
-$view = $_GET['view'] ?? 'dashboard';
+use App\Controllers\Admin\DashboardController;
+use App\Services\SessionService;
 
-if ($view === 'login') {
-    rr_render_admin('login', 'Radio Rumbo - Acceso administrativo', 'login');
-    return;
+$rootPath = rr_bootstrap();
+$mock = rr_mock_data($rootPath);
+$session = new SessionService();
+
+if ($session->user() === null) {
+    header('Location: /admin/login/', true, 302);
+    exit;
 }
 
-rr_render_admin('dashboard', 'Radio Rumbo - Panel Administrativo', 'dashboard');
+(new DashboardController($session))->index($mock);

@@ -28,6 +28,19 @@
 - Refinar el reproductor flotante como componente visual principal, sin conectarlo a stream real.
 - Reforzar módulos planificados con etiquetas profesionales.
 
+## Alcance Fase 2.0
+
+- Conexión real a MySQL mediante PDO.
+- Login administrativo funcional.
+- Sesiones seguras con regeneración de ID al iniciar sesión.
+- Logout administrativo.
+- Dashboard protegido.
+- Roles limitados a `Super Admin` y `Admin`.
+- Configuración general básica desde `settings` con fallback.
+- CRUD mínimo de noticias.
+- Página pública de noticias leyendo solo registros `published`.
+- CSRF y validación servidor en formularios administrativos.
+
 ## Requisitos no funcionales
 
 - Compatible con PHP 8.1+ y MySQL.

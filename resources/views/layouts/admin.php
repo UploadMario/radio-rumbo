@@ -5,7 +5,7 @@ declare(strict_types=1);
 use App\Helpers\SecurityHelper;
 
 $contentView = is_string($contentView ?? null) ? $contentView : 'dashboard';
-$allowedViews = ['dashboard', 'login'];
+$allowedViews = ['dashboard', 'login', 'news-form', 'news-index'];
 
 if (!in_array($contentView, $allowedViews, true)) {
     $contentView = 'dashboard';

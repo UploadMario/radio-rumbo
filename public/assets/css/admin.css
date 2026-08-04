@@ -195,6 +195,16 @@
     background: var(--color-primary);
 }
 
+.quick-admin a {
+    text-decoration: none;
+}
+
+.admin-soft {
+    color: var(--color-ink);
+    background: #edf3e8;
+    border: 1px solid rgba(9, 17, 12, 0.08);
+}
+
 table {
     width: 100%;
     border-collapse: collapse;
@@ -232,6 +242,67 @@ th {
     padding: 12px;
     background: #edf3e8;
     border-radius: var(--radius);
+}
+
+.admin-notice,
+.admin-error,
+.form-alert {
+    margin-bottom: 16px;
+    padding: 12px 14px;
+    border-radius: var(--radius);
+}
+
+.admin-notice {
+    color: var(--color-bg-dark);
+    background: var(--color-primary-light);
+}
+
+.admin-error,
+.form-alert {
+    color: #6d1010;
+    background: #ffe6e6;
+}
+
+.admin-form {
+    display: grid;
+    gap: 16px;
+}
+
+.admin-form label,
+.login-card label {
+    display: grid;
+    gap: 6px;
+    color: var(--color-ink);
+    font-weight: 700;
+}
+
+.login-card label {
+    color: var(--color-white-soft);
+}
+
+.admin-form small,
+.login-card small {
+    color: #b4232a;
+}
+
+select {
+    width: 100%;
+    padding: 12px 14px;
+    border: 1px solid rgba(9, 17, 12, 0.14);
+    border-radius: var(--radius);
+}
+
+.table-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    align-items: center;
+}
+
+.table-actions a,
+.table-actions button {
+    min-height: 34px;
+    padding: 7px 10px;
 }
 
 .admin-login {

@@ -22,6 +22,8 @@ Validar CSRF en formularios, escape HTML, consultas preparadas, proteccion de up
 
 En Fase 1 los formularios son visuales y no envian informacion real. Aun asi, los datos mock impresos deben escaparse y no deben incluir credenciales ni datos sensibles.
 
+En Fase 2.0 se agregan pruebas para validadores de login/noticias, autenticación con hash, creación de noticias y consulta pública limitada a noticias publicadas. Las pruebas de integración usan SQLite en memoria cuando la extensión está disponible.
+
 ## Cobertura minima inicial
 
 La meta inicial es cubrir helpers y reglas criticas. En fases posteriores se definira una meta numerica cuando existan modulos estables.

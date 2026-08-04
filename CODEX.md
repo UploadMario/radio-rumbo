@@ -6,6 +6,8 @@ Radio Rumbo usa una arquitectura MVC simple sin framework pesado. `public/index.
 
 La Fase 1.1 agrega una GUI conectable con layouts, parciales, vistas PHP, logo real y datos mock centralizados. No implementa backend real, autenticación, CRUDs ni conexión dinámica a MySQL.
 
+La Fase 2.0 agrega backend mínimo real: autenticación administrativa, sesiones seguras, lectura de settings y CRUD mínimo de noticias. Se mantiene la arquitectura simple y compatible con DonWeb.
+
 Capas principales:
 
 - `app/Core`: infraestructura minima como router, base de datos y vistas.
@@ -119,6 +121,7 @@ Extensiones PHP recomendadas: `pdo_mysql`, `mbstring`, `dom`, `xml`, `xmlwriter`
 - `/` y `/admin/` funcionan con `php -S localhost:8000 -t public`.
 - En Fase 1, distinguir claramente entre datos mock y funcionalidad real.
 - En Fase 1.1, mantener como datos reales confirmados solo `Radio Rumbo`, `La radio que se ve` y `Huancayo, Perú`.
+- En Fase 2.0, todo formulario administrativo funcional debe usar CSRF, validación servidor y consultas preparadas.
 - Sin frameworks pesados.
 - Sin credenciales reales.
 - Roles sin cambios no autorizados.

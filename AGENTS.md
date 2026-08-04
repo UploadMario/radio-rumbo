@@ -13,6 +13,7 @@ Extensiones PHP recomendadas: `pdo_mysql`, `mbstring`, `dom`, `xml`, `xmlwriter`
 - Usar `password_hash()` y `password_verify()` para autenticacion futura.
 - Escapar salida HTML con `SecurityHelper::e()`.
 - Usar CSRF en formularios administrativos futuros.
+- Usar CSRF en formularios administrativos funcionales.
 - Usar PDO y consultas preparadas para todo acceso a datos.
 - No exponer `.env`, backups, logs ni archivos internos en `public/`.
 - Mantener el document root apuntando a `public/`.
@@ -53,3 +54,10 @@ No exponer `app/`, `config/`, `database/`, `docs/`, `resources/`, `tests/`, `ven
 ## Datos y roles
 
 No crear roles adicionales. No inventar datos reales de la emisora, personal, clientes, telefonos, contrasenas ni correos privados.
+
+## Fase 2.0 funcional
+
+- `/admin/login/`, `/admin/dashboard/`, `/admin/logout/` y `/admin/news/` son rutas funcionales.
+- Las noticias publicas de `/noticias/` deben leer solo registros `published`.
+- Crear usuario inicial con `password_hash()` y `database/create-initial-user.example.sql` como referencia.
+- No implementar recuperación de contraseña, usuarios avanzados, uploads ni métricas avanzadas sin nueva autorización.

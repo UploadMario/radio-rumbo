@@ -589,6 +589,16 @@ textarea {
     background: #fff;
 }
 
+.empty-state {
+    margin-bottom: var(--space-4);
+    padding: var(--space-4);
+    color: #4e5b52;
+    background: #ffffff;
+    border: 1px solid rgba(9, 17, 12, 0.08);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+}
+
 .podcast-card button:disabled {
     color: #657068;
     cursor: not-allowed;

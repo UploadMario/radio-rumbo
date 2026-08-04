@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 use App\Core\View;
+use App\Services\SettingService;
 use Dotenv\Dotenv;
 
 function rr_bootstrap(): string
@@ -28,7 +29,10 @@ function rr_mock_data(string $rootPath): array
 {
     $data = require $rootPath . '/config/mock-data.php';
 
-    return is_array($data) ? $data : [];
+    $mock = is_array($data) ? $data : [];
+    $mock['station'] = (new SettingService())->station($mock);
+
+    return $mock;
 }
 
 function rr_render_public(string $page, string $title, string $active): void
@@ -43,14 +47,17 @@ function rr_render_public(string $page, string $title, string $active): void
     ]);
 }
 
-function rr_render_admin(string $page, string $title, string $active = 'dashboard'): void
+/**
+ * @param array<string, mixed> $extra
+ */
+function rr_render_admin(string $page, string $title, string $active = 'dashboard', array $extra = []): void
 {
     $rootPath = rr_bootstrap();
 
-    View::render('layouts.admin', [
+    View::render('layouts.admin', array_merge([
         'active' => $active,
         'contentView' => $page,
         'mock' => rr_mock_data($rootPath),
         'pageTitle' => $title,
-    ]);
+    ], $extra));
 }

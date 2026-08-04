@@ -6,12 +6,14 @@ Radio Rumbo se plantea como una aplicacion PHP MVC simple, sin framework pesado.
 
 La Fase 1.1 incorpora una capa visual conectable: layouts públicos/admin, parciales reutilizables, vistas PHP por pantalla, logo real y datos mock centralizados. Esta capa prepara la experiencia de usuario sin activar todavía persistencia ni administración real.
 
+La Fase 2.0 incorpora controladores, modelos, servicios y validadores para autenticación y noticias. El acceso público sigue entrando por `public/`, mientras la lógica real permanece en `app/`.
+
 ## Estructura de carpetas
 
 - `app/Core`: router, base de datos y soporte comun.
 - `app/Controllers`: coordinan peticiones y respuestas.
-- `app/Models`: representan entidades y acceso futuro a datos.
-- `app/Services`: contienen reglas de negocio reutilizables.
+- `app/Models`: encapsulan acceso mínimo a datos con PDO.
+- `app/Services`: contienen reglas de negocio reutilizables para autenticación, settings, sesión y noticias.
 - `app/Middleware`: autenticacion, roles y controles transversales.
 - `app/Validators`: validacion de entrada.
 - `app/Helpers`: funciones auxiliares seguras.
@@ -57,4 +59,5 @@ El document root debe apuntar a `public/`. Si el plan no lo permite, se debe evi
 - GUI: HTML, CSS y JavaScript vanilla en `resources/views` y `public/assets`.
 - Logica: controladores, servicios, validadores y middleware en `app`.
 - Datos: mocks en `config/mock-data.php` durante Fase 1; modelos y SQL en `database` para fases posteriores.
+- Datos Fase 2.0: noticias, usuarios, roles y settings usan MySQL por PDO.
 - Configuracion: `.env` y archivos de `config`.

@@ -70,6 +70,33 @@ composer test
 
 La suite incluye pruebas para helpers de seguridad, slugs, roles permitidos, renderizado de vistas y estructura de datos mock.
 
+## Fase 2.0 Backend mínimo
+
+Ya existe funcionalidad real mínima para:
+
+- Conexión MySQL por PDO usando variables de `.env`.
+- Login administrativo en `/admin/login/`.
+- Dashboard protegido en `/admin/dashboard/`.
+- Logout en `/admin/logout/`.
+- CRUD mínimo de noticias en `/admin/news/`.
+- Noticias públicas dinámicas en `/noticias/`, mostrando solo estado `published`.
+- Lectura básica de configuración desde tabla `settings` con fallback seguro.
+
+Para crear el usuario inicial:
+
+1. Importar `database/schema.sql` y luego `database/seed.sql`.
+2. Generar un hash local:
+
+```bash
+php -r "echo password_hash('CAMBIAR_ESTA_CONTRASENA_LOCALMENTE', PASSWORD_DEFAULT), PHP_EOL;"
+```
+
+3. Usar `database/create-initial-user.example.sql` como referencia.
+4. Reemplazar el hash placeholder manualmente antes de ejecutar el INSERT.
+5. No guardar contraseñas reales ni hashes productivos en Git.
+
+La recuperación de contraseña, usuarios avanzados, uploads, podcasts, ranking, equipo funcional y métricas avanzadas siguen como fases futuras.
+
 ## Servidor local
 
 ```bash

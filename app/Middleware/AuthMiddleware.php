@@ -4,14 +4,25 @@ declare(strict_types=1);
 
 namespace App\Middleware;
 
+use App\Services\SessionService;
+
 final class AuthMiddleware
 {
+    public function __construct(private ?SessionService $session = null)
+    {
+    }
+
     public function handle(): bool
     {
-        if (session_status() !== PHP_SESSION_ACTIVE) {
-            session_start();
+        return $this->sessions()->user() !== null;
+    }
+
+    private function sessions(): SessionService
+    {
+        if (!$this->session instanceof SessionService) {
+            $this->session = new SessionService();
         }
 
-        return isset($_SESSION['user_id']) && is_numeric($_SESSION['user_id']);
+        return $this->session;
     }
 }

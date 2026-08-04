@@ -42,6 +42,7 @@ CREATE TABLE news (
     slug VARCHAR(200) NOT NULL UNIQUE,
     summary VARCHAR(255) NULL,
     body MEDIUMTEXT NOT NULL,
+    category VARCHAR(80) NOT NULL DEFAULT 'General',
     status ENUM('draft', 'published', 'archived') NOT NULL DEFAULT 'draft',
     published_at DATETIME NULL,
     created_by INT UNSIGNED NULL,
