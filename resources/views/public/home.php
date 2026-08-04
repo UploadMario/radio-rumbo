@@ -16,7 +16,8 @@ $plannedModules = is_array($mock['planned_modules'] ?? null) ? $mock['planned_mo
             <h1>Radio Rumbo: La radio que se ve.</h1>
             <p>Una señal local con identidad renovada, acceso rápido al en vivo y una base visual lista para conectar contenidos reales en las próximas fases.</p>
             <div class="hero-actions">
-                <a class="btn btn-primary" href="/en-vivo/">Escuchar en vivo</a>
+                <a class="btn btn-primary" href="/en-vivo/">Escuchar radio en vivo</a>
+                <a class="btn btn-soft" href="/en-vivo/#video-en-vivo">Ver transmisión en vivo</a>
                 <a class="btn btn-soft" href="/publicidad-contacto/">Escribir a cabina</a>
             </div>
         </div>
@@ -34,10 +35,10 @@ $plannedModules = is_array($mock['planned_modules'] ?? null) ? $mock['planned_mo
 </section>
 
 <section class="quick-access container">
-    <a href="/en-vivo/">En vivo <span>Reproductor visual</span></a>
+    <a href="/en-vivo/">En vivo <span>Audio configurado</span></a>
+    <a href="/en-vivo/#video-en-vivo">Video en vivo <span>La radio que se ve</span></a>
+    <a href="/en-vivo/#facebook-en-vivo">Noticias en Facebook <span>Publicaciones oficiales</span></a>
     <a href="/programacion/">Programación <span>Ver horarios</span></a>
-    <a href="/noticias/">Noticias <span>Leer novedades</span></a>
-    <a href="/publicidad-contacto/">Publicidad local <span>Anuncia con nosotros</span></a>
 </section>
 
 <section class="section-light">

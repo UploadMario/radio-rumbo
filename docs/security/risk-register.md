@@ -17,3 +17,6 @@
 | Fuerza bruta contra login | Intentos repetidos buscan adivinar credenciales administrativas. | Alto | Media | Mensajes no sensibles, contraseñas con hash y recomendación de credenciales fuertes; rate limiting queda para fase futura. | Mitigación inicial Fase 2.0 |
 | CSRF en acciones admin | Un tercero intenta ejecutar formularios administrativos desde otro sitio. | Alto | Media | Tokens CSRF en login y formularios de noticias. | Control implementado Fase 2.0 |
 | Exposición de noticias no publicadas | Borradores o archivadas aparecen en la web pública. | Medio | Media | Consulta pública filtra exclusivamente `status = published`. | Control implementado Fase 2.0 |
+| Uso de credenciales locales en producción | Credenciales de desarrollo se usan en DonWeb. | Crítico | Baja | Script limitado a `APP_ENV=local`, documentación explícita y `.env.example` marcado como desarrollo. | Control implementado Fase 2.0.1 |
+| URL externa maliciosa | Una URL no HTTPS se usa en iframe o audio. | Alto | Media | `UrlHelper` valida protocolo HTTPS y descarta protocolos peligrosos. | Control implementado Fase 2.0.1 |
+| Bloqueo de embeds externos | Facebook o widgets externos no cargan por políticas del navegador. | Bajo | Media | Mensajes fallback y enlaces externos alternativos; sin scraping. | Riesgo aceptado |

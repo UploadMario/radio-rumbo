@@ -5,6 +5,7 @@ declare(strict_types=1);
 $dashboard = is_array($mock['dashboard'] ?? null) ? $mock['dashboard'] : [];
 $messages = is_array($dashboard['messages'] ?? null) ? $dashboard['messages'] : [];
 $plannedModules = is_array($mock['planned_modules'] ?? null) ? $mock['planned_modules'] : [];
+$station = is_array($mock['station'] ?? null) ? $mock['station'] : [];
 $newsCounts = is_array($newsCounts ?? null) ? $newsCounts : ['total' => 0, 'published' => 0, 'draft' => 0];
 $user = is_array($user ?? null) ? $user : ['name' => 'Admin', 'role' => 'Admin'];
 $stats = [
@@ -75,6 +76,15 @@ $stats = [
             </div>
         <?php endforeach; ?>
     </article>
+</section>
+
+<section class="admin-panel">
+    <h2>Configuración de medios</h2>
+    <div class="module-grid">
+        <span>Audio en vivo · <?= !empty($station['stream_audio_url']) ? 'Configurado' : 'Pendiente' ?></span>
+        <span>Video en vivo · <?= !empty($station['live_video_widget_url']) ? 'Configurado' : 'Pendiente' ?></span>
+        <span>Facebook · <?= !empty($station['facebook_page_url']) ? 'Configurado' : 'Pendiente' ?></span>
+    </div>
 </section>
 
 <section class="admin-panel">

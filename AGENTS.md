@@ -61,3 +61,11 @@ No crear roles adicionales. No inventar datos reales de la emisora, personal, cl
 - Las noticias publicas de `/noticias/` deben leer solo registros `published`.
 - Crear usuario inicial con `password_hash()` y `database/create-initial-user.example.sql` como referencia.
 - No implementar recuperación de contraseña, usuarios avanzados, uploads ni métricas avanzadas sin nueva autorización.
+
+## Fase 2.0.1 local y medios
+
+- `database/create-local-users.php` solo puede ejecutarse con `APP_ENV=local`.
+- Credenciales locales sugeridas son exclusivamente de desarrollo y están prohibidas en producción/DonWeb.
+- Audio, video y Facebook se configuran por `settings` o `.env`.
+- No usar scraping ni API privada de Facebook.
+- Validar URLs externas como HTTPS.

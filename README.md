@@ -97,6 +97,31 @@ php -r "echo password_hash('CAMBIAR_ESTA_CONTRASENA_LOCALMENTE', PASSWORD_DEFAUL
 
 La recuperación de contraseña, usuarios avanzados, uploads, podcasts, ranking, equipo funcional y métricas avanzadas siguen como fases futuras.
 
+## Fase 2.0.1 Medios y usuarios locales
+
+Credenciales locales sugeridas, solo para desarrollo:
+
+- Super Admin: `superadmin.local@radiorumbo.test` / `LocalOnly#2026!`
+- Admin: `admin.local@radiorumbo.test` / `AdminLocal#2026!`
+
+Estas credenciales no son de producción, no deben usarse en DonWeb y deben cambiarse antes de publicar.
+
+Para crearlas o actualizarlas en la base local:
+
+```bash
+php database/create-local-users.php
+```
+
+El script solo corre con `APP_ENV=local`, lee `.env`, usa `password_hash()` y no crea roles nuevos.
+
+Medios configurados:
+
+- Audio en vivo: `https://mediastreamm.com/8008/stream;`
+- Video en vivo: `https://servilive.com/live-stream-video-widget/tvrumbo`
+- Facebook oficial: `https://www.facebook.com/radiorumboperu`
+
+El audio usa `<audio>` HTML5 y requiere interacción del usuario. El bloque de Facebook usa iframe oficial del plugin de página; puede fallar por cookies, navegador o políticas externas. El sistema no hace scraping ni usa API privada de Facebook.
+
 ## Servidor local
 
 ```bash

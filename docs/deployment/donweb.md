@@ -41,6 +41,7 @@ Si todo el proyecto queda dentro del directorio publico por limitacion del hosti
 - `.env` real nunca se sube a Git.
 - Crear `.env` en el hosting a partir de `.env.example`.
 - Usar credenciales generadas desde el panel DonWeb.
+- No usar las credenciales locales `*.local@radiorumbo.test` en DonWeb.
 - No compartir `.env` por correo ni chat.
 - Verificar que `/.env` no sea accesible desde el navegador.
 
@@ -83,6 +84,18 @@ Usar PHP 8.1 o superior y confirmar estas extensiones:
 - xmlwriter
 - SimpleXML
 - iconv
+
+## Medios En Vivo
+
+Configurar en `.env` o en tabla `settings`:
+
+- `STREAM_AUDIO_URL`: `https://mediastreamm.com/8008/stream;`
+- `LIVE_VIDEO_WIDGET_URL`: `https://servilive.com/live-stream-video-widget/tvrumbo`
+- `FACEBOOK_PAGE_URL`: `https://www.facebook.com/radiorumboperu`
+- `FACEBOOK_PAGE_ID`: `217453608287467`
+- `FACEBOOK_PAGE_PLUGIN_URL`: iframe oficial del plugin de página.
+
+Facebook puede bloquear embeds por cookies, navegador o políticas externas. El sistema no hace scraping ni usa API privada de Facebook.
 
 ## Permisos de uploads
 

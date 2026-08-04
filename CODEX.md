@@ -8,6 +8,8 @@ La Fase 1.1 agrega una GUI conectable con layouts, parciales, vistas PHP, logo r
 
 La Fase 2.0 agrega backend mínimo real: autenticación administrativa, sesiones seguras, lectura de settings y CRUD mínimo de noticias. Se mantiene la arquitectura simple y compatible con DonWeb.
 
+La Fase 2.0.1 agrega credenciales locales documentadas, script local idempotente y enlaces reales de audio, video y Facebook. No agrega módulos funcionales nuevos.
+
 Capas principales:
 
 - `app/Core`: infraestructura minima como router, base de datos y vistas.
@@ -122,6 +124,7 @@ Extensiones PHP recomendadas: `pdo_mysql`, `mbstring`, `dom`, `xml`, `xmlwriter`
 - En Fase 1, distinguir claramente entre datos mock y funcionalidad real.
 - En Fase 1.1, mantener como datos reales confirmados solo `Radio Rumbo`, `La radio que se ve` y `Huancayo, Perú`.
 - En Fase 2.0, todo formulario administrativo funcional debe usar CSRF, validación servidor y consultas preparadas.
+- En Fase 2.0.1, las URLs externas deben validarse como `https://` antes de imprimirse o usarse en iframes/audio.
 - Sin frameworks pesados.
 - Sin credenciales reales.
 - Roles sin cambios no autorizados.

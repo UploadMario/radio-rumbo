@@ -24,6 +24,8 @@ En Fase 1 los formularios son visuales y no envian informacion real. Aun asi, lo
 
 En Fase 2.0 se agregan pruebas para validadores de login/noticias, autenticación con hash, creación de noticias y consulta pública limitada a noticias publicadas. Las pruebas de integración usan SQLite en memoria cuando la extensión está disponible.
 
+En Fase 2.0.1 se agregan pruebas para validar URLs HTTPS y fallback de settings. QA manual debe verificar audio en vivo con interacción del usuario, iframe de video, bloque de Facebook o su fallback, login local y logout.
+
 ## Cobertura minima inicial
 
 La meta inicial es cubrir helpers y reglas criticas. En fases posteriores se definira una meta numerica cuando existan modulos estables.

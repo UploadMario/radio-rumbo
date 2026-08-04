@@ -41,6 +41,16 @@
 - Página pública de noticias leyendo solo registros `published`.
 - CSRF y validación servidor en formularios administrativos.
 
+## Alcance Fase 2.0.1
+
+- Crear usuarios locales de desarrollo con script seguro e idempotente.
+- Configurar audio en vivo real por `STREAM_AUDIO_URL`.
+- Configurar widget de video en vivo por `LIVE_VIDEO_WIDGET_URL`.
+- Configurar página oficial de Facebook y plugin de página.
+- Mostrar estados de medios en dashboard.
+- Mantener todos los embeds como configuración externa validada por HTTPS.
+- No implementar podcasts, ranking, uploads, métricas avanzadas ni nuevos roles.
+
 ## Requisitos no funcionales
 
 - Compatible con PHP 8.1+ y MySQL.
