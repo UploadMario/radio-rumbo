@@ -15,43 +15,26 @@ $facebookPluginUrl = is_string($station['facebook_page_plugin_url'] ?? null) ? $
             <span class="live-pill">EN VIVO</span>
             <h1><?= $e((string) ($currentProgram['name'] ?? 'Programa matinal')) ?></h1>
             <p><?= $e((string) ($currentProgram['summary'] ?? 'Transmisión en preparación.')) ?></p>
+            <p>Mira también la transmisión en vivo de cabina y programas especiales.</p>
             <dl class="meta-row">
                 <div><dt>Conductor</dt><dd><?= $e((string) ($currentProgram['host'] ?? 'Conductor principal')) ?></dd></div>
                 <div><dt>Horario</dt><dd><?= $e((string) ($currentProgram['schedule'] ?? '06:00 - 09:00')) ?></dd></div>
-                <div><dt>Stream</dt><dd><?= $audioUrl !== '' ? 'Audio configurado' : 'Pendiente de configurar' ?></dd></div>
+                <div><dt>Audio</dt><dd><?= $audioUrl !== '' ? 'Audio configurado' : 'Pendiente de configurar' ?></dd></div>
             </dl>
         </div>
-        <div class="big-player">
-            <button class="big-play" type="button" data-player-toggle aria-label="Reproducir radio en vivo">▶</button>
-            <?php if ($audioUrl !== ''): ?>
-                <audio data-audio-player preload="none" controls src="<?= $e($audioUrl) ?>"></audio>
-            <?php else: ?>
-                <p class="embed-fallback">Audio en vivo pendiente de configuración.</p>
-            <?php endif; ?>
-            <div class="audio-waves large" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span></div>
-            <div class="hero-actions">
-                <button class="btn btn-soft" type="button">Compartir</button>
-                <button class="btn btn-primary" type="button"><?= $e((string) ($station['whatsapp_cabina'] ?? 'WhatsApp de cabina')) ?></button>
-            </div>
-        </div>
+        <?php require dirname(__DIR__) . '/partials/live-video-player.php'; ?>
     </div>
 </section>
 
 <section class="container live-media-grid">
-    <article class="media-card" id="video-en-vivo">
-        <span class="section-kicker">La radio que se ve</span>
-        <h2>Video en vivo</h2>
-        <p>Transmisión visual preparada con widget externo seguro.</p>
-        <?php if ($videoUrl !== ''): ?>
-            <iframe
-                src="<?= $e($videoUrl) ?>"
-                title="Transmisión de video en vivo de Radio Rumbo"
-                loading="lazy"
-                referrerpolicy="no-referrer-when-downgrade"
-                allow="autoplay; fullscreen; picture-in-picture"></iframe>
-            <a class="btn btn-primary" href="<?= $e($videoUrl) ?>" target="_blank" rel="noopener noreferrer">Abrir transmisión</a>
+    <article class="media-card">
+        <span class="section-kicker">Radio en vivo</span>
+        <h2>Audio de Radio Rumbo</h2>
+        <p>El audio permanece disponible en el reproductor flotante inferior y en este bloque secundario.</p>
+        <?php if ($audioUrl !== ''): ?>
+            <audio data-audio-player preload="none" controls src="<?= $e($audioUrl) ?>"></audio>
         <?php else: ?>
-            <p class="embed-fallback">Video en vivo pendiente de configuración.</p>
+            <p class="embed-fallback">Audio en vivo pendiente de configuración.</p>
         <?php endif; ?>
     </article>
     <article class="media-card" id="facebook-en-vivo">
