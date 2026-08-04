@@ -59,8 +59,12 @@ CREATE TABLE programs (
     slug VARCHAR(160) NOT NULL UNIQUE,
     description TEXT NULL,
     host_name VARCHAR(140) NULL,
-    schedule_text VARCHAR(160) NULL,
-    status ENUM('active', 'archived') NOT NULL DEFAULT 'active',
+    day_of_week ENUM('monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday') NOT NULL,
+    start_time TIME NOT NULL,
+    end_time TIME NOT NULL,
+    category VARCHAR(80) NULL,
+    is_active TINYINT(1) NOT NULL DEFAULT 1,
+    display_order INT UNSIGNED NOT NULL DEFAULT 0,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -82,11 +86,14 @@ CREATE TABLE podcasts (
 CREATE TABLE team_members (
     id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(140) NOT NULL,
-    role_title VARCHAR(140) NULL,
+    role VARCHAR(140) NOT NULL,
+    program_name VARCHAR(140) NULL,
     bio TEXT NULL,
     photo_path VARCHAR(255) NULL,
-    status ENUM('active', 'archived') NOT NULL DEFAULT 'active',
-    sort_order INT UNSIGNED NOT NULL DEFAULT 0,
+    facebook_url VARCHAR(255) NULL,
+    instagram_url VARCHAR(255) NULL,
+    is_active TINYINT(1) NOT NULL DEFAULT 1,
+    display_order INT UNSIGNED NOT NULL DEFAULT 0,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -109,9 +116,12 @@ CREATE TABLE contact_messages (
     name VARCHAR(140) NOT NULL,
     email VARCHAR(160) NULL,
     phone VARCHAR(40) NULL,
-    subject VARCHAR(160) NULL,
+    subject VARCHAR(160) NOT NULL,
     message TEXT NOT NULL,
-    status ENUM('new', 'archived') NOT NULL DEFAULT 'new',
+    type ENUM('general', 'advertising', 'news', 'technical') NOT NULL DEFAULT 'general',
+    status ENUM('new', 'read', 'archived') NOT NULL DEFAULT 'new',
+    ip_address VARCHAR(45) NULL,
+    user_agent VARCHAR(255) NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;

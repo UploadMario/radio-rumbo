@@ -61,3 +61,11 @@ El document root debe apuntar a `public/`. Si el plan no lo permite, se debe evi
 - Datos: mocks en `config/mock-data.php` durante Fase 1; modelos y SQL en `database` para fases posteriores.
 - Datos Fase 2.0: noticias, usuarios, roles y settings usan MySQL por PDO.
 - Configuracion: `.env` y archivos de `config`.
+
+## Modulos funcionales Fase 2.1
+
+- `ProgramService`, `Program` y `ProgramValidator` gestionan la parrilla radial.
+- `TeamService`, `TeamMember` y `TeamMemberValidator` gestionan integrantes sin uploads reales.
+- `ContactMessageService`, `ContactMessage` y `ContactMessageValidator` guardan mensajes publicos con CSRF y honeypot.
+- Las rutas publicas leen datos activos desde MySQL y muestran mensajes vacios profesionales.
+- Las rutas admin siguen protegidas por sesion y usan solo roles `Super Admin` y `Admin`.

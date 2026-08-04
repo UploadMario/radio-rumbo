@@ -5,7 +5,18 @@ declare(strict_types=1);
 use App\Helpers\SecurityHelper;
 
 $contentView = is_string($contentView ?? null) ? $contentView : 'dashboard';
-$allowedViews = ['dashboard', 'login', 'news-form', 'news-index'];
+$allowedViews = [
+    'dashboard',
+    'login',
+    'messages/index',
+    'messages/view',
+    'news-form',
+    'news-index',
+    'programs/form',
+    'programs/index',
+    'team/form',
+    'team/index',
+];
 
 if (!in_array($contentView, $allowedViews, true)) {
     $contentView = 'dashboard';
@@ -33,7 +44,7 @@ $isLogin = $contentView === 'login';
         <div class="admin-shell">
             <?php require dirname(__DIR__) . '/partials/admin-sidebar.php'; ?>
             <main class="admin-main" id="contenido">
-                <?php require dirname(__DIR__) . '/admin/dashboard.php'; ?>
+                <?php require dirname(__DIR__) . '/admin/' . $contentView . '.php'; ?>
             </main>
         </div>
     <?php endif; ?>

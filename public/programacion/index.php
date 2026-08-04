@@ -4,4 +4,7 @@ declare(strict_types=1);
 
 require_once dirname(__DIR__) . '/bootstrap.php';
 
-rr_render_public('schedule', 'Radio Rumbo - Programación', 'programacion');
+use App\Controllers\Public\ProgramController;
+
+$rootPath = rr_bootstrap();
+(new ProgramController())->index(rr_mock_data($rootPath));

@@ -154,3 +154,15 @@ La raiz web local y recomendada para DonWeb es siempre `public/`. Las carpetas i
 - `vendor/` no se versiona; puede subirse al hosting como artefacto si no se puede ejecutar Composer en produccion.
 - Generar credenciales y hashes de contrasena durante instalacion, nunca desde archivos versionados.
 - Ver guia completa en `docs/deployment/donweb.md`.
+
+## Fase 2.1 Programacion, Equipo y Contacto
+
+Quedan funcionales con MySQL:
+
+- Programacion publica en `/programacion/` y CRUD admin en `/admin/programs/`.
+- Equipo publico en `/equipo/` y CRUD admin en `/admin/team/`.
+- Formulario real de contacto/publicidad en `/publicidad-contacto/`, con CSRF y honeypot. Guarda mensajes; no envia correos todavia.
+- Bandeja admin en `/admin/messages/` para ver, marcar como leido y archivar mensajes.
+- Dashboard con conteos reales de noticias, programas activos, equipo activo y mensajes nuevos.
+
+Para instalaciones existentes aplicar `database/migrations/2026_08_04_phase_2_1_programs_team_messages.sql` luego de revisar backup. En instalaciones nuevas importar `database/schema.sql` y despues `database/seed.sql`.

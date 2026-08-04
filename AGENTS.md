@@ -43,6 +43,8 @@ Si las dependencias no estan instaladas, ejecutar primero `composer install`.
 
 Una tarea esta terminada cuando cumple el requisito, mantiene compatibilidad con DonWeb, no introduce credenciales, respeta la estructura del proyecto, no rompe pruebas, incluye validacion basica, documenta cambios relevantes y agrega pruebas cuando corresponde.
 
+Fase 2.1 agrega programacion, equipo y contacto funcionales. No implementar correos salientes, uploads reales, podcasts, ranking, banners avanzados, avisos urgentes, usuarios avanzados ni roles adicionales sin autorizacion.
+
 ## Restricciones DonWeb
 
 Asumir hosting compartido tradicional: PHP + MySQL, sin procesos permanentes, sin servicios en segundo plano obligatorios, sin Docker y sin WebSockets complejos.

@@ -15,14 +15,29 @@ if (!is_file($autoloadPath)) {
 
 require_once $autoloadPath;
 
-if (is_file($rootPath . '/.env')) {
-    Dotenv::createImmutable($rootPath)->safeLoad();
+Dotenv::createImmutable(dirname(__DIR__))->safeLoad();
+
+$environmentSources = [
+    getenv('APP_ENV'),
+    $_ENV['APP_ENV'] ?? null,
+    $_SERVER['APP_ENV'] ?? null,
+];
+
+$appEnvironment = '';
+
+foreach ($environmentSources as $environmentSource) {
+    if (is_string($environmentSource)) {
+        $appEnvironment = strtolower(trim($environmentSource));
+        break;
+    }
 }
 
-if (($_ENV['APP_ENV'] ?? '') !== 'local') {
+if ($appEnvironment !== 'local') {
     fwrite(STDERR, "Abortado: create-local-users.php solo puede ejecutarse con APP_ENV=local.\n");
     exit(1);
 }
+
+echo "Entorno detectado: local\n";
 
 $users = [
     [
@@ -39,7 +54,12 @@ $users = [
     ],
 ];
 
-$pdo = Database::connection();
+try {
+    $pdo = Database::connection();
+} catch (Throwable) {
+    fwrite(STDERR, "No se pudo conectar con la base local. Verifica .env e importa database/schema.sql.\n");
+    exit(1);
+}
 $roleStatement = $pdo->prepare('SELECT id FROM roles WHERE name = :name LIMIT 1');
 $userStatement = $pdo->prepare(
     'INSERT INTO users (role_id, name, email, password_hash, status)

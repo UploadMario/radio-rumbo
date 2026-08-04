@@ -46,6 +46,15 @@ php -S localhost:8000 -t public
 
 Extensiones PHP recomendadas: `pdo_mysql`, `mbstring`, `dom`, `xml`, `xmlwriter`, `SimpleXML` e `iconv`.
 
+## Fase 2.1
+
+- Programacion: rutas publicas `/programacion/` y admin `/admin/programs/`.
+- Equipo: rutas publicas `/equipo/` y admin `/admin/team/`.
+- Contacto/publicidad: formulario publico `/publicidad-contacto/` y admin `/admin/messages/`.
+- Todos los formularios administrativos usan CSRF; contacto publico usa CSRF y honeypot.
+- No hay envio de correos, uploads reales, podcasts funcionales, ranking, banners avanzados ni roles nuevos.
+- Para bases existentes revisar y aplicar `database/migrations/2026_08_04_phase_2_1_programs_team_messages.sql`.
+
 ## Reglas de carpetas
 
 - No colocar logica de negocio dentro de `public/`.

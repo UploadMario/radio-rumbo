@@ -22,13 +22,14 @@ final class User
                 FROM users
                 INNER JOIN roles ON roles.id = users.role_id
                 WHERE users.status = :status
-                  AND (users.email = :identifier OR users.name = :identifier)
+                  AND (users.email = :email_identifier OR users.name = :name_identifier)
                 LIMIT 1';
 
         $statement = $this->pdo()->prepare($sql);
         $statement->execute([
             'status' => 'active',
-            'identifier' => $identifier,
+            'email_identifier' => $identifier,
+            'name_identifier' => $identifier,
         ]);
 
         $row = $statement->fetch();

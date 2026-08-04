@@ -5,15 +5,21 @@ declare(strict_types=1);
 namespace App\Controllers\Admin;
 
 use App\Core\View;
+use App\Services\ContactMessageService;
 use App\Services\NewsService;
+use App\Services\ProgramService;
 use App\Services\SessionService;
+use App\Services\TeamService;
 use Throwable;
 
 final class DashboardController
 {
     public function __construct(
         private ?SessionService $session = null,
-        private ?NewsService $news = null
+        private ?NewsService $news = null,
+        private ?ProgramService $programs = null,
+        private ?TeamService $team = null,
+        private ?ContactMessageService $messages = null
     ) {
     }
 
@@ -30,12 +36,33 @@ final class DashboardController
             $counts = ['total' => 0, 'published' => 0, 'draft' => 0];
         }
 
+        try {
+            $programCount = $this->programService()->activeCount();
+        } catch (Throwable) {
+            $programCount = 0;
+        }
+
+        try {
+            $teamCount = $this->teamService()->activeCount();
+        } catch (Throwable) {
+            $teamCount = 0;
+        }
+
+        try {
+            $newMessages = $this->messageService()->newCount();
+        } catch (Throwable) {
+            $newMessages = 0;
+        }
+
         View::render('layouts.admin', [
             'active' => 'dashboard',
             'contentView' => 'dashboard',
             'mock' => $mock,
+            'newMessages' => $newMessages,
             'newsCounts' => $counts,
             'pageTitle' => 'Radio Rumbo - Panel Administrativo',
+            'programCount' => $programCount,
+            'teamCount' => $teamCount,
             'user' => $user,
         ]);
     }
@@ -71,5 +98,32 @@ final class DashboardController
         }
 
         return $this->news;
+    }
+
+    private function programService(): ProgramService
+    {
+        if (!$this->programs instanceof ProgramService) {
+            $this->programs = new ProgramService();
+        }
+
+        return $this->programs;
+    }
+
+    private function teamService(): TeamService
+    {
+        if (!$this->team instanceof TeamService) {
+            $this->team = new TeamService();
+        }
+
+        return $this->team;
+    }
+
+    private function messageService(): ContactMessageService
+    {
+        if (!$this->messages instanceof ContactMessageService) {
+            $this->messages = new ContactMessageService();
+        }
+
+        return $this->messages;
     }
 }

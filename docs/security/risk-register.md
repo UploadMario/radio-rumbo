@@ -20,3 +20,6 @@
 | Uso de credenciales locales en producción | Credenciales de desarrollo se usan en DonWeb. | Crítico | Baja | Script limitado a `APP_ENV=local`, documentación explícita y `.env.example` marcado como desarrollo. | Control implementado Fase 2.0.1 |
 | URL externa maliciosa | Una URL no HTTPS se usa en iframe o audio. | Alto | Media | `UrlHelper` valida protocolo HTTPS y descarta protocolos peligrosos. | Control implementado Fase 2.0.1 |
 | Bloqueo de embeds externos | Facebook o widgets externos no cargan por políticas del navegador. | Bajo | Media | Mensajes fallback y enlaces externos alternativos; sin scraping. | Riesgo aceptado |
+| Abuso de formulario publico | Bots o usuarios pueden enviar mensajes repetidos al formulario de contacto. | Medio | Media | CSRF, limites de longitud, validacion servidor y honeypot sin reCAPTCHA en esta fase. | Mitigacion inicial Fase 2.1 |
+| URLs sociales inseguras | Enlaces de equipo podrian usar protocolos peligrosos. | Medio | Baja | Aceptar solo URLs HTTPS en redes sociales. | Mitigado Fase 2.1 |
+| Correos no configurados | El usuario podria asumir respuesta automatica desde el formulario. | Bajo | Media | Documentar que el formulario guarda mensajes y no envia correos todavia. | Mitigado Fase 2.1 |

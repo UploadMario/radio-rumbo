@@ -4,4 +4,14 @@ declare(strict_types=1);
 
 require_once dirname(__DIR__) . '/bootstrap.php';
 
-rr_render_public('advertising-contact', 'Radio Rumbo - Publicidad y Contacto', 'publicidad-contacto');
+use App\Controllers\Public\ContactController;
+
+$rootPath = rr_bootstrap();
+$controller = new ContactController();
+
+if (($_SERVER['REQUEST_METHOD'] ?? 'GET') === 'POST') {
+    $controller->store(rr_mock_data($rootPath), $_POST);
+    return;
+}
+
+$controller->index(rr_mock_data($rootPath));

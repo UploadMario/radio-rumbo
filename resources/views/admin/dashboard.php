@@ -10,11 +10,16 @@ $audioConfigured = !empty($station['stream_audio_url']);
 $videoConfigured = !empty($station['live_video_widget_url']);
 $facebookConfigured = !empty($station['facebook_page_url']);
 $newsCounts = is_array($newsCounts ?? null) ? $newsCounts : ['total' => 0, 'published' => 0, 'draft' => 0];
+$programCount = (int) ($programCount ?? 0);
+$teamCount = (int) ($teamCount ?? 0);
+$newMessages = (int) ($newMessages ?? 0);
 $user = is_array($user ?? null) ? $user : ['name' => 'Admin', 'role' => 'Admin'];
 $stats = [
     ['label' => 'Noticias totales', 'value' => (string) ($newsCounts['total'] ?? 0), 'hint' => 'Dato real desde MySQL'],
     ['label' => 'Publicadas', 'value' => (string) ($newsCounts['published'] ?? 0), 'hint' => 'Estado published'],
-    ['label' => 'Borradores', 'value' => (string) ($newsCounts['draft'] ?? 0), 'hint' => 'Estado draft'],
+    ['label' => 'Programas activos', 'value' => (string) $programCount, 'hint' => 'Programacion radial'],
+    ['label' => 'Equipo activo', 'value' => (string) $teamCount, 'hint' => 'Integrantes publicados'],
+    ['label' => 'Mensajes nuevos', 'value' => (string) $newMessages, 'hint' => 'Contacto y publicidad'],
     ['label' => 'Usuario actual', 'value' => (string) ($user['name'] ?? 'Admin'), 'hint' => (string) ($user['role'] ?? 'Admin')],
 ];
 ?>

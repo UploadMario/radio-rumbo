@@ -1,5 +1,3 @@
-USE radio_rumbo;
-
 INSERT INTO roles (name) VALUES
 ('Super Admin'),
 ('Admin');
@@ -19,3 +17,13 @@ INSERT INTO settings (setting_key, setting_value, description) VALUES
 
 -- Crear usuarios reales durante instalacion usando password_hash().
 -- No incluir contrasenas reales ni hashes productivos en este archivo.
+
+INSERT INTO programs (name, slug, description, host_name, day_of_week, start_time, end_time, category, is_active, display_order) VALUES
+('Programa matinal', 'programa-matinal', 'Espacio informativo y musical de inicio del dia.', 'Conductor principal', 'monday', '06:00:00', '09:00:00', 'Magazine local', 1, 10),
+('Rumbo Noticias', 'rumbo-noticias', 'Resumen informativo local preparado para desarrollo.', 'Equipo de prensa', 'monday', '12:00:00', '13:00:00', 'Informacion', 1, 20),
+('Magazine local', 'magazine-local', 'Contenido local, musica y entrevistas en preparacion.', 'Conductor principal', 'friday', '16:00:00', '18:00:00', 'Entretenimiento', 1, 30);
+
+INSERT INTO team_members (name, role, program_name, bio, photo_path, facebook_url, instagram_url, is_active, display_order) VALUES
+('Conductor principal', 'Conduccion', 'Programa matinal', 'Perfil placeholder para reemplazar con datos oficiales.', '', '', '', 1, 10),
+('Equipo de prensa', 'Prensa', 'Rumbo Noticias', 'Equipo placeholder para contenidos informativos.', '', '', '', 1, 20),
+('Area comercial', 'Publicidad', 'Publicidad local', 'Contacto comercial placeholder sin datos personales reales.', '', '', '', 1, 30);

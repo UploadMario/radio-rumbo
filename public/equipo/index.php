@@ -4,4 +4,7 @@ declare(strict_types=1);
 
 require_once dirname(__DIR__) . '/bootstrap.php';
 
-rr_render_public('team', 'Radio Rumbo - Equipo', 'equipo');
+use App\Controllers\Public\TeamController;
+
+$rootPath = rr_bootstrap();
+(new TeamController())->index(rr_mock_data($rootPath));

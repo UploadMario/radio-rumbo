@@ -16,3 +16,5 @@ Una tarea se considera terminada solo si:
 - Verifica `/` y `/admin/` cuando toca entradas publicas.
 - Incluye pruebas cuando aplica.
 - Mantiene roles limitados a `Super Admin` y `Admin`.
+- Para formularios publicos, incluye CSRF, validacion y proteccion anti-spam simple cuando corresponde.
+- Documenta claramente cuando una funcion guarda datos pero no envia correos o no ejecuta procesos externos.

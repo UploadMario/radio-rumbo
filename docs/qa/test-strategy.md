@@ -26,6 +26,8 @@ En Fase 2.0 se agregan pruebas para validadores de login/noticias, autenticació
 
 En Fase 2.0.1 se agregan pruebas para validar URLs HTTPS y fallback de settings. QA manual debe verificar audio en vivo con interacción del usuario, iframe de video, bloque de Facebook o su fallback, login local y logout.
 
+En Fase 2.1 se agregan pruebas de validadores y servicios para programacion, equipo y mensajes con SQLite en memoria cuando esta disponible. QA manual debe verificar crear programa, ver programacion publica, crear integrante, ver equipo publico, enviar contacto, ver mensaje admin y archivar.
+
 ## Cobertura minima inicial
 
 La meta inicial es cubrir helpers y reglas criticas. En fases posteriores se definira una meta numerica cuando existan modulos estables.

@@ -33,21 +33,36 @@ final class AuthServiceTest extends TestCase
                 last_login_at TEXT NULL
             )'
         );
-        $this->pdo->exec("INSERT INTO roles (name) VALUES ('Admin')");
+        $this->pdo->exec("INSERT INTO roles (name) VALUES ('Admin'), ('Editor')");
 
         $statement = $this->pdo->prepare(
             'INSERT INTO users (role_id, name, email, password_hash, status)
-             VALUES (1, :name, :email, :hash, :status)'
+             VALUES (:role_id, :name, :email, :hash, :status)'
         );
         $statement->execute([
+            'role_id' => 1,
             'name' => 'Admin',
             'email' => 'admin@example.invalid',
             'hash' => password_hash('correct-password', PASSWORD_DEFAULT),
             'status' => 'active',
         ]);
+        $statement->execute([
+            'role_id' => 1,
+            'name' => 'Inactive Admin',
+            'email' => 'inactive@example.invalid',
+            'hash' => password_hash('correct-password', PASSWORD_DEFAULT),
+            'status' => 'inactive',
+        ]);
+        $statement->execute([
+            'role_id' => 2,
+            'name' => 'Editor',
+            'email' => 'editor@example.invalid',
+            'hash' => password_hash('correct-password', PASSWORD_DEFAULT),
+            'status' => 'active',
+        ]);
     }
 
-    public function testValidatesCorrectPassword(): void
+    public function testActiveUserCanLoginWithCorrectPassword(): void
     {
         $user = (new AuthService(new User($this->pdo)))->attempt('admin@example.invalid', 'correct-password');
 
@@ -58,6 +73,20 @@ final class AuthServiceTest extends TestCase
     public function testRejectsIncorrectPassword(): void
     {
         $user = (new AuthService(new User($this->pdo)))->attempt('admin@example.invalid', 'wrong-password');
+
+        self::assertNull($user);
+    }
+
+    public function testRejectsInactiveUser(): void
+    {
+        $user = (new AuthService(new User($this->pdo)))->attempt('inactive@example.invalid', 'correct-password');
+
+        self::assertNull($user);
+    }
+
+    public function testRejectsRoleThatIsNotAllowed(): void
+    {
+        $user = (new AuthService(new User($this->pdo)))->attempt('editor@example.invalid', 'correct-password');
 
         self::assertNull($user);
     }

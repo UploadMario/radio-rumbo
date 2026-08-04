@@ -98,3 +98,14 @@
 - Gestion avanzada de usuarios
 - Banners
 - Avisos urgentes
+
+## Alcance Fase 2.1
+
+- CRUD administrativo de programacion en `/admin/programs/`.
+- Programacion publica dinamica en `/programacion/`.
+- CRUD administrativo de equipo en `/admin/team/`, sin uploads reales.
+- Equipo publico dinamico en `/equipo/`.
+- Formulario de publicidad/contacto con CSRF, validacion y honeypot en `/publicidad-contacto/`.
+- Bandeja de mensajes en `/admin/messages/` para revisar, marcar como leido y archivar.
+- Dashboard con conteos reales basicos.
+- No se implementan correos salientes, podcasts funcionales, ranking, banners avanzados, avisos urgentes ni nuevos roles.
