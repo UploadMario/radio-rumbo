@@ -1,0 +1,7 @@
+<svg width="96" height="96" viewBox="0 0 96 96" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Radio Rumbo">
+  <rect width="96" height="96" rx="22" fill="#09110C"/>
+  <circle cx="48" cy="48" r="29" stroke="#91C82D" stroke-width="6"/>
+  <circle cx="48" cy="48" r="10" fill="#AAD14A"/>
+  <path d="M28 32C34 24 41 20 48 20C55 20 62 24 68 32" stroke="#F2F2F2" stroke-width="5" stroke-linecap="round"/>
+  <path d="M24 62C32 72 40 76 48 76C56 76 64 72 72 62" stroke="#72A223" stroke-width="5" stroke-linecap="round"/>
+</svg>

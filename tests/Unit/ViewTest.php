@@ -24,4 +24,13 @@ final class ViewTest extends TestCase
 
         View::render('public.inexistente');
     }
+
+    public function testRendersPublicView(): void
+    {
+        ob_start();
+        View::render('public.upcoming');
+        $output = (string) ob_get_clean();
+
+        self::assertStringContainsString('Modulo en preparacion', $output);
+    }
 }

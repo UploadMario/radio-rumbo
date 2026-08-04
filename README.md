@@ -1,6 +1,6 @@
 # Radio Rumbo
 
-Base Fase 0 para el sistema web de Radio Rumbo, emisora local de Huancayo, Peru. Esta fase crea una estructura profesional, segura y mantenible para crecer sin depender de frameworks pesados ni procesos permanentes.
+Sistema web Radio Rumbo, emisora local de Huancayo, Peru. La Fase 1 entrega una GUI conectable y presentable con datos mock controlados, construida sobre una base PHP simple, segura y compatible con hosting compartido.
 
 ## Stack tecnico
 
@@ -17,7 +17,7 @@ Extensiones PHP recomendadas: `pdo_mysql`, `mbstring`, `dom`, `xml`, `xmlwriter`
 
 ## Objetivo del sistema
 
-Construir una plataforma web administrable para una radio local: portada, transmision en vivo, noticias, programacion, equipo, contacto, publicidad y panel administrativo. En Fase 0 solo se prepara la base tecnica y documental.
+Construir una plataforma web administrable para una radio local: portada, transmision en vivo, noticias, programacion, equipo, contacto, publicidad y panel administrativo. En Fase 1 la interfaz visual queda lista para conectar con PHP/MySQL en fases posteriores, sin implementar todavia CRUDs, login real ni datos dinamicos desde base de datos.
 
 ## Instalacion local
 
@@ -45,6 +45,7 @@ php -S localhost:8000 -t public
 - `composer analyse`: ejecuta PHPStan sobre `app` y `tests`.
 - `composer lint`: ejecuta PHPCS con PSR-12.
 - `php -S localhost:8000 -t public`: levanta la pantalla publica minima.
+- Las rutas visuales preparadas son `/`, `/en-vivo/`, `/programacion/`, `/noticias/`, `/podcasts/`, `/equipo/`, `/publicidad-contacto/` y `/admin/`.
 
 ## Estructura del proyecto
 
@@ -52,9 +53,9 @@ php -S localhost:8000 -t public
 app/            Codigo PHP de aplicacion: Core, Controllers, Models, Services, Middleware, Validators y Helpers.
 public/         Document root recomendado, entrada publica, /admin, assets y uploads controlados.
 admin/          Carpeta interna no publica para preparacion administrativa futura.
-config/         Configuracion de aplicacion y base de datos.
+config/         Configuracion de aplicacion, base de datos y datos mock de Fase 1.
 database/       Esquema, seed y futuras migraciones SQL.
-resources/      Vistas PHP futuras separadas del document root.
+resources/      Layouts, parciales y vistas PHP separadas del document root.
 tests/          Pruebas unitarias, integracion y BDD documental.
 docs/           Requisitos, arquitectura, seguridad, QA e ISO.
 ```
@@ -67,7 +68,7 @@ Despues de instalar dependencias, ejecutar:
 composer test
 ```
 
-La Fase 0 incluye pruebas unitarias para helpers de seguridad, slugs y roles permitidos.
+La suite incluye pruebas para helpers de seguridad, slugs, roles permitidos, renderizado de vistas y estructura de datos mock.
 
 ## Servidor local
 
@@ -78,6 +79,15 @@ php -S localhost:8000 -t public
 Abrir `http://localhost:8000`. El panel administrativo placeholder carga desde `http://localhost:8000/admin/`.
 
 La raiz web local y recomendada para DonWeb es siempre `public/`. Las carpetas internas como `app/`, `config/`, `database/`, `docs/`, `resources/`, `tests/` y `vendor/` no deben quedar expuestas al navegador.
+
+## Fase 1 GUI
+
+- La home publica ya es una pantalla presentable con hero, en vivo, noticias, programacion, publicidad, equipo y reproductor flotante visual.
+- `/admin/` muestra un dashboard administrativo visual con datos mock; `/admin/?view=login` muestra el login visual.
+- `config/mock-data.php` centraliza placeholders. No contiene datos reales sensibles.
+- `public/assets/css/main.css`, `public/assets/css/admin.css`, `public/assets/js/main.js` y `public/assets/js/player.js` concentran estilos e interacciones vanilla.
+- El reproductor no conecta aun a un stream real; solo alterna estados visuales.
+- Formularios, botones y modulos futuros estan preparados visualmente, sin comportamiento productivo.
 
 ## Despliegue en DonWeb
 

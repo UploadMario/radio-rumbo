@@ -4,6 +4,8 @@
 
 Radio Rumbo usa una arquitectura MVC simple sin framework pesado. `public/index.php` actua como entrada publica, `public/admin/index.php` como entrada publica placeholder del panel administrativo y `app/` concentra la logica PHP.
 
+La Fase 1 agrega una GUI conectable con layouts, parciales, vistas PHP y datos mock centralizados. No implementa backend real, autenticacion, CRUDs ni conexion dinamica a MySQL.
+
 Capas principales:
 
 - `app/Core`: infraestructura minima como router, base de datos y vistas.
@@ -14,8 +16,9 @@ Capas principales:
 - `app/Validators`: validaciones de entrada.
 - `app/Helpers`: utilidades puras.
 - `config`: configuracion desacoplada de codigo.
+- `config/mock-data.php`: datos placeholder de Fase 1 para vistas conectables.
 - `database`: SQL versionable y migraciones futuras.
-- `resources/views`: vistas PHP futuras fuera del document root.
+- `resources/views`: layouts, parciales y vistas PHP fuera del document root.
 - `tests`: pruebas unitarias, integracion y BDD documental.
 
 ## Convenciones
@@ -43,6 +46,8 @@ Extensiones PHP recomendadas: `pdo_mysql`, `mbstring`, `dom`, `xml`, `xmlwriter`
 
 - No colocar logica de negocio dentro de `public/`.
 - Usar `public/` como document root. `/admin/` debe resolver a `public/admin/index.php`.
+- Mantener las vistas en `resources/views` y los datos mock en `config/mock-data.php`.
+- Escapar datos mock al imprimirlos en HTML.
 - No colocar configuracion sensible dentro de assets.
 - No exponer `app/`, `config/`, `database/`, `docs/`, `resources/`, `tests/`, `vendor/` ni `.env`.
 - Guardar archivos subidos solo en `public/uploads/` con validaciones futuras.
@@ -91,13 +96,14 @@ Extensiones PHP recomendadas: `pdo_mysql`, `mbstring`, `dom`, `xml`, `xmlwriter`
 ## Como crear nuevos modulos
 
 1. Definir requisito en `docs/requirements/requirements.md`.
-2. Crear controlador en `app/Controllers`.
-3. Crear modelo si hay persistencia.
-4. Crear servicio si hay reglas de negocio.
-5. Agregar validadores para entrada.
-6. Usar middleware si requiere autenticacion o rol.
-7. Crear pruebas unitarias o de integracion.
-8. Documentar rutas, riesgos y criterios de aceptacion.
+2. Si es una vista visual, crear primero una vista en `resources/views` y datos mock controlados.
+3. Crear controlador en `app/Controllers` cuando ya exista comportamiento backend.
+4. Crear modelo si hay persistencia.
+5. Crear servicio si hay reglas de negocio.
+6. Agregar validadores para entrada.
+7. Usar middleware si requiere autenticacion o rol.
+8. Crear pruebas unitarias o de integracion.
+9. Documentar rutas, riesgos y criterios de aceptacion.
 
 ## Como documentar cambios
 
@@ -111,6 +117,7 @@ Extensiones PHP recomendadas: `pdo_mysql`, `mbstring`, `dom`, `xml`, `xmlwriter`
 - Requisito implementado sin sobredimensionar.
 - Compatible con PHP 8.1+ y hosting compartido DonWeb.
 - `/` y `/admin/` funcionan con `php -S localhost:8000 -t public`.
+- En Fase 1, distinguir claramente entre datos mock y funcionalidad real.
 - Sin frameworks pesados.
 - Sin credenciales reales.
 - Roles sin cambios no autorizados.

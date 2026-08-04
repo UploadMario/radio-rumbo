@@ -4,6 +4,8 @@
 
 Radio Rumbo se plantea como una aplicacion PHP MVC simple, sin framework pesado. El objetivo es mantener bajo acoplamiento entre interfaz, logica, datos y configuracion para facilitar crecimiento gradual. La raiz web recomendada es `public/`.
 
+La Fase 1 incorpora una capa visual conectable: layouts publicos/admin, parciales reutilizables, vistas PHP por pantalla y datos mock centralizados. Esta capa prepara la experiencia de usuario sin activar todavia persistencia ni administracion real.
+
 ## Estructura de carpetas
 
 - `app/Core`: router, base de datos y soporte comun.
@@ -15,8 +17,11 @@ Radio Rumbo se plantea como una aplicacion PHP MVC simple, sin framework pesado.
 - `app/Helpers`: funciones auxiliares seguras.
 - `public`: entrada publica y assets.
 - `public/admin`: entrada publica placeholder para `/admin/`.
+- `public/assets/css`: estilos publicos y administrativos.
+- `public/assets/js`: interacciones vanilla.
 - `admin`: carpeta interna protegida para preparacion administrativa futura.
 - `config`: configuracion desacoplada.
+- `config/mock-data.php`: datos visuales placeholder para Fase 1.
 - `database`: esquema, seed y migraciones.
 - `resources/views`: vistas PHP futuras fuera del document root.
 - `tests`: pruebas automatizadas y BDD documental.
@@ -24,11 +29,11 @@ Radio Rumbo se plantea como una aplicacion PHP MVC simple, sin framework pesado.
 
 ## Flujo publico
 
-El usuario ingresa por `public/index.php`. En fases futuras, el router resolvera rutas publicas como home, noticias, programacion, equipo y contacto. La configuracion publica, como `STREAM_URL`, se obtendra desde entorno o base de datos.
+El usuario ingresa por `public/index.php`. En Fase 1 existen rutas visuales para home, en vivo, programacion, noticias, podcasts, equipo y publicidad/contacto. La configuracion publica, como `STREAM_URL`, se obtendra desde entorno o base de datos en fases posteriores.
 
 ## Flujo administrativo
 
-`public/admin/index.php` es el placeholder publico de Fase 0.1 para `/admin/`. La logica administrativa real debe permanecer fuera de `public/`. En Fase 1 se agregara login real, sesiones, CSRF, roles y dashboard. Los roles permitidos son exclusivamente `Super Admin` y `Admin`.
+`public/admin/index.php` es la entrada publica para `/admin/`. En Fase 1 muestra dashboard visual y login visual opcional por query string. La logica administrativa real debe permanecer fuera de `public/`. En fases posteriores se agregaran login real, sesiones, CSRF, roles y dashboard funcional. Los roles permitidos son exclusivamente `Super Admin` y `Admin`.
 
 ## Decisiones tecnicas
 
@@ -38,6 +43,8 @@ El usuario ingresa por `public/index.php`. En fases futuras, el router resolvera
 - PHPStan para analisis estatico.
 - PHPUnit para pruebas.
 - Sin framework pesado para ajustarse a hosting compartido.
+- Datos mock centralizados para evitar inventar informacion real.
+- JavaScript vanilla solo para interacciones visuales.
 
 ## Restricciones por DonWeb
 
@@ -47,7 +54,7 @@ El document root debe apuntar a `public/`. Si el plan no lo permite, se debe evi
 
 ## Separacion de responsabilidades
 
-- GUI: HTML, CSS y JavaScript vanilla en `public` o vistas futuras.
+- GUI: HTML, CSS y JavaScript vanilla en `resources/views` y `public/assets`.
 - Logica: controladores, servicios, validadores y middleware en `app`.
-- Datos: modelos y SQL en `database`.
+- Datos: mocks en `config/mock-data.php` durante Fase 1; modelos y SQL en `database` para fases posteriores.
 - Configuracion: `.env` y archivos de `config`.

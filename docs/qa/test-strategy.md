@@ -2,7 +2,7 @@
 
 ## Pruebas unitarias
 
-Cubren helpers, validadores y servicios puros. La Fase 0 incluye pruebas para slug, escape HTML y roles permitidos.
+Cubren helpers, validadores y servicios puros. La suite actual incluye pruebas para slug, escape HTML, roles permitidos, renderizado seguro de vistas y estructura de datos mock.
 
 ## Pruebas de integracion
 
@@ -14,11 +14,13 @@ Cubriran flujo entre controladores, servicios y base de datos cuando existan mod
 
 ## QA manual
 
-Cada pantalla nueva debe revisarse en navegador, incluyendo estados vacios, errores, permisos y responsive basico.
+Cada pantalla nueva debe revisarse en navegador, incluyendo estados vacios, errores, permisos y responsive basico. En Fase 1 se debe revisar `/`, `/en-vivo/`, `/programacion/`, `/noticias/`, `/podcasts/`, `/equipo/`, `/publicidad-contacto/`, `/admin/` y `/admin/?view=login`.
 
 ## Pruebas de seguridad basicas
 
 Validar CSRF en formularios, escape HTML, consultas preparadas, proteccion de uploads, sesiones y ausencia de credenciales versionadas.
+
+En Fase 1 los formularios son visuales y no envian informacion real. Aun asi, los datos mock impresos deben escaparse y no deben incluir credenciales ni datos sensibles.
 
 ## Cobertura minima inicial
 
