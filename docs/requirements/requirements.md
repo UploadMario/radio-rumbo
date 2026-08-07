@@ -120,3 +120,12 @@
 - Home y En Vivo pueden mostrar avisos activos mediante franja superior global.
 - No hay uploads reales: `image_path` usa ruta manual, placeholder o URL HTTPS.
 - Podcasts, ranking, usuarios avanzados, estadisticas y correos salientes siguen pendientes.
+
+## Alcance Fase 2.6
+
+- Pulir GUI/UX global para presentacion ejecutiva.
+- Priorizar Home, En Vivo, Noticias, Programacion, Equipo y Publicidad/Contacto.
+- Agregar mensajes profesionales para contenido pendiente de confirmacion oficial.
+- Mejorar dashboard con estado de presentacion, modulos implementados y pendientes antes del despliegue final.
+- Reducir protagonismo de modulos planificados: Podcasts, Ranking Top 20, Estadisticas avanzadas, Usuarios avanzados y Uploads.
+- No implementar uploads, correos salientes, ranking, podcasts funcionales, estadisticas avanzadas ni roles nuevos.

@@ -6,7 +6,7 @@ use App\Helpers\UrlHelper;
 
 $videoUrl = UrlHelper::httpsOrEmpty(is_string($videoUrl ?? null) ? $videoUrl : '');
 ?>
-<article class="live-video-card">
+<article class="live-video-card" id="video-en-vivo">
     <div class="live-video-card__header">
         <span class="live-status-badge"><span aria-hidden="true">●</span> EN VIVO</span>
         <div>

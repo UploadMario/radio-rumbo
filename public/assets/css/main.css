@@ -817,6 +817,49 @@ textarea {
     box-shadow: var(--shadow);
 }
 
+.presentation-note {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+    align-items: center;
+    justify-content: space-between;
+    margin-top: var(--space-5);
+    margin-bottom: var(--space-5);
+    padding: var(--space-3) var(--space-4);
+    color: var(--color-white-soft);
+    background:
+        linear-gradient(135deg, rgba(9, 17, 12, 0.88), rgba(24, 39, 27, 0.82)),
+        rgba(9, 17, 12, 0.84);
+    border: 1px solid rgba(145, 200, 45, 0.22);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+}
+
+.presentation-note strong {
+    color: var(--color-primary-light);
+}
+
+.presentation-note span {
+    color: rgba(242, 242, 242, 0.78);
+}
+
+.presentation-note.light-note {
+    color: var(--color-ink);
+    background: #ffffff;
+    border-color: rgba(9, 17, 12, 0.08);
+}
+
+.presentation-note.light-note span {
+    color: #59635c;
+}
+
+.presentation-empty {
+    border-color: rgba(145, 200, 45, 0.28);
+    background:
+        linear-gradient(180deg, rgba(170, 209, 74, 0.08), rgba(255, 255, 255, 0.96)),
+        #ffffff;
+}
+
 .podcast-card button:disabled {
     color: #657068;
     cursor: not-allowed;
@@ -847,6 +890,15 @@ textarea {
     background:
         linear-gradient(135deg, rgba(9, 17, 12, 0.88), rgba(35, 57, 40, 0.85)),
         repeating-linear-gradient(45deg, rgba(145, 200, 45, 0.18) 0 1px, transparent 1px 24px);
+}
+
+.contact-info-panel {
+    gap: var(--space-2);
+    align-content: center;
+}
+
+.contact-info-panel strong {
+    font-size: clamp(2rem, 4vw, 3rem);
 }
 
 .module-preview {

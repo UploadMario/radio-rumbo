@@ -64,6 +64,14 @@ Extensiones PHP recomendadas: `pdo_mysql`, `mbstring`, `dom`, `xml`, `xmlwriter`
 - No implementar uploads reales; `image_path` debe ser placeholder, ruta manual o URL HTTPS.
 - `.env` permanece como fallback de configuracion.
 
+## Fase 2.6
+
+- Pulido visual y de mensajes para presentacion ejecutiva.
+- Mantener los modulos funcionales actuales sin agregar funcionalidades grandes.
+- Usar lenguaje publico profesional: `Contenido pendiente de confirmacion`, `Disponible para carga administrativa` y `Listo para completar con informacion oficial`.
+- El dashboard debe explicar modulos implementados, estado de presentacion y pendientes antes del despliegue final.
+- Los modulos pendientes deben mostrarse como `Proxima fase`, `Planificado` o `No incluido en esta version de presentacion`.
+
 ## Reglas de carpetas
 
 - No colocar logica de negocio dentro de `public/`.

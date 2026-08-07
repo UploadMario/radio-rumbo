@@ -12,8 +12,8 @@ $success = is_string($contactSuccess ?? null) ? $contactSuccess : null;
 $typeLabels = [
     'general' => 'Consulta general',
     'advertising' => 'Publicidad local',
-    'news' => 'Informacion para prensa',
-    'technical' => 'Consulta tecnica',
+    'news' => 'Información para prensa',
+    'technical' => 'Consulta técnica',
 ];
 ?>
 <section class="page-hero">
@@ -21,15 +21,22 @@ $typeLabels = [
         <div>
             <span class="section-kicker">Publicidad y contacto</span>
             <h1>Anuncia con nosotros</h1>
-            <p>Espacios para comercios, marcas y eventos locales de Huancayo. En esta fase el formulario guarda mensajes; no envia correos todavia.</p>
-            <a class="btn btn-primary" href="#contacto">Solicitar informacion</a>
+            <p>Espacios preparados para comercios, marcas y eventos locales de Huancayo.</p>
+            <div class="hero-actions">
+                <a class="btn btn-primary" href="#contacto">Solicitar información</a>
+                <a class="btn btn-soft" href="/en-vivo/">Ver transmisión</a>
+            </div>
         </div>
-        <aside class="promo-panel">
-            <h2>WhatsApp comercial</h2>
+        <aside class="promo-panel presentation-promo">
+            <h2>Canales comerciales</h2>
             <p><?= $e((string) ($station['whatsapp_publicidad'] ?? 'WhatsApp de publicidad')) ?></p>
-            <small>Placeholder hasta confirmar datos oficiales.</small>
+            <small>Los canales de contacto serán actualizados con la información oficial antes del despliegue final.</small>
         </aside>
     </div>
+</section>
+<section class="container presentation-note">
+    <strong>Listo para recibir consultas</strong>
+    <span>El formulario guarda solicitudes para revisión administrativa. La respuesta comercial se gestionará con los datos oficiales de Radio Rumbo.</span>
 </section>
 <section class="container card-grid">
     <?php foreach ($services as $service): ?>
@@ -43,13 +50,14 @@ $typeLabels = [
     <div class="container contact-grid">
         <form class="contact-form" action="/publicidad-contacto/#contacto" method="post">
             <h2>Contacto y publicidad</h2>
+            <p>Deje su consulta y el equipo administrativo podrá revisarla desde el panel.</p>
             <?php if ($success !== null): ?><div class="admin-notice"><?= $e($success) ?></div><?php endif; ?>
             <?php if (isset($errors['_form'])): ?><div class="admin-error"><?= $e((string) $errors['_form']) ?></div><?php endif; ?>
             <input type="hidden" name="_csrf_token" value="<?= $e(SecurityHelper::csrfToken()) ?>">
             <label class="sr-only">Sitio web<input type="text" name="website" value="" autocomplete="off" tabindex="-1"></label>
             <label>Nombre<input type="text" name="name" value="<?= $e((string) ($old['name'] ?? '')) ?>" placeholder="Nombre o empresa"><?php if (isset($errors['name'])): ?><small><?= $e((string) $errors['name']) ?></small><?php endif; ?></label>
             <label>Correo<input type="email" name="email" value="<?= $e((string) ($old['email'] ?? '')) ?>" placeholder="Correo institucional pendiente"><?php if (isset($errors['email'])): ?><small><?= $e((string) $errors['email']) ?></small><?php endif; ?></label>
-            <label>Telefono<input type="text" name="phone" value="<?= $e((string) ($old['phone'] ?? '')) ?>" placeholder="WhatsApp de contacto"><?php if (isset($errors['phone'])): ?><small><?= $e((string) $errors['phone']) ?></small><?php endif; ?></label>
+            <label>Teléfono<input type="text" name="phone" value="<?= $e((string) ($old['phone'] ?? '')) ?>" placeholder="WhatsApp de contacto"><?php if (isset($errors['phone'])): ?><small><?= $e((string) $errors['phone']) ?></small><?php endif; ?></label>
             <label>Tipo de consulta
                 <select name="type">
                     <?php foreach (ContactMessageValidator::TYPES as $type): ?>
@@ -59,13 +67,13 @@ $typeLabels = [
                 <?php if (isset($errors['type'])): ?><small><?= $e((string) $errors['type']) ?></small><?php endif; ?>
             </label>
             <label>Asunto<input type="text" name="subject" value="<?= $e((string) ($old['subject'] ?? '')) ?>"><?php if (isset($errors['subject'])): ?><small><?= $e((string) $errors['subject']) ?></small><?php endif; ?></label>
-            <label>Mensaje<textarea name="message" rows="5" placeholder="Cuentanos que necesitas"><?= $e((string) ($old['message'] ?? '')) ?></textarea><?php if (isset($errors['message'])): ?><small><?= $e((string) $errors['message']) ?></small><?php endif; ?></label>
+            <label>Mensaje<textarea name="message" rows="5" placeholder="Cuéntenos qué necesita"><?= $e((string) ($old['message'] ?? '')) ?></textarea><?php if (isset($errors['message'])): ?><small><?= $e((string) $errors['message']) ?></small><?php endif; ?></label>
             <button class="btn btn-primary" type="submit">Enviar mensaje</button>
         </form>
-        <aside class="map-placeholder">
-            <span>Ubicacion placeholder</span>
-            <strong>Huancayo, Peru</strong>
-            <p>Mapa, direccion exacta y redes sociales se conectaran cuando existan datos oficiales.</p>
+        <aside class="map-placeholder contact-info-panel">
+            <span>Huancayo, Perú</span>
+            <strong>Radio Rumbo</strong>
+            <p>Dirección exacta, correo institucional, WhatsApp de cabina, WhatsApp comercial y redes sociales oficiales pendientes de confirmación.</p>
         </aside>
     </div>
 </section>

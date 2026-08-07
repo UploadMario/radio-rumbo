@@ -175,3 +175,10 @@ Para instalaciones existentes aplicar `database/migrations/2026_08_04_phase_2_1_
 - `image_path` de banners usa ruta manual o URL HTTPS; no hay uploads reales todavia.
 - `.env` sigue siendo fallback cuando una key no existe en `settings`.
 - Produccion no debe usar usuarios locales de desarrollo.
+
+## Fase 2.6 Presentacion ejecutiva
+
+- La Home, En Vivo, Noticias, Programacion, Equipo y Publicidad/Contacto fueron pulidas para una presentacion clara al cliente.
+- El dashboard administrativo incluye un resumen de modulos implementados y una lista interna de informacion pendiente antes del despliegue final.
+- Los modulos no incluidos se muestran como `Proxima fase` o `Planificado`, sin simular funcionalidad pendiente.
+- La plataforma queda lista para cargar informacion oficial antes de publicar en DonWeb.

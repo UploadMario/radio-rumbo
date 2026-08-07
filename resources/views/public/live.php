@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 $schedule = is_array($mock['today_schedule'] ?? null) ? $mock['today_schedule'] : [];
 $audioUrl = is_string($station['stream_audio_url'] ?? null) ? $station['stream_audio_url'] : '';
-$videoUrl = is_string($station['live_video_widget_url'] ?? null) ? $station['live_video_widget_url'] : '';
 $facebookUrl = is_string($station['facebook_page_url'] ?? null) ? $station['facebook_page_url'] : '';
 $facebookPluginUrl = is_string($station['facebook_page_plugin_url'] ?? null) ? $station['facebook_page_plugin_url'] : '';
 ?>
@@ -19,16 +18,16 @@ $facebookPluginUrl = is_string($station['facebook_page_plugin_url'] ?? null) ? $
             <div class="program-summary">
                 <span>Programa actual</span>
                 <strong><?= $e((string) ($currentProgram['name'] ?? 'Programa matinal')) ?></strong>
-                <small><?= $e((string) ($currentProgram['schedule'] ?? '06:00 - 09:00')) ?> · <?= $e((string) ($currentProgram['host'] ?? 'Conductor principal')) ?></small>
+                <small><?= $e((string) ($currentProgram['schedule'] ?? '06:00 - 09:00')) ?> - <?= $e((string) ($currentProgram['host'] ?? 'Conductor principal')) ?></small>
             </div>
 
             <dl class="meta-row live-meta">
-                <div><dt>Estado</dt><dd data-audio-status-label>En vivo</dd></div>
+                <div><dt>Señal</dt><dd data-audio-status-label>En vivo</dd></div>
                 <div><dt>Audio</dt><dd><?= $audioUrl !== '' ? 'Audio configurado' : 'Pendiente de configurar' ?></dd></div>
             </dl>
 
             <p class="audio-status-message" data-audio-status-message hidden>
-                La transmisión de audio no está disponible en este momento. Puede que la radio esté fuera de horario o que la señal aún no haya sido enviada desde cabina.
+                La transmisión de audio puede estar fuera de horario o pendiente de activación desde cabina.
             </p>
 
             <div class="hero-actions live-actions">
@@ -44,6 +43,11 @@ $facebookPluginUrl = is_string($station['facebook_page_plugin_url'] ?? null) ? $
         </div>
         <?php require dirname(__DIR__) . '/partials/live-video-player.php'; ?>
     </div>
+</section>
+
+<section class="container presentation-note live-note">
+    <strong>Transmisión preparada</strong>
+    <span>El video funciona de forma independiente al audio. Si la señal de audio no está activa, la web mantiene un estado profesional para el oyente.</span>
 </section>
 
 <section class="container live-media-grid">
@@ -90,6 +94,7 @@ $facebookPluginUrl = is_string($station['facebook_page_plugin_url'] ?? null) ? $
     <div class="section-heading">
         <span class="section-kicker">Sigue la señal</span>
         <h2>Próximos programas</h2>
+        <p>Programación referencial pendiente de confirmación final por Radio Rumbo.</p>
     </div>
     <div class="schedule-list">
         <?php foreach (array_slice($schedule, 1) as $program): ?>
@@ -97,9 +102,9 @@ $facebookPluginUrl = is_string($station['facebook_page_plugin_url'] ?? null) ? $
                 <time><?= $e((string) $program['time']) ?></time>
                 <div>
                     <h3><?= $e((string) $program['name']) ?></h3>
-                    <p><?= $e((string) $program['host']) ?> · <?= $e((string) $program['category']) ?></p>
+                    <p><?= $e((string) $program['host']) ?> - <?= $e((string) $program['category']) ?></p>
                 </div>
-                <button type="button">Recordar</button>
+                <a class="btn btn-soft admin-soft" href="/programacion/">Ver programación</a>
             </article>
         <?php endforeach; ?>
     </div>

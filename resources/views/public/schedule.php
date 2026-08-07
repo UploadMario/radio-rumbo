@@ -6,10 +6,10 @@ $programs = is_array($programs ?? null) ? $programs : [];
 $dayLabels = [
     'monday' => 'Lunes',
     'tuesday' => 'Martes',
-    'wednesday' => 'Miercoles',
+    'wednesday' => 'Miércoles',
     'thursday' => 'Jueves',
     'friday' => 'Viernes',
-    'saturday' => 'Sabado',
+    'saturday' => 'Sábado',
     'sunday' => 'Domingo',
 ];
 $todayKey = strtolower(date('l'));
@@ -17,8 +17,12 @@ $now = date('H:i:s');
 ?>
 <section class="page-title container">
     <span class="section-kicker">Parrilla radial</span>
-    <h1>Programacion</h1>
-    <p>Programas activos de Radio Rumbo, listos para actualizarse desde el panel administrativo.</p>
+    <h1>Programación</h1>
+    <p>Programación referencial pendiente de confirmación final por Radio Rumbo.</p>
+</section>
+<section class="container presentation-note light-note">
+    <strong>Disponible para carga administrativa</strong>
+    <span>Los horarios pueden actualizarse desde el panel antes del despliegue final.</span>
 </section>
 <section class="container">
     <div class="filter-row" aria-label="Filtros visuales por dia">
@@ -26,9 +30,14 @@ $now = date('H:i:s');
             <button class="<?= $value === $todayKey ? 'is-active' : '' ?>" type="button"><?= $e($day) ?></button>
         <?php endforeach; ?>
     </div>
-    <div class="schedule-list">
+    <div class="schedule-list public-schedule-list">
         <?php if ($programs === []): ?>
-            <article><div><h2>La programacion estara disponible proximamente.</h2><p>El equipo administrativo podra cargar horarios desde el panel.</p></div></article>
+            <article class="presentation-empty">
+                <div>
+                    <h2>La programación estará disponible próximamente.</h2>
+                    <p>Contenido pendiente de confirmación por Radio Rumbo.</p>
+                </div>
+            </article>
         <?php endif; ?>
         <?php foreach ($programs as $program): ?>
             <?php
@@ -40,11 +49,11 @@ $now = date('H:i:s');
                 <time><?= $e(substr((string) $program['start_time'], 0, 5)) ?> - <?= $e(substr((string) $program['end_time'], 0, 5)) ?></time>
                 <div>
                     <h2><?= $e((string) $program['name']) ?></h2>
-                    <p><?= $e($dayLabels[(string) $program['day_of_week']] ?? (string) $program['day_of_week']) ?> · <?= $e((string) ($program['host_name'] ?: 'Conductor principal')) ?> · <?= $e((string) ($program['category'] ?: 'Programacion')) ?></p>
+                    <p><?= $e($dayLabels[(string) $program['day_of_week']] ?? (string) $program['day_of_week']) ?> - <?= $e((string) ($program['host_name'] ?: 'Conductor principal')) ?> - <?= $e((string) ($program['category'] ?: 'Programación')) ?></p>
                     <?php if ((string) ($program['description'] ?? '') !== ''): ?><p><?= $e((string) $program['description']) ?></p><?php endif; ?>
                 </div>
                 <?php if ($isLive): ?><span class="live-pill">En vivo ahora</span><?php endif; ?>
-                <button type="button">Ver programa</button>
+                <a class="btn btn-soft admin-soft" href="/en-vivo/">Ver señal</a>
             </article>
         <?php endforeach; ?>
     </div>
