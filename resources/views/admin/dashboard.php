@@ -13,6 +13,8 @@ $newsCounts = is_array($newsCounts ?? null) ? $newsCounts : ['total' => 0, 'publ
 $programCount = (int) ($programCount ?? 0);
 $teamCount = (int) ($teamCount ?? 0);
 $newMessages = (int) ($newMessages ?? 0);
+$activeBanners = (int) ($activeBanners ?? 0);
+$activeNotices = (int) ($activeNotices ?? 0);
 $user = is_array($user ?? null) ? $user : ['name' => 'Admin', 'role' => 'Admin'];
 $stats = [
     ['label' => 'Noticias totales', 'value' => (string) ($newsCounts['total'] ?? 0), 'hint' => 'Dato real desde MySQL'],
@@ -20,6 +22,8 @@ $stats = [
     ['label' => 'Programas activos', 'value' => (string) $programCount, 'hint' => 'Programacion radial'],
     ['label' => 'Equipo activo', 'value' => (string) $teamCount, 'hint' => 'Integrantes publicados'],
     ['label' => 'Mensajes nuevos', 'value' => (string) $newMessages, 'hint' => 'Contacto y publicidad'],
+    ['label' => 'Banners activos', 'value' => (string) $activeBanners, 'hint' => 'Promociones publicas'],
+    ['label' => 'Avisos activos', 'value' => (string) $activeNotices, 'hint' => 'Comunicados visibles'],
     ['label' => 'Usuario actual', 'value' => (string) ($user['name'] ?? 'Admin'), 'hint' => (string) ($user['role'] ?? 'Admin')],
 ];
 ?>
@@ -57,7 +61,10 @@ $stats = [
         <h2>Accesos rápidos</h2>
         <div class="quick-admin">
             <a class="btn btn-primary" href="/admin/news/create/">Nueva noticia</a>
-            <a class="btn btn-soft admin-soft" href="/admin/news/">Gestionar noticias</a>
+            <a class="btn btn-soft admin-soft" href="/admin/settings/">Editar configuracion</a>
+            <a class="btn btn-soft admin-soft" href="/admin/banners/create/">Nuevo banner</a>
+            <a class="btn btn-soft admin-soft" href="/admin/urgent-notices/create/">Nuevo aviso</a>
+            <a class="btn btn-soft admin-soft" href="/admin/messages/">Ver mensajes</a>
         </div>
     </article>
 </section>

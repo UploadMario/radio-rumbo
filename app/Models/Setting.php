@@ -30,6 +30,28 @@ final class Setting
         return $settings;
     }
 
+    /**
+     * @param array<string, string> $settings
+     */
+    public function upsertMany(array $settings): void
+    {
+        $statement = $this->pdo()->prepare(
+            'INSERT INTO settings (setting_key, setting_value, description)
+             VALUES (:setting_key, :setting_value, :description)
+             ON DUPLICATE KEY UPDATE
+                setting_value = VALUES(setting_value),
+                description = VALUES(description)'
+        );
+
+        foreach ($settings as $key => $value) {
+            $statement->execute([
+                'setting_key' => $key,
+                'setting_value' => $value,
+                'description' => 'Editable desde panel administrativo.',
+            ]);
+        }
+    }
+
     private function pdo(): PDO
     {
         return $this->connection ?? Database::connection();

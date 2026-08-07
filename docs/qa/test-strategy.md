@@ -28,6 +28,8 @@ En Fase 2.0.1 se agregan pruebas para validar URLs HTTPS y fallback de settings.
 
 En Fase 2.1 se agregan pruebas de validadores y servicios para programacion, equipo y mensajes con SQLite en memoria cuando esta disponible. QA manual debe verificar crear programa, ver programacion publica, crear integrante, ver equipo publico, enviar contacto, ver mensaje admin y archivar.
 
+En Fase 2.2 se agregan pruebas para validadores de configuracion, banners y avisos. QA manual debe verificar Super Admin en configuracion, Admin solo lectura, crear/desactivar banners, crear/desactivar avisos y visibilidad publica.
+
 ## Cobertura minima inicial
 
 La meta inicial es cubrir helpers y reglas criticas. En fases posteriores se definira una meta numerica cuando existan modulos estables.

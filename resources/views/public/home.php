@@ -34,6 +34,8 @@ $plannedModules = is_array($mock['planned_modules'] ?? null) ? $mock['planned_mo
     </div>
 </section>
 
+<?php $bannerPosition = 'home_hero'; require dirname(__DIR__) . '/partials/public-banner.php'; ?>
+
 <section class="quick-access container">
     <a href="/en-vivo/">En vivo <span>Audio configurado</span></a>
     <a href="/en-vivo/#video-en-vivo">Video en vivo <span>La radio que se ve</span></a>
@@ -82,6 +84,8 @@ $plannedModules = is_array($mock['planned_modules'] ?? null) ? $mock['planned_mo
         <a class="btn btn-primary" href="/publicidad-contacto/">Ver opciones</a>
     </aside>
 </section>
+
+<?php $bannerPosition = 'home_middle'; require dirname(__DIR__) . '/partials/public-banner.php'; ?>
 
 <section class="section-light planned-section">
     <div class="container section-heading">

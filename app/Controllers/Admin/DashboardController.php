@@ -5,11 +5,13 @@ declare(strict_types=1);
 namespace App\Controllers\Admin;
 
 use App\Core\View;
+use App\Services\BannerService;
 use App\Services\ContactMessageService;
 use App\Services\NewsService;
 use App\Services\ProgramService;
 use App\Services\SessionService;
 use App\Services\TeamService;
+use App\Services\UrgentNoticeService;
 use Throwable;
 
 final class DashboardController
@@ -19,7 +21,9 @@ final class DashboardController
         private ?NewsService $news = null,
         private ?ProgramService $programs = null,
         private ?TeamService $team = null,
-        private ?ContactMessageService $messages = null
+        private ?ContactMessageService $messages = null,
+        private ?BannerService $banners = null,
+        private ?UrgentNoticeService $notices = null
     ) {
     }
 
@@ -54,10 +58,24 @@ final class DashboardController
             $newMessages = 0;
         }
 
+        try {
+            $bannerCount = $this->bannerService()->activeCount();
+        } catch (Throwable) {
+            $bannerCount = 0;
+        }
+
+        try {
+            $noticeCount = $this->noticeService()->activeCount();
+        } catch (Throwable) {
+            $noticeCount = 0;
+        }
+
         View::render('layouts.admin', [
             'active' => 'dashboard',
             'contentView' => 'dashboard',
             'mock' => $mock,
+            'activeBanners' => $bannerCount,
+            'activeNotices' => $noticeCount,
             'newMessages' => $newMessages,
             'newsCounts' => $counts,
             'pageTitle' => 'Radio Rumbo - Panel Administrativo',
@@ -125,5 +143,23 @@ final class DashboardController
         }
 
         return $this->messages;
+    }
+
+    private function bannerService(): BannerService
+    {
+        if (!$this->banners instanceof BannerService) {
+            $this->banners = new BannerService();
+        }
+
+        return $this->banners;
+    }
+
+    private function noticeService(): UrgentNoticeService
+    {
+        if (!$this->notices instanceof UrgentNoticeService) {
+            $this->notices = new UrgentNoticeService();
+        }
+
+        return $this->notices;
     }
 }

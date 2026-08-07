@@ -166,3 +166,12 @@ Quedan funcionales con MySQL:
 - Dashboard con conteos reales de noticias, programas activos, equipo activo y mensajes nuevos.
 
 Para instalaciones existentes aplicar `database/migrations/2026_08_04_phase_2_1_programs_team_messages.sql` luego de revisar backup. En instalaciones nuevas importar `database/schema.sql` y despues `database/seed.sql`.
+
+## Fase 2.2 Configuracion, Banners y Avisos
+
+- Configuracion editable en `/admin/settings/`; solo `Super Admin` puede modificar valores criticos, `Admin` puede verlos.
+- Banners basicos en `/admin/banners/`; se muestran activos en Home segun vigencia y posicion.
+- Avisos urgentes en `/admin/urgent-notices/`; se muestran como franja publica si estan activos.
+- `image_path` de banners usa ruta manual o URL HTTPS; no hay uploads reales todavia.
+- `.env` sigue siendo fallback cuando una key no existe en `settings`.
+- Produccion no debe usar usuarios locales de desarrollo.

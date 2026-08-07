@@ -6,12 +6,59 @@ namespace App\Services;
 
 use App\Helpers\UrlHelper;
 use App\Models\Setting;
+use App\Validators\SettingValidator;
 use Throwable;
 
 final class SettingService
 {
-    public function __construct(private ?Setting $settings = null)
+    public function __construct(
+        private ?Setting $settings = null,
+        private ?SettingValidator $validator = null
+    ) {
+    }
+
+    /**
+     * @return array<string, string>
+     */
+    public function editableSettings(): array
     {
+        $defaults = [
+            'RADIO_NAME' => 'Radio Rumbo',
+            'RADIO_TAGLINE' => 'La radio que se ve',
+            'RADIO_LOCATION' => 'Huancayo, Peru',
+            'stream_audio_url' => '',
+            'live_video_widget_url' => '',
+            'facebook_page_url' => '',
+            'facebook_page_id' => '',
+            'facebook_page_plugin_url' => '',
+            'WHATSAPP_CABINA' => '',
+            'WHATSAPP_PUBLICIDAD' => '',
+            'RADIO_EMAIL' => '',
+            'RADIO_ABOUT' => '',
+        ];
+
+        return array_merge($defaults, array_intersect_key($this->settingRepository()->all(), $defaults));
+    }
+
+    /**
+     * @param array<string, mixed> $input
+     * @return array{ok:bool,errors:array<string,string>,data:array<string,string>}
+     */
+    public function updateEditable(array $input): array
+    {
+        $data = [];
+        foreach (SettingValidator::KEYS as $key) {
+            $data[$key] = trim((string) ($input[$key] ?? ''));
+        }
+
+        $errors = $this->settingValidator()->validate($data);
+        if ($errors !== []) {
+            return ['ok' => false, 'errors' => $errors, 'data' => $data];
+        }
+
+        $this->settingRepository()->upsertMany($data);
+
+        return ['ok' => true, 'errors' => [], 'data' => $data];
     }
 
     /**
@@ -62,7 +109,7 @@ final class SettingService
         return [
             'name' => $settings['RADIO_NAME'] ?? $defaults['name'] ?? 'Radio Rumbo',
             'tagline' => $settings['RADIO_TAGLINE'] ?? $defaults['tagline'] ?? 'La radio que se ve',
-            'location' => $settings['RADIO_LOCATION'] ?? $defaults['location'] ?? 'Huancayo, Perú',
+            'location' => $settings['RADIO_LOCATION'] ?? $defaults['location'] ?? 'Huancayo, Peru',
             'stream_url' => UrlHelper::httpsOrEmpty($legacyStreamUrl),
             'stream_audio_url' => UrlHelper::httpsOrEmpty($streamAudioUrl),
             'live_video_widget_url' => UrlHelper::httpsOrEmpty($videoWidgetUrl),
@@ -79,9 +126,10 @@ final class SettingService
             'whatsapp_publicidad' => $settings['WHATSAPP_PUBLICIDAD']
                 ?? $defaults['whatsapp_publicidad']
                 ?? 'WhatsApp de publicidad',
-            'email' => $defaults['email'] ?? 'Correo institucional pendiente',
-            'address' => $defaults['address'] ?? 'Dirección pendiente de confirmar',
+            'email' => $settings['RADIO_EMAIL'] ?? $defaults['email'] ?? 'Correo institucional pendiente',
+            'address' => $defaults['address'] ?? 'Direccion pendiente de confirmar',
             'social' => $defaults['social'] ?? 'Redes sociales oficiales',
+            'about' => $settings['RADIO_ABOUT'] ?? $defaults['about'] ?? '',
         ];
     }
 
@@ -103,5 +151,14 @@ final class SettingService
         }
 
         return $this->settings;
+    }
+
+    private function settingValidator(): SettingValidator
+    {
+        if (!$this->validator instanceof SettingValidator) {
+            $this->validator = new SettingValidator();
+        }
+
+        return $this->validator;
     }
 }

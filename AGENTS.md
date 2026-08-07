@@ -45,6 +45,8 @@ Una tarea esta terminada cuando cumple el requisito, mantiene compatibilidad con
 
 Fase 2.1 agrega programacion, equipo y contacto funcionales. No implementar correos salientes, uploads reales, podcasts, ranking, banners avanzados, avisos urgentes, usuarios avanzados ni roles adicionales sin autorizacion.
 
+Fase 2.2 agrega configuracion editable, banners basicos y avisos urgentes. Solo `Super Admin` edita configuracion critica. No implementar uploads reales, correos salientes, podcasts, ranking, estadisticas avanzadas ni roles nuevos.
+
 ## Restricciones DonWeb
 
 Asumir hosting compartido tradicional: PHP + MySQL, sin procesos permanentes, sin servicios en segundo plano obligatorios, sin Docker y sin WebSockets complejos.

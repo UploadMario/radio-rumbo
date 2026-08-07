@@ -69,3 +69,11 @@ El document root debe apuntar a `public/`. Si el plan no lo permite, se debe evi
 - `ContactMessageService`, `ContactMessage` y `ContactMessageValidator` guardan mensajes publicos con CSRF y honeypot.
 - Las rutas publicas leen datos activos desde MySQL y muestran mensajes vacios profesionales.
 - Las rutas admin siguen protegidas por sesion y usan solo roles `Super Admin` y `Admin`.
+
+## Modulos funcionales Fase 2.2
+
+- `SettingService` permite editar keys controladas en `settings`, manteniendo `.env` como fallback.
+- `BannerService` y `Banner` gestionan banners activos por vigencia y posicion.
+- `UrgentNoticeService` y `UrgentNotice` gestionan comunicados activos para la franja publica.
+- La configuracion critica se restringe en controlador a rol `Super Admin`.
+- Los recursos visuales de banners no usan uploads reales en esta fase.

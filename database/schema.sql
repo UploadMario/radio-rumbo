@@ -101,12 +101,27 @@ CREATE TABLE team_members (
 CREATE TABLE banners (
     id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
     title VARCHAR(160) NOT NULL,
-    image_path VARCHAR(255) NOT NULL,
-    target_url VARCHAR(255) NULL,
-    placement VARCHAR(80) NOT NULL DEFAULT 'home',
-    status ENUM('active', 'archived') NOT NULL DEFAULT 'active',
-    starts_at DATETIME NULL,
-    ends_at DATETIME NULL,
+    subtitle VARCHAR(255) NULL,
+    image_path VARCHAR(255) NULL,
+    link_url VARCHAR(255) NULL,
+    position ENUM('home_hero', 'home_middle', 'sidebar', 'footer') NOT NULL DEFAULT 'home_middle',
+    status ENUM('draft', 'active', 'inactive', 'archived') NOT NULL DEFAULT 'draft',
+    start_at DATETIME NULL,
+    end_at DATETIME NULL,
+    display_order INT UNSIGNED NOT NULL DEFAULT 0,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+CREATE TABLE urgent_notices (
+    id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    title VARCHAR(160) NOT NULL,
+    message VARCHAR(500) NOT NULL,
+    type ENUM('info', 'warning', 'urgent', 'event') NOT NULL DEFAULT 'info',
+    status ENUM('draft', 'active', 'inactive', 'archived') NOT NULL DEFAULT 'draft',
+    start_at DATETIME NULL,
+    end_at DATETIME NULL,
+    display_order INT UNSIGNED NOT NULL DEFAULT 0,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;

@@ -55,6 +55,15 @@ Extensiones PHP recomendadas: `pdo_mysql`, `mbstring`, `dom`, `xml`, `xmlwriter`
 - No hay envio de correos, uploads reales, podcasts funcionales, ranking, banners avanzados ni roles nuevos.
 - Para bases existentes revisar y aplicar `database/migrations/2026_08_04_phase_2_1_programs_team_messages.sql`.
 
+## Fase 2.2
+
+- Configuracion: `/admin/settings/`, editable solo por `Super Admin`.
+- Banners: `/admin/banners/`, `/admin/banners/create/`, `/admin/banners/edit/?id=ID`.
+- Avisos urgentes: `/admin/urgent-notices/`, `/admin/urgent-notices/create/`, `/admin/urgent-notices/edit/?id=ID`.
+- Banners y avisos usan estados `draft`, `active`, `inactive`, `archived` y fechas opcionales.
+- No implementar uploads reales; `image_path` debe ser placeholder, ruta manual o URL HTTPS.
+- `.env` permanece como fallback de configuracion.
+
 ## Reglas de carpetas
 
 - No colocar logica de negocio dentro de `public/`.

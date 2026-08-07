@@ -3,7 +3,9 @@
 declare(strict_types=1);
 
 use App\Core\View;
+use App\Services\BannerService;
 use App\Services\SettingService;
+use App\Services\UrgentNoticeService;
 use Dotenv\Dotenv;
 
 function rr_bootstrap(): string
@@ -31,8 +33,30 @@ function rr_mock_data(string $rootPath): array
 
     $mock = is_array($data) ? $data : [];
     $mock['station'] = (new SettingService())->station($mock);
+    $mock['active_banners'] = rr_active_banners();
+    $mock['urgent_notices'] = rr_active_notices();
 
     return $mock;
+}
+
+/** @return list<array<string, mixed>> */
+function rr_active_banners(): array
+{
+    try {
+        return (new BannerService())->active();
+    } catch (Throwable) {
+        return [];
+    }
+}
+
+/** @return list<array<string, mixed>> */
+function rr_active_notices(): array
+{
+    try {
+        return (new UrgentNoticeService())->active();
+    } catch (Throwable) {
+        return [];
+    }
 }
 
 function rr_render_public(string $page, string $title, string $active): void

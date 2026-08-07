@@ -109,3 +109,14 @@
 - Bandeja de mensajes en `/admin/messages/` para revisar, marcar como leido y archivar.
 - Dashboard con conteos reales basicos.
 - No se implementan correos salientes, podcasts funcionales, ranking, banners avanzados, avisos urgentes ni nuevos roles.
+
+## Alcance Fase 2.2
+
+- Configuracion editable desde `/admin/settings/` usando tabla `settings`.
+- `Super Admin` puede modificar configuracion critica; `Admin` solo puede verla.
+- CRUD basico de banners en `/admin/banners/`.
+- Home muestra banners activos vigentes sin romper si no existen.
+- CRUD de avisos urgentes en `/admin/urgent-notices/`.
+- Home y En Vivo pueden mostrar avisos activos mediante franja superior global.
+- No hay uploads reales: `image_path` usa ruta manual, placeholder o URL HTTPS.
+- Podcasts, ranking, usuarios avanzados, estadisticas y correos salientes siguen pendientes.

@@ -80,6 +80,63 @@ img {
     margin: 0 auto;
 }
 
+.urgent-notice-bar {
+    color: var(--color-bg-dark);
+    background: rgba(170, 209, 74, 0.92);
+    border-bottom: 1px solid rgba(9, 17, 12, 0.12);
+}
+
+.urgent-notice-bar .container {
+    display: grid;
+    gap: 8px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+.urgent-notice {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    align-items: center;
+    font-size: 0.95rem;
+}
+
+.public-banner-zone {
+    display: grid;
+    gap: var(--space-3);
+    margin-top: var(--space-5);
+    margin-bottom: var(--space-5);
+}
+
+.public-banner-card {
+    display: grid;
+    grid-template-columns: 160px minmax(0, 1fr);
+    gap: var(--space-4);
+    align-items: center;
+    padding: var(--space-4);
+    background: rgba(255, 255, 255, 0.86);
+    border: 1px solid rgba(9, 17, 12, 0.08);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+}
+
+.public-banner-card img,
+.banner-placeholder {
+    width: 160px;
+    height: 110px;
+    object-fit: cover;
+    border-radius: var(--radius);
+    background: var(--color-bg-dark);
+}
+
+.banner-placeholder {
+    display: grid;
+    place-items: center;
+    color: var(--color-primary);
+    font-size: 3rem;
+    font-weight: 900;
+}
+
 /* layout */
 .site-body {
     padding-bottom: 96px;

@@ -27,3 +27,13 @@ INSERT INTO team_members (name, role, program_name, bio, photo_path, facebook_ur
 ('Conductor principal', 'Conduccion', 'Programa matinal', 'Perfil placeholder para reemplazar con datos oficiales.', '', '', '', 1, 10),
 ('Equipo de prensa', 'Prensa', 'Rumbo Noticias', 'Equipo placeholder para contenidos informativos.', '', '', '', 1, 20),
 ('Area comercial', 'Publicidad', 'Publicidad local', 'Contacto comercial placeholder sin datos personales reales.', '', '', '', 1, 30);
+
+INSERT INTO settings (setting_key, setting_value, description) VALUES
+('RADIO_EMAIL', '', 'Correo institucional pendiente.'),
+('RADIO_ABOUT', 'Radio Rumbo, La radio que se ve, conecta Huancayo con informacion y entretenimiento local.', 'Texto institucional breve.');
+
+INSERT INTO banners (title, subtitle, image_path, link_url, position, status, start_at, end_at, display_order) VALUES
+('Publicidad local', 'Espacios radiales y web para comercios de Huancayo.', '', '', 'home_middle', 'active', NULL, NULL, 10);
+
+INSERT INTO urgent_notices (title, message, type, status, start_at, end_at, display_order) VALUES
+('Aviso importante', 'La programacion especial se actualizara durante la transmision.', 'info', 'active', NULL, NULL, 10);

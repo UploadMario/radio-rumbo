@@ -38,6 +38,7 @@ $e = static fn (string $value): string => SecurityHelper::e($value);
 </head>
 <body class="site-body">
     <?php require dirname(__DIR__) . '/partials/header.php'; ?>
+    <?php require dirname(__DIR__) . '/partials/urgent-notice-bar.php'; ?>
     <main id="contenido" class="site-main">
         <?php require dirname(__DIR__) . '/public/' . $contentView . '.php'; ?>
     </main>

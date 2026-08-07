@@ -23,3 +23,6 @@
 | Abuso de formulario publico | Bots o usuarios pueden enviar mensajes repetidos al formulario de contacto. | Medio | Media | CSRF, limites de longitud, validacion servidor y honeypot sin reCAPTCHA en esta fase. | Mitigacion inicial Fase 2.1 |
 | URLs sociales inseguras | Enlaces de equipo podrian usar protocolos peligrosos. | Medio | Baja | Aceptar solo URLs HTTPS en redes sociales. | Mitigado Fase 2.1 |
 | Correos no configurados | El usuario podria asumir respuesta automatica desde el formulario. | Bajo | Media | Documentar que el formulario guarda mensajes y no envia correos todavia. | Mitigado Fase 2.1 |
+| Cambios criticos de configuracion | Un usuario no autorizado modifica stream, Facebook o datos institucionales. | Alto | Media | Edicion limitada a `Super Admin`, CSRF y validacion servidor. | Mitigacion inicial Fase 2.2 |
+| Banners con enlaces inseguros | Un banner apunta a protocolo peligroso o destino no confiable. | Medio | Media | Validar URLs HTTPS y escapar salida HTML. | Mitigado Fase 2.2 |
+| Avisos alarmistas o vencidos | Comunicados antiguos o mal redactados afectan percepcion publica. | Bajo | Media | Estados, vigencia opcional y gestion administrativa de activacion. | Mitigacion inicial Fase 2.2 |

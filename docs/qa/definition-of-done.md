@@ -18,3 +18,4 @@ Una tarea se considera terminada solo si:
 - Mantiene roles limitados a `Super Admin` y `Admin`.
 - Para formularios publicos, incluye CSRF, validacion y proteccion anti-spam simple cuando corresponde.
 - Documenta claramente cuando una funcion guarda datos pero no envia correos o no ejecuta procesos externos.
+- Para configuracion critica, respeta permisos por rol y mantiene `.env` como fallback documentado.

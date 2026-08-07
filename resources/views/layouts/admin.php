@@ -7,6 +7,8 @@ use App\Helpers\SecurityHelper;
 $contentView = is_string($contentView ?? null) ? $contentView : 'dashboard';
 $allowedViews = [
     'dashboard',
+    'banners/form',
+    'banners/index',
     'login',
     'messages/index',
     'messages/view',
@@ -14,8 +16,11 @@ $allowedViews = [
     'news-index',
     'programs/form',
     'programs/index',
+    'settings/index',
     'team/form',
     'team/index',
+    'urgent-notices/form',
+    'urgent-notices/index',
 ];
 
 if (!in_array($contentView, $allowedViews, true)) {
