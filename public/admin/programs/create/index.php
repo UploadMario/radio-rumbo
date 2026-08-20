@@ -10,8 +10,8 @@ $rootPath = rr_bootstrap();
 $controller = new ProgramController();
 
 if (($_SERVER['REQUEST_METHOD'] ?? 'GET') === 'POST') {
-    $controller->store(rr_mock_data($rootPath), $_POST);
+    $controller->store(rr_default_content($rootPath), $_POST);
     return;
 }
 
-$controller->create(rr_mock_data($rootPath));
+$controller->create(rr_default_content($rootPath));

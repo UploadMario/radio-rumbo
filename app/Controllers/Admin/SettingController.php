@@ -7,6 +7,7 @@ namespace App\Controllers\Admin;
 use App\Core\View;
 use App\Helpers\SecurityHelper;
 use App\Models\Role;
+use App\Services\AuditLogService;
 use App\Services\SessionService;
 use App\Services\SettingService;
 use Throwable;
@@ -15,7 +16,8 @@ final class SettingController
 {
     public function __construct(
         private ?SessionService $session = null,
-        private ?SettingService $settings = null
+        private ?SettingService $settings = null,
+        private ?AuditLogService $audit = null
     ) {
     }
 
@@ -61,6 +63,9 @@ final class SettingController
             }
 
             if ($result['ok'] === true) {
+                $this->audit()->record($user['id'], 'settings.update', 'settings', null, [
+                    'keys' => array_keys($result['data']),
+                ]);
                 $this->sessions()->flash('success', 'Configuracion actualizada correctamente.');
                 $this->redirect('/admin/settings/');
             }
@@ -133,5 +138,14 @@ final class SettingController
         }
 
         return $this->settings;
+    }
+
+    private function audit(): AuditLogService
+    {
+        if (!$this->audit instanceof AuditLogService) {
+            $this->audit = new AuditLogService();
+        }
+
+        return $this->audit;
     }
 }

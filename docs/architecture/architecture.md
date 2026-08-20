@@ -4,7 +4,7 @@
 
 Radio Rumbo se plantea como una aplicacion PHP MVC simple, sin framework pesado. El objetivo es mantener bajo acoplamiento entre interfaz, logica, datos y configuracion para facilitar crecimiento gradual. La raiz web recomendada es `public/`.
 
-La Fase 1.1 incorpora una capa visual conectable: layouts públicos/admin, parciales reutilizables, vistas PHP por pantalla, logo real y datos mock centralizados. Esta capa prepara la experiencia de usuario sin activar todavía persistencia ni administración real.
+La Fase 1.1 incorporó una capa visual conectable: layouts públicos/admin, parciales reutilizables, vistas PHP por pantalla, logo real y contenido base centralizado. Las fases 2.x ya agregan persistencia y administración real en módulos principales.
 
 La Fase 2.0 incorpora controladores, modelos, servicios y validadores para autenticación y noticias. El acceso público sigue entrando por `public/`, mientras la lógica real permanece en `app/`.
 
@@ -23,7 +23,7 @@ La Fase 2.0 incorpora controladores, modelos, servicios y validadores para auten
 - `public/assets/js`: interacciones vanilla.
 - `admin`: carpeta interna protegida para preparacion administrativa futura.
 - `config`: configuracion desacoplada.
-- `config/mock-data.php`: datos visuales placeholder para Fase 1.
+- `config/default-content.php`: contenido base oficial y fallbacks seguros.
 - `database`: esquema, seed y migraciones.
 - `resources/views`: vistas PHP futuras fuera del document root.
 - `tests`: pruebas automatizadas y BDD documental.
@@ -45,8 +45,14 @@ El usuario ingresa por `public/index.php`. En Fase 1 existen rutas visuales para
 - PHPStan para analisis estatico.
 - PHPUnit para pruebas.
 - Sin framework pesado para ajustarse a hosting compartido.
-- Datos mock centralizados para evitar inventar informacion real.
+- Contenido base oficial centralizado para evitar inventar informacion real.
 - JavaScript vanilla solo para interacciones visuales.
+- Fase 3.0 mantiene `public/bootstrap.php` como inicializador minimo y delega el calculo de programacion a `ProgramScheduleService`.
+- El contenido base oficial vive en `config/default-content.php`; `config/mock-data.php` queda como alias temporal por compatibilidad.
+- Logs internos viven en `storage/logs/`, fuera del document root.
+- Rate limiting de login usa archivos en `storage/rate-limit/` para no requerir Redis ni servicios adicionales.
+- La proxima arquitectura frontend se documenta en `docs/architecture/frontend-roadmap.md` sin introducir todavia React, Motion, Vite ni shaders.
+- Limitacion conocida: `ProgramScheduleService` resuelve programas dentro del mismo dia; los bloques que crucen medianoche deben disenarse o probarse en una fase posterior antes de publicarlos.
 
 ## Restricciones por DonWeb
 
@@ -58,7 +64,7 @@ El document root debe apuntar a `public/`. Si el plan no lo permite, se debe evi
 
 - GUI: HTML, CSS y JavaScript vanilla en `resources/views` y `public/assets`.
 - Logica: controladores, servicios, validadores y middleware en `app`.
-- Datos: mocks en `config/mock-data.php` durante Fase 1; modelos y SQL en `database` para fases posteriores.
+- Datos: contenido base en `config/default-content.php`; modelos y SQL en `database` para persistencia real.
 - Datos Fase 2.0: noticias, usuarios, roles y settings usan MySQL por PDO.
 - Configuracion: `.env` y archivos de `config`.
 

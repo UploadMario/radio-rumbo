@@ -4,40 +4,42 @@ declare(strict_types=1);
 
 $schedule = is_array($mock['today_schedule'] ?? null) ? $mock['today_schedule'] : [];
 $audioUrl = is_string($station['stream_audio_url'] ?? null) ? $station['stream_audio_url'] : '';
+$videoUrl = is_string($station['live_video_widget_url'] ?? null) ? $station['live_video_widget_url'] : '';
 $facebookUrl = is_string($station['facebook_page_url'] ?? null) ? $station['facebook_page_url'] : '';
 $facebookPluginUrl = is_string($station['facebook_page_plugin_url'] ?? null) ? $station['facebook_page_plugin_url'] : '';
+$frequencyFm = is_string($station['frequency_fm'] ?? null) ? $station['frequency_fm'] : '91.1 FM';
+$frequencyAm = is_string($station['frequency_am'] ?? null) ? $station['frequency_am'] : '1560 AM';
+$coverage = is_string($station['coverage'] ?? null) ? $station['coverage'] : 'Valle del Mantaro';
 ?>
 <section class="page-hero live-hero">
     <div class="container live-panel">
         <div class="live-copy">
-            <img class="section-logo live-logo" src="/assets/img/radio-rumbo-logo.png" alt="Radio Rumbo" width="96" height="96">
             <span class="section-kicker">La radio que se ve</span>
             <h1>Radio Rumbo en vivo</h1>
-            <p>Audio, video y noticias desde Huancayo para todos.</p>
+            <p>Medio multiplataforma con radio, señal online, video digital y redes desde Huancayo.</p>
 
             <div class="program-summary">
                 <span>Programa actual</span>
-                <strong><?= $e((string) ($currentProgram['name'] ?? 'Programa matinal')) ?></strong>
-                <small><?= $e((string) ($currentProgram['schedule'] ?? '06:00 - 09:00')) ?> - <?= $e((string) ($currentProgram['host'] ?? 'Conductor principal')) ?></small>
+                <strong><?= $e((string) ($currentProgram['name'] ?? 'Rumbo Mañanero')) ?></strong>
+                <small><?= $e((string) ($currentProgram['schedule'] ?? '91.1 FM / 1560 AM')) ?> - <?= $e((string) ($currentProgram['host'] ?? 'Cabina Radio Rumbo')) ?></small>
             </div>
 
             <dl class="meta-row live-meta">
-                <div><dt>Señal</dt><dd data-audio-status-label>En vivo</dd></div>
-                <div><dt>Audio</dt><dd><?= $audioUrl !== '' ? 'Audio configurado' : 'Pendiente de configurar' ?></dd></div>
+                <div><dt>FM</dt><dd><?= $e($frequencyFm) ?></dd></div>
+                <div><dt>AM</dt><dd><?= $e($frequencyAm) ?></dd></div>
+                <div><dt>Online</dt><dd data-audio-status-label>En vivo</dd></div>
+                <div><dt>Cobertura</dt><dd><?= $e($coverage) ?></dd></div>
             </dl>
 
             <p class="audio-status-message" data-audio-status-message hidden>
-                La transmisión de audio puede estar fuera de horario o pendiente de activación desde cabina.
+                La transmisión de audio puede estar fuera de horario o temporalmente sin señal desde cabina.
             </p>
 
             <div class="hero-actions live-actions">
                 <button class="btn btn-primary" type="button" data-player-toggle>Escuchar audio</button>
-                <button class="btn btn-soft" type="button" data-audio-retry>Intentar nuevamente</button>
-                <?php if ($audioUrl !== ''): ?>
-                    <a class="btn btn-soft" href="<?= $e($audioUrl) ?>" target="_blank" rel="noopener noreferrer">Abrir transmisión oficial</a>
-                <?php endif; ?>
+                <button class="btn btn-soft" type="button" data-audio-retry hidden>Reintentar audio</button>
                 <?php if ($facebookUrl !== ''): ?>
-                    <a class="btn btn-soft" href="<?= $e($facebookUrl) ?>" target="_blank" rel="noopener noreferrer">Ver Facebook</a>
+                    <a class="btn btn-soft" href="#facebook-en-vivo">Ver Facebook</a>
                 <?php endif; ?>
             </div>
         </div>
@@ -45,56 +47,40 @@ $facebookPluginUrl = is_string($station['facebook_page_plugin_url'] ?? null) ? $
     </div>
 </section>
 
-<section class="container presentation-note live-note">
-    <strong>Transmisión preparada</strong>
-    <span>El video funciona de forma independiente al audio. Si la señal de audio no está activa, la web mantiene un estado profesional para el oyente.</span>
-</section>
-
 <section class="container live-media-grid">
     <article class="media-card" data-audio-status-root>
         <span class="section-kicker">Radio en vivo</span>
         <h2>Audio de Radio Rumbo</h2>
-        <p>El audio permanece disponible en el reproductor flotante inferior y en este bloque secundario.</p>
+        <p>Escucha <?= $e($frequencyFm) ?>, <?= $e($frequencyAm) ?> y la señal online desde el reproductor inferior mientras navegas por la web.</p>
         <strong class="audio-inline-status" data-audio-status-label>En vivo</strong>
         <?php if ($audioUrl !== ''): ?>
-            <audio data-audio-player preload="none" controls src="<?= $e($audioUrl) ?>"></audio>
             <p class="audio-status-message" data-audio-status-message hidden>
-                La transmisión de audio no está disponible en este momento. Puede que la radio esté fuera de horario o que la señal aún no haya sido enviada desde cabina.
+                La transmisión de audio no está disponible en este momento. Puede que la radio esté fuera de horario o temporalmente sin señal desde cabina.
             </p>
             <div class="audio-fallback-actions">
-                <button class="btn btn-primary" type="button" data-audio-retry>Intentar nuevamente</button>
-                <a class="btn btn-soft admin-soft" href="<?= $e($audioUrl) ?>" target="_blank" rel="noopener noreferrer">Abrir transmisión oficial</a>
+                <button class="btn btn-primary" type="button" data-player-toggle>Escuchar en vivo</button>
+                <button class="btn btn-soft admin-soft" type="button" data-audio-retry hidden>Reintentar audio</button>
             </div>
         <?php else: ?>
-            <p class="embed-fallback">Audio en vivo pendiente de configuración.</p>
+            <p class="embed-fallback">La señal de audio no está disponible por el momento.</p>
         <?php endif; ?>
     </article>
-    <article class="media-card" id="facebook-en-vivo">
-        <span class="section-kicker">Facebook oficial</span>
-        <h2>Noticias en vivo desde Facebook</h2>
-        <p>Últimas publicaciones de Radio Rumbo Huancayo.</p>
-        <?php if ($facebookPluginUrl !== ''): ?>
-            <iframe
-                src="<?= $e($facebookPluginUrl) ?>"
-                title="Noticias en vivo desde Facebook de Radio Rumbo"
-                loading="lazy"
-                referrerpolicy="no-referrer-when-downgrade"
-                allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"></iframe>
-            <p class="embed-fallback">Si el bloque no carga, puede deberse a cookies, navegador o políticas externas de Facebook.</p>
-        <?php else: ?>
-            <p class="embed-fallback">Facebook pendiente de configuración.</p>
-        <?php endif; ?>
-        <?php if ($facebookUrl !== ''): ?>
-            <a class="btn btn-primary" href="<?= $e($facebookUrl) ?>" target="_blank" rel="noopener noreferrer">Ver en Facebook</a>
-        <?php endif; ?>
-    </article>
+    <div id="facebook-en-vivo">
+        <?php
+        $facebookPageUrl = $facebookUrl;
+        $facebookTitle = 'También en Facebook';
+        $facebookDescription = 'Últimas publicaciones de Radio Rumbo Huancayo.';
+        $facebookContext = 'en-vivo';
+        require dirname(__DIR__) . '/partials/facebook-feed.php';
+        ?>
+    </div>
 </section>
 
 <section class="container">
     <div class="section-heading">
         <span class="section-kicker">Sigue la señal</span>
         <h2>Próximos programas</h2>
-        <p>Programación referencial pendiente de confirmación final por Radio Rumbo.</p>
+        <p>Más voces, música e información durante el día.</p>
     </div>
     <div class="schedule-list">
         <?php foreach (array_slice($schedule, 1) as $program): ?>

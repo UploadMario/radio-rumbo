@@ -7,11 +7,7 @@ $podcasts = is_array($mock['podcasts'] ?? null) ? $mock['podcasts'] : [];
 <section class="page-title container">
     <span class="section-kicker">Archivo sonoro</span>
     <h1>Podcasts</h1>
-    <p>Módulo en preparación. Disponible para una próxima fase de publicación sonora.</p>
-</section>
-<section class="container presentation-note light-note">
-    <strong>No incluido en esta versión de presentación</strong>
-    <span>La sección queda preparada visualmente, sin reproducir episodios reales todavía.</span>
+    <p>Muy pronto podrás escuchar entrevistas, resúmenes y programas especiales de Radio Rumbo.</p>
 </section>
 <section class="container search-toolbar">
     <label>
@@ -28,10 +24,10 @@ $podcasts = is_array($mock['podcasts'] ?? null) ? $mock['podcasts'] : [];
 <section class="container card-grid">
     <?php foreach ($podcasts as $episode): ?>
         <article class="podcast-card">
-            <span>Próxima fase</span>
+            <span>Próximamente</span>
             <h2><?= $e((string) $episode['title']) ?></h2>
             <p><?= $e((string) $episode['program']) ?> - <?= $e((string) $episode['duration']) ?></p>
-            <button type="button" disabled>Disponible próximamente</button>
+            <button type="button" disabled>Disponible pronto</button>
         </article>
     <?php endforeach; ?>
 </section>

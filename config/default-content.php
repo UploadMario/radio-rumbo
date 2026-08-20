@@ -1,0 +1,92 @@
+<?php
+
+declare(strict_types=1);
+
+return [
+    'station' => [
+        'name' => 'Radio Rumbo',
+        'tagline' => 'La radio que se ve',
+        'location' => 'Huancayo, Junín, Perú',
+        'short_location' => 'Cabina Radio Rumbo',
+        'frequency_fm' => '91.1 FM',
+        'frequency_am' => '1560 AM',
+        'stream_status' => 'En vivo',
+        'stream_audio_url' => 'https://mediastreamm.com/8008/stream;',
+        'live_video_widget_url' => 'https://servilive.com/live-stream-video-widget/tvrumbo',
+        'facebook_page_url' => 'https://www.facebook.com/radiorumboperu',
+        'facebook_page_id' => '217453608287467',
+        'facebook_page_plugin_url' => 'https://www.facebook.com/plugins/page.php?href=https%3A%2F%2Fwww.facebook.com%2Fradiorumboperu&tabs=timeline&width=500&height=650&small_header=false&adapt_container_width=true&hide_cover=false&show_facepile=true',
+        'whatsapp_cabina' => '',
+        'whatsapp_publicidad' => '964436961',
+        'email' => '',
+        'suggested_email' => 'ventas@radiorumbo.com.pe',
+        'address' => 'Jr. Ayacucho 297, Huancayo, Junín, Perú',
+        'maps_url' => 'https://maps.google.com/maps/search/Radio%20Rumbo/@-12.06575419,-75.21055026,17z?hl=es',
+        'social' => 'Redes sociales oficiales',
+        'social_links' => [
+            'TikTok' => 'https://www.tiktok.com/@radiorumbotv',
+            'Instagram' => 'https://www.instagram.com/radio_rumbo_huancayo',
+            'YouTube' => 'https://youtube.com/@neyo3456',
+            'Facebook' => 'https://www.facebook.com/radiorumboperu',
+        ],
+        'about' => 'Radio Rumbo es una emisora de radio y medio de comunicación con sede en Huancayo, Perú. Desde 1996 acompaña a la población del Valle del Mantaro con información local, programación musical, contenidos de interés público y transmisión digital en vivo.',
+        'history' => 'La radio inició con una propuesta romántica bajo la recordada identidad Radio Rumbo, su estación Radio Corazón, y con el tiempo evolucionó hacia un medio multiplataforma que integra radio tradicional, redes sociales y video en vivo bajo el lema La radio que se ve.',
+        'first_song' => 'Déjenlos, de Los Embajadores Criollos',
+        'coverage' => 'Valle del Mantaro',
+        'music_segments' => 'Folclor, cumbia y éxitos populares',
+    ],
+    'current_program' => [
+        'name' => 'Señal Radio Rumbo',
+        'host' => 'Cabina Radio Rumbo',
+        'schedule' => '91.1 FM / 1560 AM',
+        'category' => 'Noticias y música',
+        'status' => 'EN VIVO',
+        'summary' => 'Noticias locales, regionales y nacionales, junto a folclor, cumbia y éxitos populares.',
+    ],
+    'today_schedule' => [
+        [
+            'time' => '00:00',
+            'end_time' => '23:59',
+            'name' => 'Señal Radio Rumbo',
+            'host' => 'Cabina Radio Rumbo',
+            'category' => 'Noticias y música',
+            'summary' => 'Señal multiplataforma con información de Huancayo, el Valle del Mantaro y segmentos musicales.',
+            'live' => true,
+        ],
+    ],
+    'news' => [
+        ['category' => 'Huancayo', 'date' => 'Radio Rumbo', 'title' => 'Noticias desde Facebook', 'summary' => 'Las publicaciones recientes se muestran desde la página oficial de Facebook para mantener la información actualizada.', 'featured' => true],
+        ['category' => 'Valle del Mantaro', 'date' => 'Radio Rumbo', 'title' => 'Actualidad local y regional', 'summary' => 'Cobertura de coyuntura política y social de Huancayo, Junín y el Valle del Mantaro.', 'featured' => false],
+        ['category' => 'Música', 'date' => 'Radio Rumbo', 'title' => 'Folclor, cumbia y éxitos populares', 'summary' => 'Segmentos musicales para acompañar la programación informativa y de servicio.', 'featured' => false],
+        ['category' => 'Servicio', 'date' => 'Radio Rumbo', 'title' => 'Información útil para oyentes', 'summary' => 'Avisos ciudadanos y notas de servicio para Huancayo.', 'featured' => false],
+    ],
+    'podcasts' => [],
+    'team' => [],
+    'advertising_services' => [
+        ['title' => 'Alcance local', 'summary' => 'Conecta tu marca con oyentes de Huancayo y la región Junín.'],
+        ['title' => 'Segmentación efectiva', 'summary' => 'Elige horarios y programas según el público de tu campaña.'],
+        ['title' => 'Cercanía y confianza', 'summary' => 'Comunica desde una radio local reconocida por su vínculo con la audiencia.'],
+        ['title' => 'Costo-beneficio', 'summary' => 'Optimiza tu inversión con espacios radiales y digitales rentables.'],
+        ['title' => 'Flexibilidad para campañas', 'summary' => 'Adapta spots, menciones en vivo, temporadas, promociones u ofertas.'],
+    ],
+    'planned_modules' => [
+        ['name' => 'Podcasts', 'status' => 'Próximamente'],
+        ['name' => 'Ranking Top 20', 'status' => 'Próximamente'],
+        ['name' => 'La Radio que se ve', 'status' => 'Próximamente'],
+        ['name' => 'Avisos urgentes', 'status' => 'Próximamente'],
+        ['name' => 'Estadísticas avanzadas', 'status' => 'Próximamente'],
+    ],
+    'dashboard' => [
+        'stats' => [
+            ['label' => 'Oyentes en línea', 'value' => 'En vivo', 'hint' => 'Señal activa'],
+            ['label' => 'Noticias listas', 'value' => '4', 'hint' => 'Publicaciones'],
+            ['label' => 'Mensajes recientes', 'value' => '3', 'hint' => 'Contacto'],
+            ['label' => 'Estado stream', 'value' => 'En vivo', 'hint' => 'Audio y video'],
+        ],
+        'messages' => [
+            ['from' => 'Oyente', 'subject' => 'Saludo a cabina', 'status' => 'Nuevo'],
+            ['from' => 'Comercio local', 'subject' => 'Consulta publicidad local', 'status' => 'Pendiente'],
+            ['from' => 'Contacto web', 'subject' => 'Mensaje desde formulario', 'status' => 'Nuevo'],
+        ],
+    ],
+];

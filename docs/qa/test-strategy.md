@@ -2,7 +2,7 @@
 
 ## Pruebas unitarias
 
-Cubren helpers, validadores y servicios puros. La suite actual incluye pruebas para slug, escape HTML, roles permitidos, renderizado seguro de vistas y estructura de datos mock.
+Cubren helpers, validadores y servicios puros. La suite actual incluye pruebas para slug, escape HTML, roles permitidos, renderizado seguro de vistas y estructura de contenido base.
 
 ## Pruebas de integracion
 
@@ -20,11 +20,13 @@ Cada pantalla nueva debe revisarse en navegador, incluyendo estados vacios, erro
 
 Validar CSRF en formularios, escape HTML, consultas preparadas, proteccion de uploads, sesiones y ausencia de credenciales versionadas.
 
-En Fase 1 los formularios son visuales y no envian informacion real. Aun asi, los datos mock impresos deben escaparse y no deben incluir credenciales ni datos sensibles.
+Los formularios publicos y administrativos deben validar entradas y escapar contenido al imprimirlo. El contenido base no debe incluir credenciales ni datos sensibles.
 
 En Fase 2.0 se agregan pruebas para validadores de login/noticias, autenticación con hash, creación de noticias y consulta pública limitada a noticias publicadas. Las pruebas de integración usan SQLite en memoria cuando la extensión está disponible.
 
 En Fase 2.0.1 se agregan pruebas para validar URLs HTTPS y fallback de settings. QA manual debe verificar audio en vivo con interacción del usuario, iframe de video, bloque de Facebook o su fallback, login local y logout.
+
+En Fase 3.0 se agregan pruebas unitarias para timezone, timeout de sesion, rate limiting de login, sanitizacion de logs y calculo de programa actual/siguiente. Los escenarios Gherkin siguen siendo especificacion documental, no runner ejecutable.
 
 En Fase 2.1 se agregan pruebas de validadores y servicios para programacion, equipo y mensajes con SQLite en memoria cuando esta disponible. QA manual debe verificar crear programa, ver programacion publica, crear integrante, ver equipo publico, enviar contacto, ver mensaje admin y archivar.
 

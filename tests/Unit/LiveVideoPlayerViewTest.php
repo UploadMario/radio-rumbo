@@ -32,7 +32,7 @@ final class LiveVideoPlayerViewTest extends TestCase
         require dirname(__DIR__, 2) . '/resources/views/partials/live-video-player.php';
         $output = (string) ob_get_clean();
 
-        self::assertStringContainsString('La transmisión de video está pendiente de configuración.', $output);
+        self::assertStringContainsString('La transmisión de video no está disponible por el momento.', $output);
         self::assertStringNotContainsString('<iframe', $output);
     }
 }

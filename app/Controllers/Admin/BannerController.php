@@ -6,14 +6,18 @@ namespace App\Controllers\Admin;
 
 use App\Core\View;
 use App\Helpers\SecurityHelper;
+use App\Services\AuditLogService;
 use App\Services\BannerService;
 use App\Services\SessionService;
 use Throwable;
 
 final class BannerController
 {
-    public function __construct(private ?SessionService $session = null, private ?BannerService $banners = null)
-    {
+    public function __construct(
+        private ?SessionService $session = null,
+        private ?BannerService $banners = null,
+        private ?AuditLogService $audit = null
+    ) {
     }
 
     /** @param array<string, mixed> $mock */
@@ -67,6 +71,7 @@ final class BannerController
             }
 
             if ($result['ok'] === true) {
+                $this->audit()->record($user['id'], 'banner.create', 'banner', $result['id']);
                 $this->sessions()->flash('success', 'Banner creado correctamente.');
                 $this->redirect('/admin/banners/');
             }
@@ -112,6 +117,7 @@ final class BannerController
             }
 
             if ($result['ok'] === true) {
+                $this->audit()->record($user['id'], 'banner.update', 'banner', $id);
                 $this->sessions()->flash('success', 'Banner actualizado correctamente.');
                 $this->redirect('/admin/banners/');
             }
@@ -126,15 +132,17 @@ final class BannerController
     /** @param array<string, mixed> $input */
     public function action(array $input): void
     {
-        $this->requireUser();
+        $user = $this->requireUser();
         if ($this->csrfErrors($input) === []) {
             $id = (int) ($input['id'] ?? 0);
             try {
                 if ($id > 0 && (string) ($input['_action'] ?? '') === 'toggle') {
                     $this->bannerService()->toggle($id);
+                    $this->audit()->record($user['id'], 'banner.toggle', 'banner', $id);
                     $this->sessions()->flash('success', 'Estado del banner actualizado.');
                 } elseif ($id > 0 && (string) ($input['_action'] ?? '') === 'archive') {
                     $this->bannerService()->archive($id);
+                    $this->audit()->record($user['id'], 'banner.archive', 'banner', $id);
                     $this->sessions()->flash('success', 'Banner archivado.');
                 }
             } catch (Throwable) {
@@ -251,5 +259,14 @@ final class BannerController
         }
 
         return $this->banners;
+    }
+
+    private function audit(): AuditLogService
+    {
+        if (!$this->audit instanceof AuditLogService) {
+            $this->audit = new AuditLogService();
+        }
+
+        return $this->audit;
     }
 }

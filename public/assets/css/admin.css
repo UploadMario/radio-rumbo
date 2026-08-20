@@ -129,6 +129,19 @@
     border-radius: var(--radius);
 }
 
+.admin-profile form {
+    margin: 0;
+}
+
+.admin-profile button {
+    padding: 0;
+    color: var(--color-primary-light);
+    font: inherit;
+    background: transparent;
+    border: 0;
+    cursor: pointer;
+}
+
 .admin-profile a {
     color: var(--color-primary-light);
 }

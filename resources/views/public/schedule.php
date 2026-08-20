@@ -18,14 +18,10 @@ $now = date('H:i:s');
 <section class="page-title container">
     <span class="section-kicker">Parrilla radial</span>
     <h1>Programación</h1>
-    <p>Programación referencial pendiente de confirmación final por Radio Rumbo.</p>
-</section>
-<section class="container presentation-note light-note">
-    <strong>Disponible para carga administrativa</strong>
-    <span>Los horarios pueden actualizarse desde el panel antes del despliegue final.</span>
+    <p>Consulta los programas, horarios y voces que acompañan la señal de Radio Rumbo.</p>
 </section>
 <section class="container">
-    <div class="filter-row" aria-label="Filtros visuales por dia">
+    <div class="filter-row" aria-label="Filtros visuales por día">
         <?php foreach ($dayLabels as $value => $day): ?>
             <button class="<?= $value === $todayKey ? 'is-active' : '' ?>" type="button"><?= $e($day) ?></button>
         <?php endforeach; ?>
@@ -35,7 +31,7 @@ $now = date('H:i:s');
             <article class="presentation-empty">
                 <div>
                     <h2>La programación estará disponible próximamente.</h2>
-                    <p>Contenido pendiente de confirmación por Radio Rumbo.</p>
+                    <p>Vuelve pronto para conocer los horarios de Radio Rumbo.</p>
                 </div>
             </article>
         <?php endif; ?>
@@ -49,7 +45,7 @@ $now = date('H:i:s');
                 <time><?= $e(substr((string) $program['start_time'], 0, 5)) ?> - <?= $e(substr((string) $program['end_time'], 0, 5)) ?></time>
                 <div>
                     <h2><?= $e((string) $program['name']) ?></h2>
-                    <p><?= $e($dayLabels[(string) $program['day_of_week']] ?? (string) $program['day_of_week']) ?> - <?= $e((string) ($program['host_name'] ?: 'Conductor principal')) ?> - <?= $e((string) ($program['category'] ?: 'Programación')) ?></p>
+                    <p><?= $e($dayLabels[(string) $program['day_of_week']] ?? (string) $program['day_of_week']) ?> - <?= $e((string) ($program['host_name'] ?: 'Cabina Radio Rumbo')) ?> - <?= $e((string) ($program['category'] ?: 'Programación')) ?></p>
                     <?php if ((string) ($program['description'] ?? '') !== ''): ?><p><?= $e((string) $program['description']) ?></p><?php endif; ?>
                 </div>
                 <?php if ($isLive): ?><span class="live-pill">En vivo ahora</span><?php endif; ?>

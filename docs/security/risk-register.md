@@ -10,6 +10,10 @@
 | Caida del stream | El reproductor futuro no puede transmitir audio. | Medio | Media | Configuracion externa de stream, mensajes de fallback y monitoreo manual inicial. | Identificado |
 | Exposicion de credenciales | `.env`, backups o logs quedan publicos. | Alto | Media | `.gitignore`, document root en `public/`, permisos y revision antes de despliegue. | Control inicial definido |
 | Cambios no trazables | Acciones administrativas futuras no tienen historial. | Medio | Media | Tabla `audit_logs` y registro de acciones relevantes. | Preparado en esquema |
+| Sesion administrativa prolongada | Una sesion abierta en equipo compartido podria quedar activa demasiado tiempo. | Alto | Media | Timeout configurable por `ADMIN_SESSION_TIMEOUT` y destruccion segura de sesion. | Mitigado Fase 3.0 |
+| Fuerza bruta de login | Intentos repetidos podrian presionar el formulario administrativo. | Alto | Media | Rate limiting local por ventana de tiempo, mensajes genericos y sin revelar existencia de usuario. | Mitigado Fase 3.0 |
+| Errores no observables | Fallbacks silenciosos pueden ocultar fallas reales. | Medio | Media | `LoggerService` en `storage/logs/app.log` con contexto sanitizado. | Mitigado Fase 3.0 |
+| Paquete ZIP con `.env` local | Un despliegue manual podria subir credenciales locales. | Alto | Media | Script `scripts/build-deploy.ps1` excluye `.env` y documentacion exige crearlo manualmente en servidor. | Mitigado Fase 3.0 |
 | Exposicion de carpetas internas | `app`, `config`, `database`, `docs`, `resources`, `tests` o `vendor` quedan navegables. | Alto | Media | Document root en `public/`, `.htaccess` raiz y checklist DonWeb. | Control reforzado Fase 0.1 |
 | Mala configuracion de document root | El dominio apunta a la raiz del proyecto en lugar de `public/`. | Alto | Media | Guia `docs/deployment/donweb.md`, bloqueos `.htaccess` y verificacion manual 403. | Control reforzado Fase 0.1 |
 | Ejecucion de archivos maliciosos en uploads | Un archivo subido se ejecuta como PHP dentro de `public/uploads`. | Alto | Media | `public/uploads/.htaccess`, validaciones futuras de extension, MIME, tamano y nombre. | Control inicial reforzado |

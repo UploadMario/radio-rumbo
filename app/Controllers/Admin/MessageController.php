@@ -6,6 +6,7 @@ namespace App\Controllers\Admin;
 
 use App\Core\View;
 use App\Helpers\SecurityHelper;
+use App\Services\AuditLogService;
 use App\Services\ContactMessageService;
 use App\Services\SessionService;
 use Throwable;
@@ -14,7 +15,8 @@ final class MessageController
 {
     public function __construct(
         private ?SessionService $session = null,
-        private ?ContactMessageService $messages = null
+        private ?ContactMessageService $messages = null,
+        private ?AuditLogService $audit = null
     ) {
     }
 
@@ -70,7 +72,7 @@ final class MessageController
      */
     public function action(array $input): void
     {
-        $this->requireUser();
+        $user = $this->requireUser();
         if (!SecurityHelper::verifyCsrfToken((string) ($input['_csrf_token'] ?? ''))) {
             $this->redirect('/admin/messages/');
         }
@@ -81,9 +83,11 @@ final class MessageController
         try {
             if ($id > 0 && $action === 'mark-read') {
                 $this->messageService()->markRead($id);
+                $this->audit()->record($user['id'], 'message.mark_read', 'contact_message', $id);
                 $this->sessions()->flash('success', 'Mensaje marcado como leido.');
             } elseif ($id > 0 && $action === 'archive') {
                 $this->messageService()->archive($id);
+                $this->audit()->record($user['id'], 'message.archive', 'contact_message', $id);
                 $this->sessions()->flash('success', 'Mensaje archivado.');
             }
         } catch (Throwable) {
@@ -147,5 +151,14 @@ final class MessageController
         }
 
         return $this->messages;
+    }
+
+    private function audit(): AuditLogService
+    {
+        if (!$this->audit instanceof AuditLogService) {
+            $this->audit = new AuditLogService();
+        }
+
+        return $this->audit;
     }
 }

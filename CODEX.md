@@ -4,7 +4,7 @@
 
 Radio Rumbo usa una arquitectura MVC simple sin framework pesado. `public/index.php` actua como entrada publica, `public/admin/index.php` como entrada publica placeholder del panel administrativo y `app/` concentra la logica PHP.
 
-La Fase 1.1 agrega una GUI conectable con layouts, parciales, vistas PHP, logo real y datos mock centralizados. No implementa backend real, autenticación, CRUDs ni conexión dinámica a MySQL.
+La Fase 1.1 agregó una GUI conectable con layouts, parciales, vistas PHP, logo real y contenido base centralizado. Las fases 2.x ya incorporan backend real, autenticación y CRUDs principales.
 
 La Fase 2.0 agrega backend mínimo real: autenticación administrativa, sesiones seguras, lectura de settings y CRUD mínimo de noticias. Se mantiene la arquitectura simple y compatible con DonWeb.
 
@@ -20,7 +20,7 @@ Capas principales:
 - `app/Validators`: validaciones de entrada.
 - `app/Helpers`: utilidades puras.
 - `config`: configuracion desacoplada de codigo.
-- `config/mock-data.php`: datos base confirmados y placeholders de Fase 1.1 para vistas conectables.
+- `config/default-content.php`: contenido base oficial y fallbacks seguros para vistas conectables.
 - `database`: SQL versionable y migraciones futuras.
 - `resources/views`: layouts, parciales y vistas PHP fuera del document root.
 - `tests`: pruebas unitarias, integracion y BDD documental.
@@ -76,8 +76,8 @@ Extensiones PHP recomendadas: `pdo_mysql`, `mbstring`, `dom`, `xml`, `xmlwriter`
 
 - No colocar logica de negocio dentro de `public/`.
 - Usar `public/` como document root. `/admin/` debe resolver a `public/admin/index.php`.
-- Mantener las vistas en `resources/views` y los datos mock en `config/mock-data.php`.
-- Escapar datos mock al imprimirlos en HTML.
+- Mantener las vistas en `resources/views` y el contenido base en `config/default-content.php`.
+- Escapar contenido externo o configurable al imprimirlo en HTML.
 - No colocar configuracion sensible dentro de assets.
 - No exponer `app/`, `config/`, `database/`, `docs/`, `resources/`, `tests/`, `vendor/` ni `.env`.
 - Guardar archivos subidos solo en `public/uploads/` con validaciones futuras.
@@ -126,7 +126,7 @@ Extensiones PHP recomendadas: `pdo_mysql`, `mbstring`, `dom`, `xml`, `xmlwriter`
 ## Como crear nuevos modulos
 
 1. Definir requisito en `docs/requirements/requirements.md`.
-2. Si es una vista visual, crear primero una vista en `resources/views` y datos mock controlados.
+2. Si es una vista visual, crear primero una vista en `resources/views` y contenido base controlado.
 3. Crear controlador en `app/Controllers` cuando ya exista comportamiento backend.
 4. Crear modelo si hay persistencia.
 5. Crear servicio si hay reglas de negocio.
@@ -147,7 +147,7 @@ Extensiones PHP recomendadas: `pdo_mysql`, `mbstring`, `dom`, `xml`, `xmlwriter`
 - Requisito implementado sin sobredimensionar.
 - Compatible con PHP 8.1+ y hosting compartido DonWeb.
 - `/` y `/admin/` funcionan con `php -S localhost:8000 -t public`.
-- En Fase 1, distinguir claramente entre datos mock y funcionalidad real.
+- Distinguir claramente entre contenido base, configuración real y datos persistidos.
 - En Fase 1.1, mantener como datos reales confirmados solo `Radio Rumbo`, `La radio que se ve` y `Huancayo, Perú`.
 - En Fase 2.0, todo formulario administrativo funcional debe usar CSRF, validación servidor y consultas preparadas.
 - En Fase 2.0.1, las URLs externas deben validarse como `https://` antes de imprimirse o usarse en iframes/audio.
@@ -156,3 +156,23 @@ Extensiones PHP recomendadas: `pdo_mysql`, `mbstring`, `dom`, `xml`, `xmlwriter`
 - Roles sin cambios no autorizados.
 - Pruebas y herramientas ejecutadas o limitacion documentada.
 - Codigo legible, tipado y alineado a PSR-12.
+
+## Fase 3.0 Hardening
+
+- Configurar timezone con `APP_TIMEZONE`; si falta o es inválido se usa `America/Lima`.
+- `SessionService` aplica timeout administrativo por inactividad con `ADMIN_SESSION_TIMEOUT`.
+- `LoginRateLimiterService` usa archivos en `storage/rate-limit/`, compatible con hosting compartido y sin Redis.
+- Logout administrativo debe ser `POST` con CSRF. No usar enlaces GET para cerrar sesión.
+- `LoggerService` escribe en `storage/logs/app.log` y sanitiza contraseñas, tokens, cookies y secretos.
+- `AuditLogService` registra acciones administrativas importantes en `audit_logs` sin romper la operación si falla.
+- La programación actual/siguiente vive en `ProgramScheduleService`; no devolver esa lógica a `public/bootstrap.php`.
+- Usar `config/default-content.php` para contenido base oficial. `config/mock-data.php` solo existe como alias temporal de compatibilidad.
+- Para despliegue DonWeb usar `scripts/build-deploy.ps1` y crear `.env` de producción manualmente en el servidor.
+
+## Integracion Facebook
+
+Facebook debe mostrarse con el Page Plugin oficial dentro de la web. Usar primero `facebook_page_plugin_url` desde BD, luego `FACEBOOK_PAGE_PLUGIN_URL`; si ambos estan vacios, construir la URL del plugin desde `facebook_page_url` o `FACEBOOK_PAGE_URL` validada por HTTPS. No usar sandbox en el iframe, scraping, SDK obligatorio ni API privada.
+
+## Contenido oficial publico
+
+La web publica usa como base oficial: Radio Rumbo desde 1996, lema `La radio que se ve`, `91.1 FM`, `1560 AM`, sede `Jr. Ayacucho 297, Huancayo, Junin, Peru`, telefono comercial `964436961`, transmision online/video y redes oficiales recibidas. No publicar programacion, conductores, equipo, banners ni correo institucional como datos definitivos hasta que el cliente los confirme.

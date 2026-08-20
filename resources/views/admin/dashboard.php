@@ -33,15 +33,15 @@ $presentationItems = [
     'Despliegue final pendiente de configuración en hosting',
 ];
 $pendingItems = [
-    'Confirmar logo final.',
-    'Confirmar programación oficial.',
-    'Confirmar nombres del equipo.',
-    'Confirmar WhatsApp de cabina.',
-    'Confirmar WhatsApp comercial.',
+    'Logo final oficial en buena calidad.',
+    'WhatsApp de cabina.',
+    'Programación oficial por día y horario.',
+    'Nombre de programas.',
+    'Conductores.',
+    'Equipo oficial: nombres, cargos y fotos.',
+    'Banners o campañas publicitarias iniciales.',
     'Confirmar correo institucional.',
-    'Confirmar redes sociales oficiales.',
-    'Confirmar banners o campañas publicitarias.',
-    'Confirmar textos institucionales.',
+    'Confirmar Facebook oficial principal.',
 ];
 ?>
 <header class="admin-topbar">
@@ -54,7 +54,10 @@ $pendingItems = [
     </div>
     <div class="admin-profile">
         <span><?= $e((string) ($user['name'] ?? 'Admin')) ?> / <?= $e((string) ($user['role'] ?? 'Admin')) ?></span>
-        <a href="/admin/logout/">Cerrar sesión</a>
+        <form action="/admin/logout/" method="post">
+            <input type="hidden" name="_csrf_token" value="<?= $e(\App\Helpers\SecurityHelper::csrfToken()) ?>">
+            <button type="submit">Cerrar sesión</button>
+        </form>
     </div>
 </header>
 

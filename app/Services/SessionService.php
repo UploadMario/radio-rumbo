@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App\Services;
 
+use App\Helpers\EnvironmentHelper;
+
 final class SessionService
 {
     public function start(): void
@@ -47,6 +49,12 @@ final class SessionService
             return null;
         }
 
+        $lastActivity = $_SESSION['last_activity'] ?? null;
+        if (is_int($lastActivity) && self::isExpired($lastActivity, time(), $this->timeoutSeconds())) {
+            $this->logout();
+            return null;
+        }
+
         if (
             !isset($user['id'], $user['name'], $user['email'], $user['role'])
             || !is_numeric($user['id'])
@@ -56,6 +64,8 @@ final class SessionService
         ) {
             return null;
         }
+
+        $_SESSION['last_activity'] = time();
 
         return [
             'id' => (int) $user['id'],
@@ -83,7 +93,9 @@ final class SessionService
             );
         }
 
-        session_destroy();
+        if (session_status() === PHP_SESSION_ACTIVE) {
+            session_destroy();
+        }
     }
 
     public function flash(string $key, ?string $message = null): ?string
@@ -99,5 +111,25 @@ final class SessionService
         unset($_SESSION['_flash'][$key]);
 
         return is_string($value) ? $value : null;
+    }
+
+    public static function isExpired(int $lastActivity, int $now, int $timeout): bool
+    {
+        if ($timeout <= 0 || $now < $lastActivity) {
+            return false;
+        }
+
+        return ($now - $lastActivity) > $timeout;
+    }
+
+    public function touchActivity(): void
+    {
+        $this->start();
+        $_SESSION['last_activity'] = time();
+    }
+
+    public function timeoutSeconds(): int
+    {
+        return EnvironmentHelper::int('ADMIN_SESSION_TIMEOUT', 3600, 60);
     }
 }

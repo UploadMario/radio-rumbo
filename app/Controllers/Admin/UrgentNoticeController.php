@@ -6,6 +6,7 @@ namespace App\Controllers\Admin;
 
 use App\Core\View;
 use App\Helpers\SecurityHelper;
+use App\Services\AuditLogService;
 use App\Services\SessionService;
 use App\Services\UrgentNoticeService;
 use Throwable;
@@ -14,7 +15,8 @@ final class UrgentNoticeController
 {
     public function __construct(
         private ?SessionService $session = null,
-        private ?UrgentNoticeService $notices = null
+        private ?UrgentNoticeService $notices = null,
+        private ?AuditLogService $audit = null
     ) {
     }
 
@@ -76,6 +78,7 @@ final class UrgentNoticeController
             }
 
             if ($result['ok'] === true) {
+                $this->audit()->record($user['id'], 'urgent_notice.create', 'urgent_notice', $result['id']);
                 $this->sessions()->flash('success', 'Aviso creado correctamente.');
                 $this->redirect('/admin/urgent-notices/');
             }
@@ -121,6 +124,7 @@ final class UrgentNoticeController
             }
 
             if ($result['ok'] === true) {
+                $this->audit()->record($user['id'], 'urgent_notice.update', 'urgent_notice', $id);
                 $this->sessions()->flash('success', 'Aviso actualizado correctamente.');
                 $this->redirect('/admin/urgent-notices/');
             }
@@ -135,16 +139,18 @@ final class UrgentNoticeController
     /** @param array<string, mixed> $input */
     public function action(array $input): void
     {
-        $this->requireUser();
+        $user = $this->requireUser();
         if ($this->csrfErrors($input) === []) {
             $id = (int) ($input['id'] ?? 0);
             $action = (string) ($input['_action'] ?? '');
             try {
                 if ($id > 0 && $action === 'toggle') {
                     $this->noticeService()->toggle($id);
+                    $this->audit()->record($user['id'], 'urgent_notice.toggle', 'urgent_notice', $id);
                     $this->sessions()->flash('success', 'Estado del aviso actualizado.');
                 } elseif ($id > 0 && $action === 'archive') {
                     $this->noticeService()->archive($id);
+                    $this->audit()->record($user['id'], 'urgent_notice.archive', 'urgent_notice', $id);
                     $this->sessions()->flash('success', 'Aviso archivado.');
                 }
             } catch (Throwable) {
@@ -259,5 +265,14 @@ final class UrgentNoticeController
         }
 
         return $this->notices;
+    }
+
+    private function audit(): AuditLogService
+    {
+        if (!$this->audit instanceof AuditLogService) {
+            $this->audit = new AuditLogService();
+        }
+
+        return $this->audit;
     }
 }

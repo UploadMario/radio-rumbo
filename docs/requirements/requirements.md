@@ -17,7 +17,7 @@
 - Crear reproductor inferior flotante visual.
 - Crear dashboard administrativo visual en `/admin/`.
 - Crear login administrativo visual en `/admin/?view=login`.
-- Usar datos mock centralizados en `config/mock-data.php`.
+- Usar contenido base centralizado en `config/default-content.php`.
 - Mantener formularios, botones y estados como preparacion visual, sin comportamiento real.
 
 ## Alcance Fase 1.1
@@ -67,8 +67,10 @@
 - No asumir procesos permanentes.
 - No crear roles adicionales.
 - No usar datos reales inventados.
-- No conectar contenido visual de Fase 1 a MySQL todavia.
-- No implementar autenticacion ni CRUDs reales todavia.
+- Mantener autenticacion, sesiones, CSRF y roles actuales sin relajar seguridad.
+- Timezone configurable con fallback `America/Lima`.
+- Sesiones administrativas con timeout y login con proteccion ante intentos repetidos.
+- Logout administrativo mediante `POST` + CSRF.
 
 ## Modulos fase 1
 
@@ -87,7 +89,7 @@
 - Login administrativo visual
 - Dashboard administrativo visual
 - Publicidad y banners visuales
-- Mensajes recientes mock
+- Mensajes recientes de referencia administrativa
 
 ## Modulos futuros
 
@@ -129,3 +131,19 @@
 - Mejorar dashboard con estado de presentacion, modulos implementados y pendientes antes del despliegue final.
 - Reducir protagonismo de modulos planificados: Podcasts, Ranking Top 20, Estadisticas avanzadas, Usuarios avanzados y Uploads.
 - No implementar uploads, correos salientes, ranking, podcasts funcionales, estadisticas avanzadas ni roles nuevos.
+
+## Ajuste Facebook Page Plugin
+
+- `/noticias/` debe mostrar publicaciones recientes mediante el Page Plugin oficial de Facebook dentro de la web.
+- Si la URL completa del plugin esta vacia, debe construirse automaticamente desde la pagina oficial `https://www.facebook.com/radiorumboperu`.
+- Todos los enlaces externos de Facebook deben validarse como HTTPS.
+- Si Facebook bloquea el iframe por navegador, cookies, bloqueadores o politicas externas, la interfaz debe mostrar fallback profesional sin parecer un error del sistema.
+
+## Contenido oficial Radio Rumbo
+
+- Mostrar lema `La radio que se ve`.
+- Mostrar frecuencias `91.1 FM` y `1560 AM`.
+- Mostrar ubicacion `Jr. Ayacucho 297, Huancayo, Junin, Peru`.
+- Mostrar telefono comercial `964436961`.
+- Mostrar redes oficiales recibidas: TikTok, Instagram, YouTube y Facebook, siempre con URLs HTTPS.
+- No publicar programacion, conductores, equipo, banners ni correo institucional como definitivos hasta confirmacion administrativa.

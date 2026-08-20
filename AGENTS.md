@@ -73,3 +73,15 @@ No crear roles adicionales. No inventar datos reales de la emisora, personal, cl
 - Audio, video y Facebook se configuran por `settings` o `.env`.
 - No usar scraping ni API privada de Facebook.
 - Validar URLs externas como HTTPS.
+
+## Fase 3.0 hardening
+
+- Mantener `APP_TIMEZONE=America/Lima` o un timezone PHP válido.
+- Mantener timeout admin con `ADMIN_SESSION_TIMEOUT` y rate limiting con `LOGIN_MAX_ATTEMPTS` / `LOGIN_WINDOW_SECONDS`.
+- Logout admin debe permanecer como `POST` + CSRF.
+- No escribir logs dentro de `public/`; usar `storage/logs/`.
+- No registrar contraseñas, tokens, cookies, secretos ni contenido sensible innecesario.
+- Registrar acciones admin relevantes con `AuditLogService` sin romper la operación principal.
+- No volver a cargar lógica de programación en `public/bootstrap.php`; usar `ProgramScheduleService`.
+- Usar `config/default-content.php` para contenido base oficial; no introducir nuevas referencias productivas a “mock”.
+- Generar paquetes DonWeb con `scripts/build-deploy.ps1` y crear `.env` de producción manualmente en el servidor.

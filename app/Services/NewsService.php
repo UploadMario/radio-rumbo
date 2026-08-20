@@ -12,7 +12,8 @@ final class NewsService
 {
     public function __construct(
         private ?News $news = null,
-        private ?NewsValidator $validator = null
+        private ?NewsValidator $validator = null,
+        private ?AuditLogService $audit = null
     ) {
     }
 
@@ -53,7 +54,10 @@ final class NewsService
             return ['ok' => false, 'errors' => $errors, 'id' => null, 'data' => $data];
         }
 
-        return ['ok' => true, 'errors' => [], 'id' => $this->repository()->create($data), 'data' => $data];
+        $id = $this->repository()->create($data);
+        $this->audit()->record($userId, 'news.create', 'news', $id, ['status' => $data['status']]);
+
+        return ['ok' => true, 'errors' => [], 'id' => $id, 'data' => $data];
     }
 
     /**
@@ -70,6 +74,7 @@ final class NewsService
         }
 
         $this->repository()->update($id, $data);
+        $this->audit()->record($userId, 'news.update', 'news', $id, ['status' => $data['status']]);
 
         return ['ok' => true, 'errors' => [], 'data' => $data];
     }
@@ -77,6 +82,7 @@ final class NewsService
     public function archive(int $id, int $userId): void
     {
         $this->repository()->archive($id, $userId);
+        $this->audit()->record($userId, 'news.archive', 'news', $id);
     }
 
     /**
@@ -128,5 +134,14 @@ final class NewsService
         }
 
         return $this->validator;
+    }
+
+    private function audit(): AuditLogService
+    {
+        if (!$this->audit instanceof AuditLogService) {
+            $this->audit = new AuditLogService();
+        }
+
+        return $this->audit;
     }
 }

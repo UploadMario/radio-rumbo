@@ -5,6 +5,7 @@ declare(strict_types=1);
 require_once __DIR__ . '/bootstrap.php';
 
 use App\Controllers\Public\NewsController;
+use App\Controllers\Public\ProgramController;
 
 $path = trim((string) parse_url($_SERVER['REQUEST_URI'] ?? '/', PHP_URL_PATH), '/');
 $routes = [
@@ -25,7 +26,13 @@ if (!array_key_exists($path, $routes) && $path !== '') {
 
 if ($page === 'news') {
     $rootPath = rr_bootstrap();
-    (new NewsController())->index(rr_mock_data($rootPath));
+    (new NewsController())->index(rr_default_content($rootPath));
+    return;
+}
+
+if ($page === 'schedule') {
+    $rootPath = rr_bootstrap();
+    (new ProgramController())->index(rr_default_content($rootPath));
     return;
 }
 

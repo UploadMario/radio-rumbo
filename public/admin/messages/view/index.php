@@ -8,4 +8,4 @@ use App\Controllers\Admin\MessageController;
 
 $rootPath = rr_bootstrap();
 $id = (int) ($_GET['id'] ?? 0);
-(new MessageController())->view(rr_mock_data($rootPath), $id);
+(new MessageController())->view(rr_default_content($rootPath), $id);

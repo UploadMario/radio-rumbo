@@ -2,6 +2,13 @@ Options -Indexes
 
 DirectoryIndex index.php
 
+<IfModule mod_headers.c>
+    Header set X-Content-Type-Options "nosniff"
+    Header set Referrer-Policy "strict-origin-when-cross-origin"
+    Header set Permissions-Policy "camera=(), microphone=(), geolocation=(), payment=()"
+    Header set Content-Security-Policy "default-src 'self'; base-uri 'self'; frame-ancestors 'self'; img-src 'self' data: https:; media-src 'self' https://mediastreamm.com; frame-src 'self' https://www.facebook.com https://web.facebook.com https://servilive.com; script-src 'self'; style-src 'self' 'unsafe-inline'; form-action 'self'; object-src 'none'"
+</IfModule>
+
 <FilesMatch "^(\.env|\.env\..*|composer\.(json|lock)|phpunit\.xml|phpstan\.neon|phpcs\.xml|.*\.(sql|log|bak|backup|ini|conf|dist|md))$">
     <IfModule mod_authz_core.c>
         Require all denied

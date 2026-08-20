@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Core;
 
+use App\Helpers\EnvironmentHelper;
 use PDO;
 use PDOException;
 
@@ -17,11 +18,11 @@ final class Database
             return self::$connection;
         }
 
-        $host = self::env('DB_HOST', '127.0.0.1');
-        $port = self::env('DB_PORT', '3306');
-        $database = self::env('DB_DATABASE', 'radio_rumbo');
-        $username = self::env('DB_USERNAME', 'root');
-        $password = self::env('DB_PASSWORD', '');
+        $host = EnvironmentHelper::string('DB_HOST', '127.0.0.1');
+        $port = EnvironmentHelper::string('DB_PORT', '3306');
+        $database = EnvironmentHelper::string('DB_DATABASE', 'radio_rumbo');
+        $username = EnvironmentHelper::string('DB_USERNAME', 'root');
+        $password = EnvironmentHelper::string('DB_PASSWORD', '');
 
         $dsn = sprintf(
             'mysql:host=%s;port=%s;dbname=%s;charset=utf8mb4',
@@ -45,12 +46,5 @@ final class Database
         }
 
         return self::$connection;
-    }
-
-    private static function env(string $key, string $default = ''): string
-    {
-        $value = $_ENV[$key] ?? $_SERVER[$key] ?? getenv($key);
-
-        return is_string($value) && $value !== '' ? $value : $default;
     }
 }

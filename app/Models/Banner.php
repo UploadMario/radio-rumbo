@@ -30,17 +30,17 @@ final class Banner
     /**
      * @return list<array<string, mixed>>
      */
-    public function active(): array
+    public function active(?string $now = null): array
     {
         $statement = $this->pdo()->prepare(
             'SELECT id, title, subtitle, image_path, link_url, position, status, start_at, end_at, display_order
              FROM banners
              WHERE status = :status
-               AND (start_at IS NULL OR start_at <= CURRENT_TIMESTAMP)
-               AND (end_at IS NULL OR end_at >= CURRENT_TIMESTAMP)
+               AND (start_at IS NULL OR start_at <= :now)
+               AND (end_at IS NULL OR end_at >= :now)
              ORDER BY display_order, id DESC'
         );
-        $statement->execute(['status' => 'active']);
+        $statement->execute(['status' => 'active', 'now' => $now ?? date('Y-m-d H:i:s')]);
 
         return $this->rows($statement->fetchAll());
     }

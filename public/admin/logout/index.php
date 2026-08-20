@@ -6,4 +6,5 @@ require_once dirname(__DIR__, 2) . '/bootstrap.php';
 
 use App\Controllers\Admin\AuthController;
 
-(new AuthController())->logout();
+rr_bootstrap();
+(new AuthController())->logout($_POST);

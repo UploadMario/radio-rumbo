@@ -5,8 +5,12 @@
     var players = document.querySelectorAll('[data-audio-player]');
     var statusLabels = document.querySelectorAll('[data-audio-status-label]');
     var statusMessages = document.querySelectorAll('[data-audio-status-message]');
+    var volumeToggles = document.querySelectorAll('[data-volume-toggle]');
+    var volumeSliders = document.querySelectorAll('[data-volume-slider]');
+    var playerShell = document.querySelector('.floating-player');
     var isPlaying = false;
     var currentStatus = 'ready';
+    var storageKey = 'radio-rumbo-volume';
 
     var labels = {
         ready: 'En vivo',
@@ -23,6 +27,9 @@
         });
         statusMessages.forEach(function (message) {
             message.hidden = status !== 'offline' && status !== 'unavailable';
+        });
+        retryButtons.forEach(function (button) {
+            button.hidden = status !== 'offline' && status !== 'unavailable';
         });
         document.body.dataset.audioStatus = status;
     }
@@ -43,6 +50,36 @@
         });
     }
 
+    function setVolume(value) {
+        var volume = Math.max(0, Math.min(1, Number(value)));
+        if (Number.isNaN(volume)) {
+            volume = 0.8;
+        }
+
+        players.forEach(function (player) {
+            player.volume = volume;
+        });
+        volumeSliders.forEach(function (slider) {
+            slider.value = String(volume);
+        });
+
+        try {
+            window.localStorage.setItem(storageKey, String(volume));
+        } catch (error) {
+            return;
+        }
+    }
+
+    function loadVolume() {
+        var stored = '0.8';
+        try {
+            stored = window.localStorage.getItem(storageKey) || stored;
+        } catch (error) {
+            stored = '0.8';
+        }
+        setVolume(stored);
+    }
+
     function playPrimary() {
         if (players.length === 0) {
             setStatus('unavailable');
@@ -59,6 +96,35 @@
             isPlaying = false;
             setStatus('offline');
             sync();
+        });
+    }
+
+    function refreshProgramCopy() {
+        if (!playerShell) {
+            return;
+        }
+
+        var name = playerShell.getAttribute('data-program-name') || '';
+        var host = playerShell.getAttribute('data-program-host') || '';
+        var schedule = playerShell.getAttribute('data-program-schedule') || '';
+        var programNodes = document.querySelectorAll('[data-player-program]');
+        var hostNodes = document.querySelectorAll('[data-player-host]');
+        var scheduleNodes = document.querySelectorAll('[data-player-schedule]');
+
+        programNodes.forEach(function (node) {
+            if (name !== '') {
+                node.textContent = name;
+            }
+        });
+        hostNodes.forEach(function (node) {
+            if (host !== '') {
+                node.textContent = host;
+            }
+        });
+        scheduleNodes.forEach(function (node) {
+            if (schedule !== '') {
+                node.textContent = schedule;
+            }
         });
     }
 
@@ -88,6 +154,22 @@
             isPlaying = false;
             sync();
             playPrimary();
+        });
+    });
+
+    volumeToggles.forEach(function (button) {
+        button.addEventListener('click', function () {
+            var expanded = button.getAttribute('aria-expanded') === 'true';
+            button.setAttribute('aria-expanded', expanded ? 'false' : 'true');
+            if (playerShell) {
+                playerShell.classList.toggle('is-volume-open', !expanded);
+            }
+        });
+    });
+
+    volumeSliders.forEach(function (slider) {
+        slider.addEventListener('input', function () {
+            setVolume(slider.value);
         });
     });
 
@@ -122,6 +204,9 @@
         });
     });
 
+    loadVolume();
+    refreshProgramCopy();
+    window.setInterval(refreshProgramCopy, 60000);
     setStatus(players.length > 0 ? 'ready' : 'unavailable');
     sync();
 }());

@@ -22,7 +22,7 @@ final class BannerService
     /** @return list<array<string, mixed>> */
     public function active(): array
     {
-        return $this->repository()->active();
+        return $this->repository()->active(date('Y-m-d H:i:s'));
     }
 
     /** @return array<string, mixed>|null */

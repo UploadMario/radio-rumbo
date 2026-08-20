@@ -1,6 +1,6 @@
 # Radio Rumbo
 
-Sistema web Radio Rumbo, emisora local de Huancayo, Perú. La Fase 1.1 entrega una GUI conectable y presentable con branding real, contenido base confirmado y datos mock controlados, construida sobre una base PHP simple, segura y compatible con hosting compartido.
+Sistema web Radio Rumbo, emisora local de Huancayo, Perú. El proyecto cuenta con interfaz pública, panel administrativo y módulos funcionales sobre una base PHP simple, segura y compatible con hosting compartido.
 
 ## Stack tecnico
 
@@ -53,7 +53,7 @@ php -S localhost:8000 -t public
 app/            Codigo PHP de aplicacion: Core, Controllers, Models, Services, Middleware, Validators y Helpers.
 public/         Document root recomendado, entrada publica, /admin, assets y uploads controlados.
 admin/          Carpeta interna no publica para preparacion administrativa futura.
-config/         Configuracion de aplicacion, base de datos y datos mock de Fase 1.
+config/         Configuracion de aplicacion, base de datos y contenido base oficial.
 database/       Esquema, seed y futuras migraciones SQL.
 resources/      Layouts, parciales y vistas PHP separadas del document root.
 tests/          Pruebas unitarias, integracion y BDD documental.
@@ -68,7 +68,7 @@ Despues de instalar dependencias, ejecutar:
 composer test
 ```
 
-La suite incluye pruebas para helpers de seguridad, slugs, roles permitidos, renderizado de vistas y estructura de datos mock.
+La suite incluye pruebas para helpers de seguridad, slugs, roles permitidos, renderizado de vistas y estructura de contenido base.
 
 ## Fase 2.0 Backend mínimo
 
@@ -135,8 +135,8 @@ La raiz web local y recomendada para DonWeb es siempre `public/`. Las carpetas i
 ## Fase 1.1 GUI
 
 - La home pública ya es una pantalla presentable con hero, logo real, en vivo, noticias, programación, publicidad, equipo y reproductor flotante visual.
-- `/admin/` muestra un dashboard administrativo visual con datos mock; `/admin/?view=login` muestra el login visual.
-- `config/mock-data.php` centraliza datos base confirmados y placeholders. No contiene datos reales sensibles.
+- `/admin/` muestra un dashboard administrativo protegido; `/admin/login/` muestra el login real.
+- `config/default-content.php` centraliza contenido base oficial y fallbacks seguros. No contiene datos reales sensibles.
 - `public/assets/css/main.css`, `public/assets/css/admin.css`, `public/assets/js/main.js` y `public/assets/js/player.js` concentran estilos e interacciones vanilla.
 - El reproductor no conecta aun a un stream real; solo alterna estados visuales.
 - Formularios, botones y modulos futuros estan preparados visualmente, sin comportamiento productivo.
@@ -176,7 +176,37 @@ Para instalaciones existentes aplicar `database/migrations/2026_08_04_phase_2_1_
 - `.env` sigue siendo fallback cuando una key no existe en `settings`.
 - Produccion no debe usar usuarios locales de desarrollo.
 
+## Fase 3.0 Hardening previo al Visual System
+
+La Fase 3.0 endurece la base técnica sin rediseñar la interfaz:
+
+- Timezone centralizado con `APP_TIMEZONE`, fallback `America/Lima`.
+- Timeout de sesión administrativa con `ADMIN_SESSION_TIMEOUT`, fallback `3600`.
+- Rate limiting simple de login con `LOGIN_MAX_ATTEMPTS` y `LOGIN_WINDOW_SECONDS`.
+- Logout administrativo por `POST` + CSRF.
+- Logging interno en `storage/logs/app.log`, fuera de `public/`.
+- Auditoría básica en `audit_logs` para acciones administrativas relevantes.
+- Contenido base oficial en `config/default-content.php`; `config/mock-data.php` queda solo como alias temporal.
+- Lógica de programación extraída a `App\Services\ProgramScheduleService`.
+- Script de paquete DonWeb en `scripts/build-deploy.ps1`.
+
+Para generar un ZIP de despliegue:
+
+```powershell
+powershell -ExecutionPolicy Bypass -File scripts/build-deploy.ps1
+```
+
+El paquete nunca debe incluir `.env`; crear el `.env` de producción manualmente en el servidor.
+
 ## Fase 2.6 Presentacion ejecutiva
+
+## Nota Facebook Page Plugin
+
+La integracion de Facebook usa `FACEBOOK_PAGE_PLUGIN_URL` cuando existe. Si esa variable o `facebook_page_plugin_url` esta vacia, el sistema construye automaticamente la URL del plugin desde `FACEBOOK_PAGE_URL` o `facebook_page_url`, siempre validando HTTPS. Facebook puede bloquear la vista previa por navegador, cookies, bloqueadores, restricciones de pais/edad o politicas externas; en ese caso la web muestra un fallback profesional y mantiene el boton `Ver Facebook`.
+
+## Contenido oficial base
+
+La web publica incorpora informacion oficial recibida de Radio Rumbo: inicio de operaciones en 1996, lema `La radio que se ve`, frecuencias `91.1 FM` y `1560 AM`, sede en `Jr. Ayacucho 297, Huancayo, Junin, Peru`, enfoque multiplataforma con radio, redes y video digital, y telefono comercial `964436961`. La programacion detallada, conductores, equipo, banners y correo institucional deben confirmarse y cargarse desde el panel administrativo.
 
 - La Home, En Vivo, Noticias, Programacion, Equipo y Publicidad/Contacto fueron pulidas para una presentacion clara al cliente.
 - El dashboard administrativo incluye un resumen de modulos implementados y una lista interna de informacion pendiente antes del despliegue final.

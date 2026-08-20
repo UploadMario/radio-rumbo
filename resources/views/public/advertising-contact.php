@@ -3,17 +3,23 @@
 declare(strict_types=1);
 
 use App\Helpers\SecurityHelper;
+use App\Helpers\UrlHelper;
 use App\Validators\ContactMessageValidator;
 
 $services = is_array($mock['advertising_services'] ?? null) ? $mock['advertising_services'] : [];
 $errors = is_array($contactErrors ?? null) ? $contactErrors : [];
 $old = is_array($contactOld ?? null) ? $contactOld : [];
 $success = is_string($contactSuccess ?? null) ? $contactSuccess : null;
+$commercialWhatsapp = trim((string) ($station['whatsapp_publicidad'] ?? ''));
+$hasCommercialWhatsapp = $commercialWhatsapp !== '' && stripos($commercialWhatsapp, 'WhatsApp de') === false;
+$address = is_string($station['address'] ?? null) ? $station['address'] : 'Jr. Ayacucho 297, Huancayo, Junín, Perú';
+$mapsUrl = UrlHelper::httpsOrEmpty(is_string($station['maps_url'] ?? null) ? $station['maps_url'] : '');
+$socialLinks = is_array($station['social_links'] ?? null) ? $station['social_links'] : [];
 $typeLabels = [
     'general' => 'Consulta general',
     'advertising' => 'Publicidad local',
     'news' => 'Información para prensa',
-    'technical' => 'Consulta técnica',
+    'technical' => 'Soporte de señal',
 ];
 ?>
 <section class="page-hero">
@@ -21,23 +27,20 @@ $typeLabels = [
         <div>
             <span class="section-kicker">Publicidad y contacto</span>
             <h1>Anuncia con nosotros</h1>
-            <p>Espacios preparados para comercios, marcas y eventos locales de Huancayo.</p>
+            <p>Anuncia con nosotros y conecta tu marca con Huancayo y la región Junín. Radio Rumbo ofrece alcance local, cercanía con la audiencia, segmentación por horarios y programas, flexibilidad para campañas comerciales y espacios publicitarios adaptados a distintos objetivos.</p>
             <div class="hero-actions">
                 <a class="btn btn-primary" href="#contacto">Solicitar información</a>
                 <a class="btn btn-soft" href="/en-vivo/">Ver transmisión</a>
             </div>
         </div>
         <aside class="promo-panel presentation-promo">
-            <h2>Canales comerciales</h2>
-            <p><?= $e((string) ($station['whatsapp_publicidad'] ?? 'WhatsApp de publicidad')) ?></p>
-            <small>Los canales de contacto serán actualizados con la información oficial antes del despliegue final.</small>
+            <h2>Publicidad o contratos</h2>
+            <p><?= $hasCommercialWhatsapp ? $e($commercialWhatsapp) : 'Escríbenos para coordinar tu campaña local.' ?></p>
+            <small>Spots, menciones en vivo, campañas de temporada, promociones y coberturas locales.</small>
         </aside>
     </div>
 </section>
-<section class="container presentation-note">
-    <strong>Listo para recibir consultas</strong>
-    <span>El formulario guarda solicitudes para revisión administrativa. La respuesta comercial se gestionará con los datos oficiales de Radio Rumbo.</span>
-</section>
+
 <section class="container card-grid">
     <?php foreach ($services as $service): ?>
         <article class="service-card">
@@ -46,18 +49,19 @@ $typeLabels = [
         </article>
     <?php endforeach; ?>
 </section>
+
 <section class="section-light" id="contacto">
     <div class="container contact-grid">
         <form class="contact-form" action="/publicidad-contacto/#contacto" method="post">
             <h2>Contacto y publicidad</h2>
-            <p>Deje su consulta y el equipo administrativo podrá revisarla desde el panel.</p>
+            <p>Déjanos tu consulta y nos pondremos en contacto contigo.</p>
             <?php if ($success !== null): ?><div class="admin-notice"><?= $e($success) ?></div><?php endif; ?>
             <?php if (isset($errors['_form'])): ?><div class="admin-error"><?= $e((string) $errors['_form']) ?></div><?php endif; ?>
             <input type="hidden" name="_csrf_token" value="<?= $e(SecurityHelper::csrfToken()) ?>">
             <label class="sr-only">Sitio web<input type="text" name="website" value="" autocomplete="off" tabindex="-1"></label>
             <label>Nombre<input type="text" name="name" value="<?= $e((string) ($old['name'] ?? '')) ?>" placeholder="Nombre o empresa"><?php if (isset($errors['name'])): ?><small><?= $e((string) $errors['name']) ?></small><?php endif; ?></label>
-            <label>Correo<input type="email" name="email" value="<?= $e((string) ($old['email'] ?? '')) ?>" placeholder="Correo institucional pendiente"><?php if (isset($errors['email'])): ?><small><?= $e((string) $errors['email']) ?></small><?php endif; ?></label>
-            <label>Teléfono<input type="text" name="phone" value="<?= $e((string) ($old['phone'] ?? '')) ?>" placeholder="WhatsApp de contacto"><?php if (isset($errors['phone'])): ?><small><?= $e((string) $errors['phone']) ?></small><?php endif; ?></label>
+            <label>Correo<input type="email" name="email" value="<?= $e((string) ($old['email'] ?? '')) ?>" placeholder="Correo de contacto"><?php if (isset($errors['email'])): ?><small><?= $e((string) $errors['email']) ?></small><?php endif; ?></label>
+            <label>Teléfono<input type="text" name="phone" value="<?= $e((string) ($old['phone'] ?? '')) ?>" placeholder="WhatsApp o teléfono"><?php if (isset($errors['phone'])): ?><small><?= $e((string) $errors['phone']) ?></small><?php endif; ?></label>
             <label>Tipo de consulta
                 <select name="type">
                     <?php foreach (ContactMessageValidator::TYPES as $type): ?>
@@ -71,9 +75,22 @@ $typeLabels = [
             <button class="btn btn-primary" type="submit">Enviar mensaje</button>
         </form>
         <aside class="map-placeholder contact-info-panel">
-            <span>Huancayo, Perú</span>
-            <strong>Radio Rumbo</strong>
-            <p>Dirección exacta, correo institucional, WhatsApp de cabina, WhatsApp comercial y redes sociales oficiales pendientes de confirmación.</p>
+            <span>Cabina Radio Rumbo</span>
+            <strong>Jr. Ayacucho 297</strong>
+            <p><?= $e($address) ?></p>
+            <?php if ($mapsUrl !== ''): ?>
+                <a class="btn btn-primary" href="<?= $e($mapsUrl) ?>" target="_blank" rel="noopener noreferrer">Ver ubicación en Google Maps</a>
+            <?php endif; ?>
+            <?php if ($socialLinks !== []): ?>
+                <div class="social-links" aria-label="Redes oficiales">
+                    <?php foreach ($socialLinks as $label => $url): ?>
+                        <?php $safeUrl = UrlHelper::httpsOrEmpty(is_string($url) ? $url : ''); ?>
+                        <?php if ($safeUrl !== ''): ?>
+                            <a href="<?= $e($safeUrl) ?>" target="_blank" rel="noopener noreferrer"><?= $e((string) $label) ?></a>
+                        <?php endif; ?>
+                    <?php endforeach; ?>
+                </div>
+            <?php endif; ?>
         </aside>
     </div>
 </section>

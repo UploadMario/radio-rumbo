@@ -26,10 +26,8 @@ $videoUrl = UrlHelper::httpsOrEmpty(is_string($videoUrl ?? null) ? $videoUrl : '
                 allowfullscreen
                 referrerpolicy="no-referrer-when-downgrade"></iframe>
         </div>
-        <a class="btn btn-soft live-video-action" href="<?= $e($videoUrl) ?>" target="_blank" rel="noopener noreferrer">
-            Abrir transmisión
-        </a>
+        <span class="live-video-action">En vivo desde Radio Rumbo</span>
     <?php else: ?>
-        <p class="embed-fallback">La transmisión de video está pendiente de configuración.</p>
+        <p class="embed-fallback">La transmisión de video no está disponible por el momento.</p>
     <?php endif; ?>
 </article>

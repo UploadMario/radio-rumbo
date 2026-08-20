@@ -12,6 +12,9 @@ Una tarea se considera terminada solo si:
 - Protege rutas administrativas con sesión cuando corresponde.
 - Documenta cambios relevantes.
 - Mantiene compatibilidad con DonWeb y hosting compartido.
+- Mantiene logout administrativo por POST + CSRF.
+- No registra secretos en logs ni auditoria.
+- Respeta `APP_TIMEZONE` para logica de horarios.
 - Mantiene `public/` como document root recomendado y evita exposicion de carpetas internas.
 - Verifica `/` y `/admin/` cuando toca entradas publicas.
 - Incluye pruebas cuando aplica.

@@ -10,8 +10,8 @@ $rootPath = rr_bootstrap();
 $controller = new SettingController();
 
 if (($_SERVER['REQUEST_METHOD'] ?? 'GET') === 'POST') {
-    $controller->update(rr_mock_data($rootPath), $_POST);
+    $controller->update(rr_default_content($rootPath), $_POST);
     return;
 }
 
-$controller->index(rr_mock_data($rootPath));
+$controller->index(rr_default_content($rootPath));

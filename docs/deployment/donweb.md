@@ -124,3 +124,13 @@ Facebook puede bloquear embeds por cookies, navegador o políticas externas. El 
 - [ ] `.env` real creado fuera de Git.
 - [ ] `public/uploads/` tiene permisos minimos necesarios.
 - [ ] No hay contrasenas planas ni datos reales inventados en archivos versionados.
+
+## Paquete seguro de despliegue
+
+La Fase 3.0 agrega `scripts/build-deploy.ps1` para generar un ZIP orientado a DonWeb. El paquete excluye `.env`, `.git`, pruebas, logs, caches y archivos temporales.
+
+```powershell
+powershell -ExecutionPolicy Bypass -File scripts/build-deploy.ps1
+```
+
+Crear `.env` de produccion manualmente en el servidor. Nunca subir el `.env` local. Si DonWeb no permite ejecutar Composer, el directorio `vendor/` puede subirse como parte del artefacto, siempre fuera de exposicion publica directa.

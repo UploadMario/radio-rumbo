@@ -31,6 +31,6 @@ final class ViewTest extends TestCase
         View::render('public.upcoming');
         $output = (string) ob_get_clean();
 
-        self::assertStringContainsString('Módulo en preparación', $output);
+        self::assertStringContainsString('Sección en preparación', $output);
     }
 }

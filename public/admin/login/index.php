@@ -10,8 +10,8 @@ $rootPath = rr_bootstrap();
 $controller = new AuthController();
 
 if (($_SERVER['REQUEST_METHOD'] ?? 'GET') === 'POST') {
-    $controller->login(rr_mock_data($rootPath), $_POST);
+    $controller->login(rr_default_content($rootPath), $_POST);
     return;
 }
 
-$controller->showLogin(rr_mock_data($rootPath));
+$controller->showLogin(rr_default_content($rootPath));

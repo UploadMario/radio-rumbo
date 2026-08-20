@@ -7,7 +7,6 @@ $navItems = [
     'en-vivo' => ['label' => 'En vivo', 'href' => '/en-vivo/'],
     'programacion' => ['label' => 'Programación', 'href' => '/programacion/'],
     'noticias' => ['label' => 'Noticias', 'href' => '/noticias/'],
-    'podcasts' => ['label' => 'Podcasts', 'href' => '/podcasts/'],
     'equipo' => ['label' => 'Equipo', 'href' => '/equipo/'],
     'publicidad-contacto' => ['label' => 'Publicidad', 'href' => '/publicidad-contacto/'],
 ];
@@ -16,11 +15,7 @@ $navItems = [
     <a class="skip-link" href="#contenido">Saltar al contenido</a>
     <div class="container header-inner">
         <a class="brand" href="/" aria-label="Radio Rumbo inicio">
-            <img class="brand-logo" src="/assets/img/radio-rumbo-logo.png" alt="" width="52" height="52">
-            <span>
-                <strong><?= $e((string) ($station['name'] ?? 'Radio Rumbo')) ?></strong>
-                <small><?= $e((string) ($station['tagline'] ?? 'La radio que se ve')) ?></small>
-            </span>
+            <img class="brand-logo" src="/assets/img/radio-rumbo-logo.png" alt="Radio Rumbo" width="52" height="52">
         </a>
         <button class="nav-toggle" type="button" data-nav-toggle aria-expanded="false" aria-controls="main-nav">
             Menú
@@ -31,7 +26,6 @@ $navItems = [
                     <?= $e($item['label']) ?>
                 </a>
             <?php endforeach; ?>
-            <a class="admin-link" href="/admin/">Admin</a>
         </nav>
     </div>
 </header>

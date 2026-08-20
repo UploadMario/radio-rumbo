@@ -6,6 +6,7 @@ namespace App\Controllers\Admin;
 
 use App\Core\View;
 use App\Helpers\SecurityHelper;
+use App\Services\AuditLogService;
 use App\Services\ProgramService;
 use App\Services\SessionService;
 use Throwable;
@@ -14,7 +15,8 @@ final class ProgramController
 {
     public function __construct(
         private ?SessionService $session = null,
-        private ?ProgramService $programs = null
+        private ?ProgramService $programs = null,
+        private ?AuditLogService $audit = null
     ) {
     }
 
@@ -75,6 +77,7 @@ final class ProgramController
             }
 
             if ($result['ok'] === true) {
+                $this->audit()->record($user['id'], 'program.create', 'program', $result['id']);
                 $this->sessions()->flash('success', 'Programa creado correctamente.');
                 $this->redirect('/admin/programs/');
             }
@@ -123,6 +126,7 @@ final class ProgramController
             }
 
             if ($result['ok'] === true) {
+                $this->audit()->record($user['id'], 'program.update', 'program', $id);
                 $this->sessions()->flash('success', 'Programa actualizado correctamente.');
                 $this->redirect('/admin/programs/');
             }
@@ -139,16 +143,18 @@ final class ProgramController
      */
     public function action(array $input): void
     {
-        $this->requireUser();
+        $user = $this->requireUser();
         if ($this->csrfErrors($input) === []) {
             $id = (int) ($input['id'] ?? 0);
             $action = (string) ($input['_action'] ?? '');
             try {
                 if ($id > 0 && $action === 'toggle') {
                     $this->programService()->toggle($id);
+                    $this->audit()->record($user['id'], 'program.toggle', 'program', $id);
                     $this->sessions()->flash('success', 'Estado del programa actualizado.');
                 } elseif ($id > 0 && $action === 'delete') {
                     $this->programService()->delete($id);
+                    $this->audit()->record($user['id'], 'program.delete', 'program', $id);
                     $this->sessions()->flash('success', 'Programa eliminado correctamente.');
                 }
             } catch (Throwable) {
@@ -272,5 +278,14 @@ final class ProgramController
         }
 
         return $this->programs;
+    }
+
+    private function audit(): AuditLogService
+    {
+        if (!$this->audit instanceof AuditLogService) {
+            $this->audit = new AuditLogService();
+        }
+
+        return $this->audit;
     }
 }

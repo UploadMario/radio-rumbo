@@ -48,6 +48,32 @@ final class SettingServiceTest extends TestCase
         self::assertSame('', $station['live_video_widget_url']);
     }
 
+    public function testUsesEnvFallbackWhenDatabaseValueIsEmpty(): void
+    {
+        $previous = $_ENV['LIVE_VIDEO_WIDGET_URL'] ?? null;
+        try {
+            $_ENV['LIVE_VIDEO_WIDGET_URL'] = 'https://servilive.com/live-stream-video-widget/tvrumbo';
+
+            $this->pdo->exec(
+                "INSERT INTO settings (setting_key, setting_value)
+                 VALUES ('live_video_widget_url', '   ')"
+            );
+
+            $station = (new SettingService(new Setting($this->pdo)))->station(['station' => []]);
+
+            self::assertSame(
+                'https://servilive.com/live-stream-video-widget/tvrumbo',
+                $station['live_video_widget_url']
+            );
+        } finally {
+            if ($previous === null) {
+                unset($_ENV['LIVE_VIDEO_WIDGET_URL']);
+            } else {
+                $_ENV['LIVE_VIDEO_WIDGET_URL'] = $previous;
+            }
+        }
+    }
+
     public function testUsesFallbackWhenDatabaseAndEnvAreEmpty(): void
     {
         $station = (new SettingService(new Setting($this->pdo)))->station([
@@ -57,5 +83,39 @@ final class SettingServiceTest extends TestCase
         ]);
 
         self::assertSame('https://www.facebook.com/radiorumboperu', $station['facebook_page_url']);
+    }
+
+    public function testBuildsFacebookPluginUrlFromPageUrlWhenPluginSettingIsEmpty(): void
+    {
+        $this->pdo->exec(
+            "INSERT INTO settings (setting_key, setting_value)
+             VALUES
+             ('facebook_page_url', 'https://www.facebook.com/radiorumboperu'),
+             ('facebook_page_plugin_url', '   ')"
+        );
+
+        $station = (new SettingService(new Setting($this->pdo)))->station(['station' => []]);
+
+        self::assertStringStartsWith(
+            'https://www.facebook.com/plugins/page.php?',
+            $station['facebook_page_plugin_url']
+        );
+        self::assertStringContainsString('radiorumboperu', $station['facebook_page_plugin_url']);
+        self::assertSame('configurado', $station['facebook_status']);
+    }
+
+    public function testRejectsUnsafeFacebookPageUrl(): void
+    {
+        $this->pdo->exec(
+            "INSERT INTO settings (setting_key, setting_value)
+             VALUES
+             ('facebook_page_url', 'javascript:alert(1)'),
+             ('facebook_page_plugin_url', '')"
+        );
+
+        $station = (new SettingService(new Setting($this->pdo)))->station(['station' => []]);
+
+        self::assertSame('', $station['facebook_page_url']);
+        self::assertSame('', $station['facebook_page_plugin_url']);
     }
 }

@@ -6,6 +6,7 @@ namespace App\Controllers\Admin;
 
 use App\Core\View;
 use App\Helpers\SecurityHelper;
+use App\Services\AuditLogService;
 use App\Services\SessionService;
 use App\Services\TeamService;
 use Throwable;
@@ -14,7 +15,8 @@ final class TeamController
 {
     public function __construct(
         private ?SessionService $session = null,
-        private ?TeamService $team = null
+        private ?TeamService $team = null,
+        private ?AuditLogService $audit = null
     ) {
     }
 
@@ -74,6 +76,7 @@ final class TeamController
             }
 
             if ($result['ok'] === true) {
+                $this->audit()->record($user['id'], 'team.create', 'team_member', $result['id']);
                 $this->sessions()->flash('success', 'Integrante creado correctamente.');
                 $this->redirect('/admin/team/');
             }
@@ -122,6 +125,7 @@ final class TeamController
             }
 
             if ($result['ok'] === true) {
+                $this->audit()->record($user['id'], 'team.update', 'team_member', $id);
                 $this->sessions()->flash('success', 'Integrante actualizado correctamente.');
                 $this->redirect('/admin/team/');
             }
@@ -138,16 +142,18 @@ final class TeamController
      */
     public function action(array $input): void
     {
-        $this->requireUser();
+        $user = $this->requireUser();
         if ($this->csrfErrors($input) === []) {
             $id = (int) ($input['id'] ?? 0);
             $action = (string) ($input['_action'] ?? '');
             try {
                 if ($id > 0 && $action === 'toggle') {
                     $this->teamService()->toggle($id);
+                    $this->audit()->record($user['id'], 'team.toggle', 'team_member', $id);
                     $this->sessions()->flash('success', 'Estado del integrante actualizado.');
                 } elseif ($id > 0 && $action === 'delete') {
                     $this->teamService()->delete($id);
+                    $this->audit()->record($user['id'], 'team.delete', 'team_member', $id);
                     $this->sessions()->flash('success', 'Integrante eliminado correctamente.');
                 }
             } catch (Throwable) {
@@ -270,5 +276,14 @@ final class TeamController
         }
 
         return $this->team;
+    }
+
+    private function audit(): AuditLogService
+    {
+        if (!$this->audit instanceof AuditLogService) {
+            $this->audit = new AuditLogService();
+        }
+
+        return $this->audit;
     }
 }

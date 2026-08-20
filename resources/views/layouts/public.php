@@ -33,7 +33,7 @@ $e = static fn (string $value): string => SecurityHelper::e($value);
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title><?= $e($pageTitle) ?></title>
-    <meta name="description" content="Radio Rumbo, emisora local de Huancayo, Perú. Interfaz visual Fase 1.1 preparada para conexión futura.">
+    <meta name="description" content="Radio Rumbo, emisora local de Huancayo, Perú. En vivo, noticias, programación, equipo y publicidad.">
     <link rel="stylesheet" href="/assets/css/main.css">
 </head>
 <body class="site-body">

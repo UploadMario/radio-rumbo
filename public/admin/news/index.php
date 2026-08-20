@@ -14,4 +14,4 @@ if (($_SERVER['REQUEST_METHOD'] ?? 'GET') === 'POST' && ($_POST['_action'] ?? ''
     return;
 }
 
-$controller->index(rr_mock_data($rootPath));
+$controller->index(rr_default_content($rootPath));
