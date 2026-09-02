@@ -33,13 +33,25 @@ final class ProgramValidatorTest extends TestCase
         self::assertArrayHasKey('day_of_week', $errors);
     }
 
-    public function testRejectsInvalidTimeRange(): void
+    public function testAcceptsOvernightProgram(): void
+    {
+        $errors = (new ProgramValidator())->validate([
+            'name' => 'Noches de Radio',
+            'day_of_week' => 'monday',
+            'start_time' => '22:00',
+            'end_time' => '02:00',
+        ]);
+
+        self::assertSame([], $errors);
+    }
+
+    public function testRejectsEqualTimeRange(): void
     {
         $errors = (new ProgramValidator())->validate([
             'name' => 'Programa matinal',
             'day_of_week' => 'monday',
             'start_time' => '09:00',
-            'end_time' => '06:00',
+            'end_time' => '09:00',
         ]);
 
         self::assertArrayHasKey('end_time', $errors);

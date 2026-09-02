@@ -43,6 +43,30 @@ final class ProgramScheduleServiceTest extends TestCase
         self::assertNull($context['next_program']);
     }
 
+    public function testDetectsOvernightProgramBeforeMidnight(): void
+    {
+        $context = $this->service()->context(
+            $this->overnightPrograms(),
+            'America/Lima',
+            $this->time('2026-08-17 23:30')
+        );
+
+        self::assertSame('Noches de Radio', $context['current_program']['name']);
+        self::assertTrue($context['current_program']['live']);
+    }
+
+    public function testDetectsOvernightProgramAfterMidnight(): void
+    {
+        $context = $this->service()->context(
+            $this->overnightPrograms(),
+            'America/Lima',
+            $this->time('2026-08-18 01:30')
+        );
+
+        self::assertSame('Noches de Radio', $context['current_program']['name']);
+        self::assertSame('Rumbo Mañanero', $context['next_program']['name']);
+    }
+
     public function testIgnoresOtherDays(): void
     {
         $context = $this->service()->context($this->programs(), 'America/Lima', $this->time('2026-08-18 07:00'));
@@ -120,6 +144,29 @@ final class ProgramScheduleServiceTest extends TestCase
                 'day_of_week' => 'monday',
                 'start_time' => '12:00',
                 'end_time' => '14:00',
+            ],
+        ];
+    }
+
+    /**
+     * @return list<array<string, mixed>>
+     */
+    private function overnightPrograms(): array
+    {
+        return [
+            [
+                'name' => 'Noches de Radio',
+                'host_name' => 'Equipo Radio Rumbo',
+                'day_of_week' => 'monday',
+                'start_time' => '22:00',
+                'end_time' => '02:00',
+            ],
+            [
+                'name' => 'Rumbo Mañanero',
+                'host_name' => 'Equipo Radio Rumbo',
+                'day_of_week' => 'tuesday',
+                'start_time' => '06:00',
+                'end_time' => '09:00',
             ],
         ];
     }

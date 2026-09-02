@@ -32,6 +32,9 @@ final class ProgramScheduleService
         'sunday' => 'domingo',
     ];
 
+    /** @var list<string> */
+    private const DAY_KEYS = ['lunes', 'martes', 'miercoles', 'jueves', 'viernes', 'sabado', 'domingo'];
+
     public function __construct(private ?ProgramService $programs = null, private ?LoggerService $logger = null)
     {
     }
@@ -101,7 +104,7 @@ final class ProgramScheduleService
 
             $normalized[] = [
                 'name' => $this->presentableProgramName((string) ($item['name'] ?? 'Programación en pausa')),
-                'description' => (string) ($item['description'] ?? $item['summary'] ?? ''),
+                'description' => $this->publicProgramSummary((string) ($item['description'] ?? $item['summary'] ?? '')),
                 'host_name' => (string) ($item['host_name'] ?? $item['host'] ?? 'Cabina Radio Rumbo'),
                 'day_of_week' => self::normalizeDay((string) ($item['day_of_week'] ?? $today)) ?? $today,
                 'start_time' => substr($time, 0, 5),
@@ -122,14 +125,29 @@ final class ProgramScheduleService
     {
         $clock = $now ?? new DateTimeImmutable('now', new DateTimeZone($timezone));
         $today = self::todayKey($timezone, $clock);
+        $previousDay = self::previousDayKey($today);
         $todayPrograms = $this->programsForDay($programs, $today);
+        $overnightPrograms = $this->overnightProgramsFromPreviousDay($programs, $previousDay);
         $currentTime = $clock->format('H:i');
 
         $current = null;
         $next = null;
 
+        foreach ($overnightPrograms as $program) {
+            if ($this->isCurrentProgram((string) $program['start_time'], (string) $program['end_time'], $currentTime)) {
+                $current = $program;
+                break;
+            }
+        }
+
         foreach ($todayPrograms as $program) {
-            if ((string) $program['start_time'] <= $currentTime && (string) $program['end_time'] > $currentTime) {
+            $isCurrent = $this->isCurrentProgram(
+                (string) $program['start_time'],
+                (string) $program['end_time'],
+                $currentTime
+            );
+
+            if ($current === null && $isCurrent) {
                 $current = $program;
                 continue;
             }
@@ -211,6 +229,18 @@ final class ProgramScheduleService
         return self::normalizeDay($requestedDay) ?? self::todayKey($timezone, $now);
     }
 
+    public static function previousDayKey(string $day): string
+    {
+        $normalizedDay = self::normalizeDay($day) ?? 'lunes';
+        $index = array_search($normalizedDay, self::DAY_KEYS, true);
+
+        if (!is_int($index)) {
+            return 'domingo';
+        }
+
+        return self::DAY_KEYS[($index + count(self::DAY_KEYS) - 1) % count(self::DAY_KEYS)];
+    }
+
     /**
      * @param list<array<string, mixed>> $programs
      * @return list<array<string, mixed>>
@@ -240,6 +270,35 @@ final class ProgramScheduleService
     }
 
     /**
+     * @param list<array<string, mixed>> $programs
+     * @return list<array<string, mixed>>
+     */
+    private function overnightProgramsFromPreviousDay(array $programs, string $previousDay): array
+    {
+        return array_values(array_filter(
+            $this->programsForDay($programs, $previousDay),
+            fn (array $program): bool => $this->crossesMidnight(
+                (string) $program['start_time'],
+                (string) $program['end_time']
+            )
+        ));
+    }
+
+    private function isCurrentProgram(string $start, string $end, string $currentTime): bool
+    {
+        if ($this->crossesMidnight($start, $end)) {
+            return $currentTime >= $start || $currentTime < $end;
+        }
+
+        return $start <= $currentTime && $end > $currentTime;
+    }
+
+    private function crossesMidnight(string $start, string $end): bool
+    {
+        return $start > $end;
+    }
+
+    /**
      * @param array<string, mixed> $program
      * @return array<string, mixed>
      */
@@ -254,7 +313,7 @@ final class ProgramScheduleService
             'schedule' => $start . ' - ' . $end,
             'category' => (string) ($program['category'] ?? 'Radio Rumbo'),
             'status' => $live ? 'EN VIVO' : 'Programado',
-            'summary' => (string) ($program['description'] ?? $program['summary'] ?? ''),
+            'summary' => $this->publicProgramSummary((string) ($program['description'] ?? $program['summary'] ?? '')),
             'time' => $start,
             'start_time' => $start,
             'end_time' => $end,
@@ -284,5 +343,14 @@ final class ProgramScheduleService
     private function presentableProgramName(string $name): string
     {
         return trim($name) === 'Programa matinal' ? 'Rumbo Mañanero' : $name;
+    }
+
+    private function publicProgramSummary(string $summary): string
+    {
+        if (preg_match('/desarrollo|mock|demo|pendiente|por confirmar/i', $summary) === 1) {
+            return '';
+        }
+
+        return str_replace([' del dia', ' al dia'], [' del día', ' al día'], $summary);
     }
 }

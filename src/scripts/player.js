@@ -13,9 +13,12 @@ import { animate } from 'motion';
     const playerShell = document.querySelector('.floating-player');
     const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     const storage = {
-        volume: 'radio-rumbo-volume',
-        muted: 'radio-rumbo-muted',
-        wasPlaying: 'radio-rumbo-was-playing'
+        volume: 'radioVolume',
+        muted: 'radioMuted',
+        wasPlaying: 'radioWasPlaying',
+        legacyVolume: 'radio-rumbo-volume',
+        legacyMuted: 'radio-rumbo-muted',
+        legacyWasPlaying: 'radio-rumbo-was-playing'
     };
     const state = {
         isPlaying: false,
@@ -39,6 +42,12 @@ import { animate } from 'motion';
         } catch (error) {
             return fallback;
         }
+    }
+
+    function readStorageWithLegacy(key, legacyKey, fallback) {
+        const value = readStorage(key, '');
+
+        return value !== '' ? value : readStorage(legacyKey, fallback);
     }
 
     function writeStorage(key, value) {
@@ -97,16 +106,16 @@ import { animate } from 'motion';
             button.setAttribute('aria-label', state.muted ? 'Activar audio' : 'Silenciar audio');
         });
         volumeIcons.forEach((icon) => {
-            icon.textContent = state.muted || state.volume === 0 ? '\uD83D\uDD07' : '\uD83D\uDD0A';
+            icon.classList.toggle('is-muted', state.muted || state.volume === 0);
         });
         writeStorage(storage.volume, String(state.volume));
         writeStorage(storage.muted, state.muted ? 'true' : 'false');
     }
 
     function loadVolumeState() {
-        const volume = Number(readStorage(storage.volume, '0.8'));
+        const volume = Number(readStorageWithLegacy(storage.volume, storage.legacyVolume, '0.8'));
         state.volume = Number.isNaN(volume) ? 0.8 : Math.max(0, Math.min(1, volume));
-        state.muted = readStorage(storage.muted, 'false') === 'true';
+        state.muted = readStorageWithLegacy(storage.muted, storage.legacyMuted, 'false') === 'true';
         syncVolume();
     }
 
@@ -270,7 +279,7 @@ import { animate } from 'motion';
     setStatus(players.length > 0 ? 'ready' : 'unavailable');
     syncButtons();
 
-    if (readStorage(storage.wasPlaying, 'false') === 'true') {
+    if (readStorageWithLegacy(storage.wasPlaying, storage.legacyWasPlaying, 'false') === 'true') {
         window.setTimeout(() => {
             playPrimary(true);
         }, 80);

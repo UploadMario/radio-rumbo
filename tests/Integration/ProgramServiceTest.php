@@ -60,11 +60,25 @@ final class ProgramServiceTest extends TestCase
             'name' => 'Programa matinal',
             'day_of_week' => 'monday',
             'start_time' => '09:00',
-            'end_time' => '06:00',
+            'end_time' => '09:00',
         ]);
 
         self::assertFalse($result['ok']);
         self::assertArrayHasKey('end_time', $result['errors']);
+    }
+
+    public function testCreatesOvernightProgram(): void
+    {
+        $result = $this->service()->create([
+            'name' => 'Noches de Radio',
+            'day_of_week' => 'friday',
+            'start_time' => '22:00',
+            'end_time' => '02:00',
+            'is_active' => '1',
+        ]);
+
+        self::assertTrue($result['ok']);
+        self::assertSame('noches-de-radio', $result['data']['slug']);
     }
 
     public function testListsOnlyActivePrograms(): void

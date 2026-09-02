@@ -47,7 +47,11 @@ $programSchedule = (string) ($currentProgram['schedule'] ?? 'Horario por confirm
     <div class="player-actions" aria-label="Controles secundarios">
         <div class="volume-control">
             <button type="button" class="volume-toggle" data-volume-mute aria-pressed="false" aria-label="Silenciar audio">
-                <span data-volume-icon aria-hidden="true">🔊</span>
+                <svg data-volume-icon aria-hidden="true" viewBox="0 0 24 24" width="18" height="18" focusable="false">
+                    <path class="volume-icon-speaker" d="M4 9v6h4l5 4V5L8 9H4Z"></path>
+                    <path class="volume-icon-wave" d="M16 8.5a5 5 0 0 1 0 7M18.5 6a8.5 8.5 0 0 1 0 12"></path>
+                    <path class="volume-icon-muted" d="M16 9l5 5m0-5-5 5"></path>
+                </svg>
             </button>
             <label class="volume-slider-wrap">
                 <span class="sr-only">Volumen</span>

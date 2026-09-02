@@ -39,8 +39,8 @@ final class ProgramValidator
             $errors['end_time'] = 'La hora de fin no es valida.';
         }
 
-        if ($this->isTime($start) && $this->isTime($end) && $start >= $end) {
-            $errors['end_time'] = 'La hora de fin debe ser mayor que la hora de inicio.';
+        if ($this->isTime($start) && $this->isTime($end) && $start === $end) {
+            $errors['end_time'] = 'La hora de fin debe ser diferente a la hora de inicio.';
         }
 
         return $errors;

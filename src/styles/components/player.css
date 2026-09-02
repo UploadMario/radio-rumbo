@@ -45,6 +45,29 @@
   border-radius: var(--radius-pill);
 }
 
+.volume-toggle svg {
+  display: block;
+  fill: currentcolor;
+}
+
+.volume-icon-wave,
+.volume-icon-muted {
+  fill: none;
+  stroke: currentcolor;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.volume-icon-muted,
+.volume-toggle svg.is-muted .volume-icon-wave {
+  display: none;
+}
+
+.volume-toggle svg.is-muted .volume-icon-muted {
+  display: block;
+}
+
 .volume-control {
   display: inline-flex;
   gap: 8px;
