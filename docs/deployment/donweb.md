@@ -134,3 +134,14 @@ powershell -ExecutionPolicy Bypass -File scripts/build-deploy.ps1
 ```
 
 Crear `.env` de produccion manualmente en el servidor. Nunca subir el `.env` local. Si DonWeb no permite ejecutar Composer, el directorio `vendor/` puede subirse como parte del artefacto, siempre fuera de exposicion publica directa.
+
+## Assets frontend Fase 3.1
+
+El build frontend se genera localmente:
+
+```bash
+npm install
+npm run build
+```
+
+DonWeb no necesita Node. Subir `public/assets/dist/` junto con el resto del proyecto preparado. No subir `node_modules/` ni `.npm-cache/`.

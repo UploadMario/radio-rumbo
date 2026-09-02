@@ -29,14 +29,14 @@ if ($facebookPluginUrl === '' && $facebookPageUrl !== '') {
     </div>
 
     <?php if ($facebookPluginUrl !== ''): ?>
-        <div class="facebook-embed-shell">
+        <div class="facebook-embed-shell" data-embed-shell>
             <iframe
                 class="facebook-embed-frame"
+                data-external-embed
                 title="Publicaciones de Facebook de Radio Rumbo"
                 src="<?= $e($facebookPluginUrl) ?>"
                 width="500"
                 height="650"
-                style="border:none;overflow:hidden"
                 scrolling="no"
                 frameborder="0"
                 allowfullscreen="true"

@@ -1,0 +1,21 @@
+html {
+  color-scheme: light dark;
+  overflow-x: clip;
+}
+
+body {
+  min-width: 320px;
+  overflow-x: clip;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+}
+
+:focus-visible {
+  outline: 3px solid var(--color-brand-light);
+  outline-offset: 3px;
+}
+
+::selection {
+  color: var(--color-bg);
+  background: var(--color-brand-light);
+}

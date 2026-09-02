@@ -1,0 +1,25 @@
+.contact-info-panel {
+  background:
+    radial-gradient(circle at 80% 20%, rgba(170, 209, 74, 0.2), transparent 28%),
+    linear-gradient(135deg, rgba(9, 17, 12, 0.94), rgba(26, 44, 31, 0.9));
+}
+.presentation-promo {
+  display: grid;
+  align-content: center;
+  min-height: 280px;
+}
+
+.presentation-promo h2 {
+  margin-top: 0;
+  font-size: clamp(1.6rem, 3vw, 2.5rem);
+}
+
+.presentation-promo p {
+  color: var(--color-brand-light);
+  font-size: clamp(1.5rem, 4vw, 3rem);
+  font-weight: 900;
+}
+
+.service-card {
+  min-height: 180px;
+}

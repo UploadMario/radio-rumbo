@@ -27,7 +27,7 @@ $coverage = is_string($station['coverage'] ?? null) ? $station['coverage'] : 'Va
             <dl class="meta-row live-meta">
                 <div><dt>FM</dt><dd><?= $e($frequencyFm) ?></dd></div>
                 <div><dt>AM</dt><dd><?= $e($frequencyAm) ?></dd></div>
-                <div><dt>Online</dt><dd data-audio-status-label>En vivo</dd></div>
+                <div><dt>Online</dt><dd data-audio-status-label>Señal disponible</dd></div>
                 <div><dt>Cobertura</dt><dd><?= $e($coverage) ?></dd></div>
             </dl>
 
@@ -43,7 +43,13 @@ $coverage = is_string($station['coverage'] ?? null) ? $station['coverage'] : 'Va
                 <?php endif; ?>
             </div>
         </div>
-        <?php require dirname(__DIR__) . '/partials/live-video-player.php'; ?>
+        <?php
+        $videoTitle = 'Transmisión en vivo';
+        $videoDescription = 'Cabina, entrevistas y programas especiales desde Huancayo.';
+        $videoLoading = 'eager';
+        $videoCardClass = 'live-video-card--featured';
+        require dirname(__DIR__) . '/partials/live-video-player.php';
+        ?>
     </div>
 </section>
 
@@ -52,7 +58,7 @@ $coverage = is_string($station['coverage'] ?? null) ? $station['coverage'] : 'Va
         <span class="section-kicker">Radio en vivo</span>
         <h2>Audio de Radio Rumbo</h2>
         <p>Escucha <?= $e($frequencyFm) ?>, <?= $e($frequencyAm) ?> y la señal online desde el reproductor inferior mientras navegas por la web.</p>
-        <strong class="audio-inline-status" data-audio-status-label>En vivo</strong>
+        <strong class="audio-inline-status" data-audio-status-label>Señal disponible</strong>
         <?php if ($audioUrl !== ''): ?>
             <p class="audio-status-message" data-audio-status-message hidden>
                 La transmisión de audio no está disponible en este momento. Puede que la radio esté fuera de horario o temporalmente sin señal desde cabina.
@@ -78,9 +84,12 @@ $coverage = is_string($station['coverage'] ?? null) ? $station['coverage'] : 'Va
 
 <section class="container">
     <div class="section-heading">
-        <span class="section-kicker">Sigue la señal</span>
-        <h2>Próximos programas</h2>
-        <p>Más voces, música e información durante el día.</p>
+        <div>
+            <span class="section-kicker">Sigue la señal</span>
+            <h2>Próximos programas</h2>
+            <p>Más voces, música e información durante el día.</p>
+        </div>
+        <a class="btn btn-soft" href="/programacion/">Ver programación completa</a>
     </div>
     <div class="schedule-list">
         <?php foreach (array_slice($schedule, 1) as $program): ?>
@@ -90,7 +99,6 @@ $coverage = is_string($station['coverage'] ?? null) ? $station['coverage'] : 'Va
                     <h3><?= $e((string) $program['name']) ?></h3>
                     <p><?= $e((string) $program['host']) ?> - <?= $e((string) $program['category']) ?></p>
                 </div>
-                <a class="btn btn-soft admin-soft" href="/programacion/">Ver programación</a>
             </article>
         <?php endforeach; ?>
     </div>

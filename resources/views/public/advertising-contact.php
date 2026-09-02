@@ -26,10 +26,13 @@ $typeLabels = [
     <div class="container split-section">
         <div>
             <span class="section-kicker">Publicidad y contacto</span>
-            <h1>Anuncia con nosotros</h1>
-            <p>Anuncia con nosotros y conecta tu marca con Huancayo y la región Junín. Radio Rumbo ofrece alcance local, cercanía con la audiencia, segmentación por horarios y programas, flexibilidad para campañas comerciales y espacios publicitarios adaptados a distintos objetivos.</p>
+            <h1>Haz que tu negocio se escuche.</h1>
+            <p>Conecta tu marca con Huancayo y la región Junín. Radio Rumbo ofrece alcance local, cercanía con la audiencia, segmentación por horarios y programas, flexibilidad para campañas comerciales y espacios publicitarios adaptados a distintos objetivos.</p>
             <div class="hero-actions">
-                <a class="btn btn-primary" href="#contacto">Solicitar información</a>
+                <?php if ($hasCommercialWhatsapp): ?>
+                    <a class="btn btn-primary" href="https://wa.me/51<?= $e(preg_replace('/\D+/', '', $commercialWhatsapp) ?: $commercialWhatsapp) ?>" target="_blank" rel="noopener noreferrer">Consultar publicidad por WhatsApp</a>
+                <?php endif; ?>
+                <a class="btn btn-soft" href="#contacto">Enviar consulta</a>
                 <a class="btn btn-soft" href="/en-vivo/">Ver transmisión</a>
             </div>
         </div>

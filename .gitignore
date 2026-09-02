@@ -1,5 +1,7 @@
 .env
 vendor/
+node_modules/
+.npm-cache/
 
 public/uploads/*
 !public/uploads/.gitkeep
@@ -10,6 +12,8 @@ storage/logs/*
 !storage/logs/.gitkeep
 storage/rate-limit/*
 !storage/rate-limit/.gitkeep
+storage/sessions/*
+!storage/sessions/.gitkeep
 tmp/
 temp/
 cache/

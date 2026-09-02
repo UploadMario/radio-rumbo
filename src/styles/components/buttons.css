@@ -1,0 +1,13 @@
+.btn,
+button {
+  transition: box-shadow var(--transition-normal), background var(--transition-normal), border-color var(--transition-normal);
+}
+
+.btn:hover,
+button:hover {
+  box-shadow: var(--shadow-sm);
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, var(--color-brand-light), var(--color-brand));
+}

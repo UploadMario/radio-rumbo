@@ -40,8 +40,8 @@ $isLogin = $contentView === 'login';
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="robots" content="noindex, nofollow">
     <title><?= $e($pageTitle) ?></title>
-    <link rel="stylesheet" href="/assets/css/main.css">
-    <link rel="stylesheet" href="/assets/css/admin.css">
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+    <link rel="stylesheet" href="/assets/dist/assets/admin.css">
 </head>
 <body class="<?= $isLogin ? 'admin-login-body' : 'admin-shell-body' ?>">
     <?php if ($isLogin): ?>
@@ -54,6 +54,6 @@ $isLogin = $contentView === 'login';
             </main>
         </div>
     <?php endif; ?>
-    <script src="/assets/js/main.js" defer></script>
+    <script type="module" src="/assets/dist/assets/admin.js"></script>
 </body>
 </html>

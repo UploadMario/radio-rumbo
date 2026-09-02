@@ -50,6 +50,47 @@ final class ProgramScheduleServiceTest extends TestCase
         self::assertSame([], $context['today_schedule']);
     }
 
+    public function testNormalizesSpanishAndEnglishDays(): void
+    {
+        self::assertSame('miercoles', ProgramScheduleService::normalizeDay('Miércoles'));
+        self::assertSame('martes', ProgramScheduleService::normalizeDay('tuesday'));
+        self::assertNull(ProgramScheduleService::normalizeDay('feriado'));
+    }
+
+    public function testSelectedDayFallsBackToTodayInLima(): void
+    {
+        $selected = ProgramScheduleService::selectedDay(
+            'no-valido',
+            'America/Lima',
+            $this->time('2026-09-01 08:00')
+        );
+
+        self::assertSame('martes', $selected);
+    }
+
+    public function testProgramsForDayUsesOneSelectedDay(): void
+    {
+        $programs = $this->service()->programsForDay($this->programs(), 'lunes');
+
+        self::assertCount(2, $programs);
+        self::assertSame('lunes', $programs[0]['day_of_week']);
+    }
+
+    public function testDefaultWeeklyFallbackCoversSevenDays(): void
+    {
+        $data = require dirname(__DIR__, 2) . '/config/default-content.php';
+        $weekly = is_array($data['weekly_schedule'] ?? null) ? $data['weekly_schedule'] : [];
+        $days = [];
+
+        foreach ($weekly as $program) {
+            if (is_array($program) && isset($program['day_of_week'])) {
+                $days[(string) $program['day_of_week']] = true;
+            }
+        }
+
+        self::assertSame(array_keys(ProgramScheduleService::DAY_LABELS), array_keys($days));
+    }
+
     private function service(): ProgramScheduleService
     {
         return new ProgramScheduleService();

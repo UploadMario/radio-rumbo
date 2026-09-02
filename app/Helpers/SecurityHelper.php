@@ -14,6 +14,7 @@ final class SecurityHelper
     public static function csrfToken(): string
     {
         if (session_status() !== PHP_SESSION_ACTIVE) {
+            EnvironmentHelper::configureSessionStorage();
             session_start();
         }
 
@@ -27,6 +28,7 @@ final class SecurityHelper
     public static function verifyCsrfToken(string $token): bool
     {
         if (session_status() !== PHP_SESSION_ACTIVE) {
+            EnvironmentHelper::configureSessionStorage();
             session_start();
         }
 

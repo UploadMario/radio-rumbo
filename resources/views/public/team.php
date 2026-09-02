@@ -34,7 +34,7 @@ $publicBio = static function (string $bio): string {
     <?php foreach ($teamMembers as $member): ?>
         <article class="person-card large">
             <?php if ((string) ($member['photo_path'] ?? '') !== ''): ?>
-                <img class="avatar-placeholder" src="<?= $e((string) $member['photo_path']) ?>" alt="" width="82" height="82">
+                <img class="avatar-placeholder" src="<?= $e((string) $member['photo_path']) ?>" alt="<?= $e('Foto de ' . (string) $member['name']) ?>" width="82" height="82" loading="lazy">
             <?php else: ?>
                 <div class="avatar-placeholder"><?= $e($initial((string) $member['name'])) ?></div>
             <?php endif; ?>

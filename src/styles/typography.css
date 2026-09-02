@@ -1,0 +1,19 @@
+.eyebrow,
+.section-kicker,
+.live-pill,
+.live-status-badge,
+.player-live-badge {
+  letter-spacing: 0.04em;
+}
+
+.hero-copy h1,
+.live-copy h1,
+.page-title h1 {
+  text-wrap: balance;
+}
+
+.section-heading p,
+.page-title p,
+.hero-copy p {
+  text-wrap: pretty;
+}

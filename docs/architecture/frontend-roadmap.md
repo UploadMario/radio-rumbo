@@ -9,9 +9,9 @@ La Fase 3.0 no introduce rediseño visual, Motion, shaders, WebGL, React ni depe
 - JavaScript vanilla en `public/assets/js/`.
 - DonWeb recibe assets estáticos ya listos.
 
-## Ruta Sugerida Para Fase 3.1
+## Implementado En Fase 3.1
 
-Si se decide modularizar assets, usar un pipeline opcional de build local:
+La modularizacion inicial queda activa:
 
 ```text
 src/

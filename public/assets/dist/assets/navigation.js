@@ -1,0 +1,1 @@
+var e=document.querySelector(`[data-nav-toggle]`),t=document.getElementById(`main-nav`),n=document.querySelector(`.site-header`);if(e&&t&&e.addEventListener(`click`,()=>{let n=t.classList.toggle(`is-open`);e.setAttribute(`aria-expanded`,n?`true`:`false`)}),n){let e=()=>{n.classList.toggle(`is-scrolled`,window.scrollY>8)};e(),window.addEventListener(`scroll`,e,{passive:!0})}

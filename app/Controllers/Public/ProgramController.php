@@ -6,12 +6,15 @@ namespace App\Controllers\Public;
 
 use App\Core\View;
 use App\Services\ProgramService;
+use App\Services\ProgramScheduleService;
 use Throwable;
 
 final class ProgramController
 {
-    public function __construct(private ?ProgramService $programs = null)
-    {
+    public function __construct(
+        private ?ProgramService $programs = null,
+        private ?ProgramScheduleService $schedule = null
+    ) {
     }
 
     /**
@@ -25,12 +28,28 @@ final class ProgramController
             $items = [];
         }
 
+        $selectedDay = ProgramScheduleService::selectedDay(
+            is_string($_GET['dia'] ?? null) ? $_GET['dia'] : null,
+            'America/Lima'
+        );
+        $todayKey = ProgramScheduleService::todayKey('America/Lima');
+        $fallback = is_array($mock['weekly_schedule'] ?? null) ? $mock['weekly_schedule'] : [];
+        $fallbackPrograms = $this->scheduleService()->normalizeSchedule($fallback, 'America/Lima');
+        $dayPrograms = $this->scheduleService()->programsForDay($items, $selectedDay);
+
+        if ($dayPrograms === []) {
+            $dayPrograms = $this->scheduleService()->programsForDay($fallbackPrograms, $selectedDay);
+        }
+
         View::render('layouts.public', [
             'active' => 'programacion',
             'contentView' => 'schedule',
             'mock' => $mock,
-            'pageTitle' => 'Radio Rumbo - Programacion',
-            'programs' => $items,
+            'pageTitle' => 'Radio Rumbo - Programación',
+            'programs' => $dayPrograms,
+            'selectedDay' => $selectedDay,
+            'todayKey' => $todayKey,
+            'dayLabels' => ProgramScheduleService::DAY_LABELS,
         ]);
     }
 
@@ -41,5 +60,14 @@ final class ProgramController
         }
 
         return $this->programs;
+    }
+
+    private function scheduleService(): ProgramScheduleService
+    {
+        if (!$this->schedule instanceof ProgramScheduleService) {
+            $this->schedule = new ProgramScheduleService($this->programService());
+        }
+
+        return $this->schedule;
     }
 }

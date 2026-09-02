@@ -3,12 +3,9 @@
 declare(strict_types=1);
 
 $schedule = is_array($mock['today_schedule'] ?? null) ? $mock['today_schedule'] : [];
-$news = is_array($mock['news'] ?? null) ? $mock['news'] : [];
 $team = is_array($mock['team'] ?? null) ? $mock['team'] : [];
 $facebookUrl = is_string($station['facebook_page_url'] ?? null) ? $station['facebook_page_url'] : '';
 $nextProgram = is_array($mock['next_program'] ?? null) ? $mock['next_program'] : null;
-$featuredNews = $news[0] ?? null;
-$secondaryNews = array_slice($news, 1, 2);
 $about = is_string($station['about'] ?? null) ? $station['about'] : '';
 $history = is_string($station['history'] ?? null) ? $station['history'] : '';
 $frequencyFm = is_string($station['frequency_fm'] ?? null) ? $station['frequency_fm'] : '91.1 FM';
@@ -30,27 +27,24 @@ $coverage = is_string($station['coverage'] ?? null) ? $station['coverage'] : 'Va
             </div>
             <div class="hero-actions">
                 <button class="btn btn-primary" type="button" data-player-toggle>Escuchar en vivo</button>
-                <a class="btn btn-soft" href="/en-vivo/#video-en-vivo">Ver transmisión</a>
-                <a class="btn btn-soft" href="/publicidad-contacto/">Anuncia con nosotros</a>
+                <a class="btn btn-soft" href="/en-vivo/">Abrir En vivo</a>
             </div>
+            <article class="program-summary hero-program-card">
+                <span>Programa actual</span>
+                <strong><?= $e((string) ($currentProgram['name'] ?? 'Rumbo Mañanero')) ?></strong>
+                <small><?= $e((string) ($currentProgram['schedule'] ?? '06:00 - 09:00')) ?> - <?= $e((string) ($currentProgram['host'] ?? 'Cabina Radio Rumbo')) ?></small>
+                <?php if ($nextProgram !== null): ?>
+                    <small class="player-next">Luego: <?= $e((string) ($nextProgram['name'] ?? 'Próximo bloque disponible')) ?></small>
+                <?php endif; ?>
+            </article>
         </div>
-        <article class="live-card hero-live-card">
-            <span class="live-pill"><?= $e((string) ($currentProgram['status'] ?? 'EN VIVO')) ?></span>
-            <h2>En vivo ahora</h2>
-            <p class="program-name"><?= $e((string) ($currentProgram['name'] ?? 'Rumbo Mañanero')) ?></p>
-            <p><?= $e((string) ($currentProgram['summary'] ?? 'Acompañamiento, información y música para Huancayo.')) ?></p>
-            <dl>
-                <div><dt>Cabina</dt><dd><?= $e((string) ($currentProgram['host'] ?? 'Cabina Radio Rumbo')) ?></dd></div>
-                <div><dt>Horario</dt><dd><?= $e((string) ($currentProgram['schedule'] ?? '06:00 - 09:00')) ?></dd></div>
-            </dl>
-            <?php if ($nextProgram !== null): ?>
-                <div class="next-mini">
-                    <span>Siguiente bloque</span>
-                    <strong><?= $e((string) ($nextProgram['name'] ?? 'Próximo bloque disponible')) ?></strong>
-                    <small><?= $e((string) ($nextProgram['schedule'] ?? 'Horario por confirmar')) ?></small>
-                </div>
-            <?php endif; ?>
-        </article>
+        <?php
+        $videoTitle = 'Video en directo';
+        $videoDescription = 'Mira la cabina y programas especiales sin salir de la web.';
+        $videoLoading = 'lazy';
+        $videoCardClass = 'live-video-card--home';
+        require dirname(__DIR__) . '/partials/live-video-player.php';
+        ?>
     </div>
 </section>
 
@@ -80,9 +74,9 @@ $coverage = is_string($station['coverage'] ?? null) ? $station['coverage'] : 'Va
         <small><?= $e((string) ($nextProgram['schedule'] ?? 'Horario por confirmar')) ?></small>
     </article>
     <article>
-        <span>Última noticia</span>
-        <strong><?= $e((string) ($featuredNews['title'] ?? 'Noticias de Huancayo')) ?></strong>
-        <small><?= $e((string) ($featuredNews['category'] ?? 'Información local')) ?></small>
+        <span>Noticias</span>
+        <strong>Publicaciones recientes</strong>
+        <small>Actualidad desde Facebook</small>
     </article>
     <article>
         <span>Transmisión</span>
@@ -101,32 +95,18 @@ $coverage = is_string($station['coverage'] ?? null) ? $station['coverage'] : 'Va
         </div>
         <p>Las publicaciones recientes se muestran desde Facebook para mantener la información actualizada.</p>
     </div>
-    <div class="container editorial-news-grid">
-        <?php if ($news === []): ?>
-            <article class="empty-state presentation-empty">Muy pronto tendremos nuevas publicaciones para nuestros oyentes.</article>
-        <?php endif; ?>
-        <?php if (is_array($featuredNews)): ?>
-            <article class="news-card featured-editorial">
-                <span><?= $e((string) ($featuredNews['category'] ?? 'Huancayo')) ?></span>
-                <h3><?= $e((string) ($featuredNews['title'] ?? 'Últimas noticias de Huancayo')) ?></h3>
-                <p><?= $e((string) ($featuredNews['summary'] ?? '')) ?></p>
-                <div class="hero-actions">
-                    <a class="btn btn-primary" href="/noticias/">Ver noticias</a>
-                    <?php if ($facebookUrl !== ''): ?>
-                        <a class="btn btn-soft admin-soft" href="<?= $e($facebookUrl) ?>" target="_blank" rel="noopener noreferrer">Ver Facebook oficial</a>
-                    <?php endif; ?>
-                </div>
-            </article>
-        <?php endif; ?>
-        <div class="editorial-side-list">
-            <?php foreach ($secondaryNews as $item): ?>
-                <article class="news-card compact-news">
-                    <span><?= $e((string) ($item['category'] ?? 'Radio Rumbo')) ?></span>
-                    <h3><?= $e((string) ($item['title'] ?? 'Información local')) ?></h3>
-                    <p><?= $e((string) ($item['summary'] ?? '')) ?></p>
-                </article>
-            <?php endforeach; ?>
-        </div>
+    <div class="container editorial-news-grid editorial-news-grid--single">
+        <article class="news-card featured-editorial">
+            <span>Facebook oficial</span>
+            <h3>Últimas publicaciones de Radio Rumbo</h3>
+            <p>Noticias locales, regionales y nacionales compartidas desde la presencia digital de la radio.</p>
+            <div class="hero-actions">
+                <a class="btn btn-primary" href="/noticias/">Ver noticias</a>
+                <?php if ($facebookUrl !== ''): ?>
+                    <a class="btn btn-soft admin-soft" href="<?= $e($facebookUrl) ?>" target="_blank" rel="noopener noreferrer">Ver Facebook oficial</a>
+                <?php endif; ?>
+            </div>
+        </article>
     </div>
 </section>
 
@@ -172,19 +152,13 @@ $coverage = is_string($station['coverage'] ?? null) ? $station['coverage'] : 'Va
 
 <?php $bannerPosition = 'home_middle'; require dirname(__DIR__) . '/partials/public-banner.php'; ?>
 
+<?php if ($team !== []): ?>
 <section class="container section-heading team-home-heading">
     <span class="section-kicker">Voces de la radio</span>
     <h2>Nuestro equipo</h2>
     <p>Las voces y áreas que acompañan la señal de Radio Rumbo.</p>
 </section>
 <section class="container team-strip">
-    <?php if ($team === []): ?>
-        <article class="person-card">
-            <div class="avatar-placeholder">R</div>
-            <h3>Equipo Radio Rumbo</h3>
-            <p>Las voces y áreas de la radio se publicarán desde el panel cuando la información oficial esté lista.</p>
-        </article>
-    <?php endif; ?>
     <?php foreach (array_slice($team, 0, 4) as $member): ?>
         <article class="person-card">
             <div class="avatar-placeholder"><?= $e(strtoupper(substr((string) $member['name'], 0, 1))) ?></div>
@@ -193,6 +167,7 @@ $coverage = is_string($station['coverage'] ?? null) ? $station['coverage'] : 'Va
         </article>
     <?php endforeach; ?>
 </section>
+<?php endif; ?>
 
 <section class="container final-cta">
     <div>

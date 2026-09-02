@@ -1,0 +1,26 @@
+.news-card,
+.service-card,
+.person-card,
+.media-card,
+.featured-news,
+.facebook-news-panel,
+.identity-copy,
+.identity-facts,
+.public-banner-card {
+  transition: border-color var(--transition-normal), box-shadow var(--transition-normal);
+}
+
+.news-card:hover,
+.service-card:hover,
+.person-card:hover,
+.public-banner-card:hover {
+  border-color: rgba(145, 200, 45, 0.32);
+  box-shadow: var(--shadow-lg);
+}
+
+.glass-panel {
+  background: var(--color-surface-glass);
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  box-shadow: var(--shadow-lg);
+  backdrop-filter: blur(20px) saturate(135%);
+}

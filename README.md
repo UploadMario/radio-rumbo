@@ -198,6 +198,26 @@ powershell -ExecutionPolicy Bypass -File scripts/build-deploy.ps1
 
 El paquete nunca debe incluir `.env`; crear el `.env` de producción manualmente en el servidor.
 
+## Fase 3.1 Visual System & Frontend Architecture
+
+La Fase 3.1 introduce un pipeline frontend opcional para desarrollo, sin React y sin requerir Node en DonWeb.
+
+- CSS modular en `src/styles/`.
+- JavaScript modular en `src/scripts/`.
+- Design tokens en `src/styles/tokens.css`.
+- Build con Vite hacia `public/assets/dist/`.
+- Motion se usa sobre DOM con moderación y respeta `prefers-reduced-motion`.
+- Los assets compilados se versionan para despliegue en hosting compartido.
+
+Comandos frontend:
+
+```bash
+npm install
+npm run build
+```
+
+En producción DonWeb solo debe recibir `public/assets/dist/`; no necesita ejecutar Node.
+
 ## Fase 2.6 Presentacion ejecutiva
 
 ## Nota Facebook Page Plugin

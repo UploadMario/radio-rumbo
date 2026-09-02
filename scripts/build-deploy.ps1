@@ -16,6 +16,8 @@ $excludedDirectories = @(
     ".phpunit.cache",
     ".deploy-staging",
     "build",
+    "node_modules",
+    ".npm-cache",
     "tests",
     "storage\logs",
     "storage\rate-limit"

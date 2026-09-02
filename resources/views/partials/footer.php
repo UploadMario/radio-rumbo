@@ -15,15 +15,22 @@ $hasEmail = $email !== '' && stripos($email, 'pendiente') === false;
 ?>
 <footer class="site-footer">
     <div class="container footer-grid">
-        <div>
+        <div class="footer-about">
             <div class="footer-brand">
                 <img class="footer-logo" src="/assets/img/radio-rumbo-logo.png" alt="Radio Rumbo" width="64" height="64">
             </div>
             <p><?= $e((string) ($station['tagline'] ?? 'La radio que se ve')) ?></p>
             <p class="footer-note">91.1 FM, 1560 AM, señal online y video digital desde Huancayo para el Valle del Mantaro.</p>
+            <div class="footer-signal">
+                <span>91.1 FM</span>
+                <span>1560 AM</span>
+                <span>Señal online</span>
+                <span>Video en vivo</span>
+            </div>
         </div>
         <div>
             <h2>Secciones</h2>
+            <a href="/">Inicio</a>
             <a href="/en-vivo/">En vivo</a>
             <a href="/programacion/">Programación</a>
             <a href="/noticias/">Noticias</a>
@@ -48,5 +55,9 @@ $hasEmail = $email !== '' && stripos($email, 'pendiente') === false;
                 </div>
             <?php endif; ?>
         </div>
+    </div>
+    <div class="container footer-bottom">
+        <span>&copy; <?= date('Y') ?> Radio Rumbo. Huancayo, Perú.</span>
+        <span>La radio que se ve.</span>
     </div>
 </footer>

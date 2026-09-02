@@ -45,4 +45,20 @@ final class EnvironmentHelper
     {
         date_default_timezone_set(self::timezone());
     }
+
+    public static function configureSessionStorage(): void
+    {
+        if (session_status() === PHP_SESSION_ACTIVE) {
+            return;
+        }
+
+        $path = dirname(__DIR__, 2) . '/storage/sessions';
+        if (!is_dir($path)) {
+            @mkdir($path, 0775, true);
+        }
+
+        if (is_dir($path) && is_writable($path)) {
+            ini_set('session.save_path', $path);
+        }
+    }
 }

@@ -1,0 +1,8 @@
+.avatar-placeholder {
+  box-shadow: var(--shadow-glow);
+}
+
+.person-card img,
+.person-card .avatar-placeholder {
+  aspect-ratio: 1;
+}

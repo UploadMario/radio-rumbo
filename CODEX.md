@@ -169,6 +169,17 @@ Extensiones PHP recomendadas: `pdo_mysql`, `mbstring`, `dom`, `xml`, `xmlwriter`
 - Usar `config/default-content.php` para contenido base oficial. `config/mock-data.php` solo existe como alias temporal de compatibilidad.
 - Para despliegue DonWeb usar `scripts/build-deploy.ps1` y crear `.env` de producción manualmente en el servidor.
 
+## Fase 3.1 Visual System
+
+- Frontend modular en `src/styles/` y `src/scripts/`.
+- Vite compila a `public/assets/dist/`; DonWeb no requiere Node.
+- No introducir React ni convertir la web en SPA.
+- `src/styles/tokens.css` define colores, spacing, sombras, radios, tipografía y transiciones.
+- `motion` se usa solo para microinteracciones, entrada de hero/cards y player. Respetar `prefers-reduced-motion`.
+- Shaders reales quedan fuera de esta fase; se usan gradientes CSS con fallback nativo.
+- Mantener Facebook lazy donde no sea protagonista y video eager en `/en-vivo/`.
+- Antes de publicar, ejecutar `npm run build`, `composer test`, `composer analyse` y `composer lint`.
+
 ## Integracion Facebook
 
 Facebook debe mostrarse con el Page Plugin oficial dentro de la web. Usar primero `facebook_page_plugin_url` desde BD, luego `FACEBOOK_PAGE_PLUGIN_URL`; si ambos estan vacios, construir la URL del plugin desde `facebook_page_url` o `FACEBOOK_PAGE_URL` validada por HTTPS. No usar sandbox en el iframe, scraping, SDK obligatorio ni API privada.

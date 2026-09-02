@@ -1,0 +1,14 @@
+input,
+textarea,
+select {
+  background: #fff;
+  transition: border-color var(--transition-normal), box-shadow var(--transition-normal);
+}
+
+input:focus,
+textarea:focus,
+select:focus {
+  border-color: rgba(145, 200, 45, 0.72);
+  box-shadow: 0 0 0 4px rgba(145, 200, 45, 0.14);
+  outline: 0;
+}

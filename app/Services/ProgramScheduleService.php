@@ -10,6 +10,28 @@ use Throwable;
 
 final class ProgramScheduleService
 {
+    /** @var array<string, string> */
+    public const DAY_LABELS = [
+        'lunes' => 'Lunes',
+        'martes' => 'Martes',
+        'miercoles' => 'Miércoles',
+        'jueves' => 'Jueves',
+        'viernes' => 'Viernes',
+        'sabado' => 'Sábado',
+        'domingo' => 'Domingo',
+    ];
+
+    /** @var array<string, string> */
+    private const ENGLISH_TO_SPANISH_DAYS = [
+        'monday' => 'lunes',
+        'tuesday' => 'martes',
+        'wednesday' => 'miercoles',
+        'thursday' => 'jueves',
+        'friday' => 'viernes',
+        'saturday' => 'sabado',
+        'sunday' => 'domingo',
+    ];
+
     public function __construct(private ?ProgramService $programs = null, private ?LoggerService $logger = null)
     {
     }
@@ -24,11 +46,21 @@ final class ProgramScheduleService
         $usingDatabase = $programs !== [];
 
         if (!$usingDatabase) {
-            $fallback = is_array($defaultContent['today_schedule'] ?? null) ? $defaultContent['today_schedule'] : [];
+            $weekly = is_array($defaultContent['weekly_schedule'] ?? null) ? $defaultContent['weekly_schedule'] : [];
+            $fallback = $weekly !== [] ? $weekly : (is_array($defaultContent['today_schedule'] ?? null)
+                ? $defaultContent['today_schedule']
+                : []);
             $programs = $this->normalizeSchedule($fallback, $timezone, $now);
         }
 
         $context = $this->context($programs, $timezone, $now);
+        if ($usingDatabase && $context['today_schedule'] === []) {
+            $weekly = is_array($defaultContent['weekly_schedule'] ?? null) ? $defaultContent['weekly_schedule'] : [];
+            $programs = $this->normalizeSchedule($weekly, $timezone, $now);
+            $context = $this->context($programs, $timezone, $now);
+            $usingDatabase = false;
+        }
+
         $defaultContent['today_schedule'] = $context['today_schedule'];
         $defaultContent['current_program'] = $context['current_program'];
         $defaultContent['next_program'] = $context['next_program'];
@@ -55,7 +87,7 @@ final class ProgramScheduleService
     public function normalizeSchedule(array $items, string $timezone, ?DateTimeImmutable $now = null): array
     {
         $clock = $now ?? new DateTimeImmutable('now', new DateTimeZone($timezone));
-        $today = strtolower($clock->format('l'));
+        $today = self::todayKey($timezone, $clock);
         $normalized = [];
 
         foreach ($items as $index => $item) {
@@ -68,10 +100,10 @@ final class ProgramScheduleService
             $nextTime = $next !== null ? (string) ($next['time'] ?? $next['start_time'] ?? '') : '';
 
             $normalized[] = [
-                'name' => (string) ($item['name'] ?? 'Programación en pausa'),
+                'name' => $this->presentableProgramName((string) ($item['name'] ?? 'Programación en pausa')),
                 'description' => (string) ($item['description'] ?? $item['summary'] ?? ''),
                 'host_name' => (string) ($item['host_name'] ?? $item['host'] ?? 'Cabina Radio Rumbo'),
-                'day_of_week' => (string) ($item['day_of_week'] ?? $today),
+                'day_of_week' => self::normalizeDay((string) ($item['day_of_week'] ?? $today)) ?? $today,
                 'start_time' => substr($time, 0, 5),
                 'end_time' => substr($nextTime !== '' ? $nextTime : (string) ($item['end_time'] ?? '23:59'), 0, 5),
                 'category' => (string) ($item['category'] ?? 'Radio Rumbo'),
@@ -89,22 +121,9 @@ final class ProgramScheduleService
     public function context(array $programs, string $timezone, ?DateTimeImmutable $now = null): array
     {
         $clock = $now ?? new DateTimeImmutable('now', new DateTimeZone($timezone));
-        $today = strtolower($clock->format('l'));
+        $today = self::todayKey($timezone, $clock);
+        $todayPrograms = $this->programsForDay($programs, $today);
         $currentTime = $clock->format('H:i');
-        $todayPrograms = [];
-
-        foreach ($programs as $program) {
-            if ((string) ($program['day_of_week'] ?? $today) !== $today) {
-                continue;
-            }
-
-            $todayPrograms[] = $this->programViewData($program, false);
-        }
-
-        usort(
-            $todayPrograms,
-            static fn (array $a, array $b): int => strcmp((string) $a['start_time'], (string) $b['start_time'])
-        );
 
         $current = null;
         $next = null;
@@ -122,12 +141,13 @@ final class ProgramScheduleService
 
         if ($current === null) {
             $current = [
-                'name' => 'Programación en pausa',
+                'name' => $todayPrograms === [] ? 'Sin programa registrado' : 'Programación en pausa',
                 'host' => 'Radio Rumbo',
                 'schedule' => $next !== null ? 'Próximo bloque: ' . (string) $next['time'] : 'Fuera de horario',
-                'category' => 'Señal fuera de horario',
-                'status' => 'EN PAUSA',
-                'summary' => 'La señal puede encontrarse fuera de horario o pendiente de activación desde cabina.',
+                'category' => 'Programación',
+                'status' => 'Programación en pausa',
+                'summary' => 'La transmisión de audio puede estar fuera de horario '
+                    . 'o pendiente de activación desde cabina.',
                 'time' => $next !== null ? (string) $next['time'] : '',
                 'start_time' => $next !== null ? (string) $next['start_time'] : '',
                 'end_time' => $next !== null ? (string) $next['end_time'] : '',
@@ -152,6 +172,73 @@ final class ProgramScheduleService
         ];
     }
 
+    public static function todayKey(string $timezone, ?DateTimeImmutable $now = null): string
+    {
+        $clock = $now ?? new DateTimeImmutable('now', new DateTimeZone($timezone));
+        $englishDay = strtolower($clock->format('l'));
+
+        return self::ENGLISH_TO_SPANISH_DAYS[$englishDay] ?? 'lunes';
+    }
+
+    public static function normalizeDay(?string $day): ?string
+    {
+        if ($day === null) {
+            return null;
+        }
+
+        $normalized = strtolower(trim(strtr($day, [
+            'Á' => 'a',
+            'É' => 'e',
+            'Í' => 'i',
+            'Ó' => 'o',
+            'Ú' => 'u',
+            'á' => 'a',
+            'é' => 'e',
+            'í' => 'i',
+            'ó' => 'o',
+            'ú' => 'u',
+        ])));
+
+        if (isset(self::ENGLISH_TO_SPANISH_DAYS[$normalized])) {
+            return self::ENGLISH_TO_SPANISH_DAYS[$normalized];
+        }
+
+        return isset(self::DAY_LABELS[$normalized]) ? $normalized : null;
+    }
+
+    public static function selectedDay(?string $requestedDay, string $timezone, ?DateTimeImmutable $now = null): string
+    {
+        return self::normalizeDay($requestedDay) ?? self::todayKey($timezone, $now);
+    }
+
+    /**
+     * @param list<array<string, mixed>> $programs
+     * @return list<array<string, mixed>>
+     */
+    public function programsForDay(array $programs, string $selectedDay): array
+    {
+        $normalizedDay = self::normalizeDay($selectedDay) ?? $selectedDay;
+        $dayPrograms = [];
+
+        foreach ($programs as $program) {
+            $programDay = self::normalizeDay((string) ($program['day_of_week'] ?? $normalizedDay)) ?? $normalizedDay;
+            if ($programDay !== $normalizedDay) {
+                continue;
+            }
+
+            $viewData = $this->programViewData($program, false);
+            $viewData['day_of_week'] = $programDay;
+            $dayPrograms[] = $viewData;
+        }
+
+        usort(
+            $dayPrograms,
+            static fn (array $a, array $b): int => strcmp((string) $a['start_time'], (string) $b['start_time'])
+        );
+
+        return $dayPrograms;
+    }
+
     /**
      * @param array<string, mixed> $program
      * @return array<string, mixed>
@@ -162,7 +249,7 @@ final class ProgramScheduleService
         $end = substr((string) ($program['end_time'] ?? '23:59'), 0, 5);
 
         return [
-            'name' => (string) ($program['name'] ?? 'Programación en pausa'),
+            'name' => $this->presentableProgramName((string) ($program['name'] ?? 'Programación en pausa')),
             'host' => (string) ($program['host_name'] ?? $program['host'] ?? 'Cabina Radio Rumbo'),
             'schedule' => $start . ' - ' . $end,
             'category' => (string) ($program['category'] ?? 'Radio Rumbo'),
@@ -171,6 +258,7 @@ final class ProgramScheduleService
             'time' => $start,
             'start_time' => $start,
             'end_time' => $end,
+            'day_of_week' => self::normalizeDay((string) ($program['day_of_week'] ?? '')) ?? '',
             'live' => $live,
         ];
     }
@@ -191,5 +279,10 @@ final class ProgramScheduleService
         }
 
         return $this->logger;
+    }
+
+    private function presentableProgramName(string $name): string
+    {
+        return trim($name) === 'Programa matinal' ? 'Rumbo Mañanero' : $name;
     }
 }

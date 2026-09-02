@@ -1,0 +1,11 @@
+.u-gradient-text {
+  color: var(--color-brand-light);
+  background: linear-gradient(135deg, var(--color-brand-light), #f4ffd1);
+  -webkit-background-clip: text;
+  background-clip: text;
+}
+
+.u-no-motion {
+  animation: none !important;
+  transition: none !important;
+}

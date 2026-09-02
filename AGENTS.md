@@ -85,3 +85,13 @@ No crear roles adicionales. No inventar datos reales de la emisora, personal, cl
 - No volver a cargar lógica de programación en `public/bootstrap.php`; usar `ProgramScheduleService`.
 - Usar `config/default-content.php` para contenido base oficial; no introducir nuevas referencias productivas a “mock”.
 - Generar paquetes DonWeb con `scripts/build-deploy.ps1` y crear `.env` de producción manualmente en el servidor.
+
+## Fase 3.1 frontend
+
+- No introducir React.
+- DonWeb no debe depender de Node; publicar assets compilados en `public/assets/dist/`.
+- Usar Vite solo como herramienta local de build.
+- Mantener CSS modular en `src/styles/` y JS modular en `src/scripts/`.
+- Respetar `prefers-reduced-motion`.
+- Motion debe usarse con moderación; no animar tablas ni formularios complejos.
+- No mostrar Admin en navegación pública.

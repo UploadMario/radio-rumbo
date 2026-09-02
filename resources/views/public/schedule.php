@@ -3,30 +3,34 @@
 declare(strict_types=1);
 
 $programs = is_array($programs ?? null) ? $programs : [];
-$dayLabels = [
-    'monday' => 'Lunes',
-    'tuesday' => 'Martes',
-    'wednesday' => 'Miércoles',
-    'thursday' => 'Jueves',
-    'friday' => 'Viernes',
-    'saturday' => 'Sábado',
-    'sunday' => 'Domingo',
-];
-$todayKey = strtolower(date('l'));
-$now = date('H:i:s');
+$dayLabels = is_array($dayLabels ?? null) ? $dayLabels : [];
+$selectedDay = is_string($selectedDay ?? null) ? $selectedDay : 'lunes';
+$todayKey = is_string($todayKey ?? null) ? $todayKey : $selectedDay;
+$now = (new DateTimeImmutable('now', new DateTimeZone('America/Lima')))->format('H:i');
 ?>
-<section class="page-title container">
+<section class="page-title container schedule-page-title">
     <span class="section-kicker">Parrilla radial</span>
     <h1>Programación</h1>
     <p>Consulta los programas, horarios y voces que acompañan la señal de Radio Rumbo.</p>
-</section>
-<section class="container">
-    <div class="filter-row" aria-label="Filtros visuales por día">
-        <?php foreach ($dayLabels as $value => $day): ?>
-            <button class="<?= $value === $todayKey ? 'is-active' : '' ?>" type="button"><?= $e($day) ?></button>
-        <?php endforeach; ?>
+    <div class="schedule-global-actions">
+        <button class="btn btn-primary" type="button" data-player-toggle>Escuchar en vivo</button>
+        <a class="btn btn-soft" href="/en-vivo/">Ver cabina</a>
     </div>
-    <div class="schedule-list public-schedule-list">
+</section>
+<section class="container schedule-page">
+    <nav class="filter-row schedule-day-filter" aria-label="Seleccionar día de programación">
+        <?php foreach ($dayLabels as $value => $day): ?>
+            <a
+                class="<?= $value === $selectedDay ? 'is-active' : '' ?>"
+                href="/programacion/?dia=<?= $e((string) $value) ?>"
+                <?= $value === $selectedDay ? 'aria-current="page"' : '' ?>
+            >
+                <span><?= $e((string) $day) ?></span>
+                <?php if ($value === $todayKey): ?><small>Hoy</small><?php endif; ?>
+            </a>
+        <?php endforeach; ?>
+    </nav>
+    <div class="schedule-list public-schedule-list schedule-timeline">
         <?php if ($programs === []): ?>
             <article class="presentation-empty">
                 <div>
@@ -37,7 +41,7 @@ $now = date('H:i:s');
         <?php endif; ?>
         <?php foreach ($programs as $program): ?>
             <?php
-            $isLive = (string) $program['day_of_week'] === $todayKey
+            $isLive = $selectedDay === $todayKey
                 && (string) $program['start_time'] <= $now
                 && (string) $program['end_time'] > $now;
             ?>
@@ -45,11 +49,10 @@ $now = date('H:i:s');
                 <time><?= $e(substr((string) $program['start_time'], 0, 5)) ?> - <?= $e(substr((string) $program['end_time'], 0, 5)) ?></time>
                 <div>
                     <h2><?= $e((string) $program['name']) ?></h2>
-                    <p><?= $e($dayLabels[(string) $program['day_of_week']] ?? (string) $program['day_of_week']) ?> - <?= $e((string) ($program['host_name'] ?: 'Cabina Radio Rumbo')) ?> - <?= $e((string) ($program['category'] ?: 'Programación')) ?></p>
-                    <?php if ((string) ($program['description'] ?? '') !== ''): ?><p><?= $e((string) $program['description']) ?></p><?php endif; ?>
+                    <p><?= $e((string) ($program['host'] ?? $program['host_name'] ?? 'Cabina Radio Rumbo')) ?> - <?= $e((string) ($program['category'] ?: 'Programación')) ?></p>
+                    <?php if ((string) ($program['summary'] ?? '') !== ''): ?><p><?= $e((string) $program['summary']) ?></p><?php endif; ?>
                 </div>
                 <?php if ($isLive): ?><span class="live-pill">En vivo ahora</span><?php endif; ?>
-                <a class="btn btn-soft admin-soft" href="/en-vivo/">Ver señal</a>
             </article>
         <?php endforeach; ?>
     </div>

@@ -14,6 +14,8 @@ final class SessionService
             return;
         }
 
+        EnvironmentHelper::configureSessionStorage();
+
         session_set_cookie_params([
             'lifetime' => 0,
             'path' => '/',

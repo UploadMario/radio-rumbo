@@ -4,12 +4,10 @@ La Fase 3.0 documenta deuda técnica de SEO y accesibilidad sin ejecutar todaví
 
 ## SEO Pendiente
 
-- Canonical por página.
-- Open Graph y social metadata.
-- Favicon definitivo.
-- `robots.txt`.
-- `sitemap.xml`.
-- Structured data para medio local/radio si se confirma la información oficial.
+- Revisar canonical final cuando el dominio definitivo esté configurado en `APP_URL`.
+- Completar Open Graph con imagen final de alta calidad si el cliente entrega material oficial.
+- Actualizar `public/sitemap.xml` con el dominio definitivo cuando el cliente confirme `APP_URL` de producción.
+- Ampliar structured data cuando se confirme información institucional adicional.
 
 ## Accesibilidad Pendiente
 
@@ -19,6 +17,18 @@ La Fase 3.0 documenta deuda técnica de SEO y accesibilidad sin ejecutar todaví
 - Estados de foco consistentes.
 - Soporte `prefers-reduced-motion` en futuros efectos.
 - Verificación de contraste después del Visual System.
+
+## Implementado En Fase 3.1
+
+- Meta description por página.
+- Canonical basado en `APP_URL`.
+- Open Graph y Twitter cards básicos.
+- Favicon SVG.
+- `robots.txt`.
+- Sitemap básico en `/sitemap.xml`.
+- Structured data básico `RadioStation`.
+- Skip link, focus visible y `aria-live` en reproductor.
+- `prefers-reduced-motion` en CSS/JS.
 
 ## Correcciones Permitidas En Esta Fase
 
