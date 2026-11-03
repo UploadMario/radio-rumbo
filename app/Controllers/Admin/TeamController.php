@@ -151,10 +151,10 @@ final class TeamController
                     $this->teamService()->toggle($id);
                     $this->audit()->record($user['id'], 'team.toggle', 'team_member', $id);
                     $this->sessions()->flash('success', 'Estado del integrante actualizado.');
-                } elseif ($id > 0 && $action === 'delete') {
-                    $this->teamService()->delete($id);
-                    $this->audit()->record($user['id'], 'team.delete', 'team_member', $id);
-                    $this->sessions()->flash('success', 'Integrante eliminado correctamente.');
+                } elseif ($id > 0 && ($action === 'archive' || $action === 'delete')) {
+                    $this->teamService()->archive($id);
+                    $this->audit()->record($user['id'], 'team.archive', 'team_member', $id);
+                    $this->sessions()->flash('success', 'Integrante archivado correctamente.');
                 }
             } catch (Throwable) {
                 $this->sessions()->flash('success', 'No se pudo completar la accion solicitada.');

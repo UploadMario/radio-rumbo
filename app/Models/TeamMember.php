@@ -109,10 +109,18 @@ final class TeamMember
         $statement->execute(['id' => $id]);
     }
 
+    public function archive(int $id): void
+    {
+        $statement = $this->pdo()->prepare('UPDATE team_members SET is_active = 0 WHERE id = :id');
+        $statement->execute(['id' => $id]);
+    }
+
+    /**
+     * Backward-compatible alias. Team records are retained and deactivated.
+     */
     public function delete(int $id): void
     {
-        $statement = $this->pdo()->prepare('DELETE FROM team_members WHERE id = :id');
-        $statement->execute(['id' => $id]);
+        $this->archive($id);
     }
 
     public function activeCount(): int

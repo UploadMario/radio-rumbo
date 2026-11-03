@@ -35,9 +35,9 @@ $error = is_string($error ?? null) ? $error : null;
                         </form>
                         <form action="/admin/team/" method="post">
                             <input type="hidden" name="_csrf_token" value="<?= $e(SecurityHelper::csrfToken()) ?>">
-                            <input type="hidden" name="_action" value="delete">
+                            <input type="hidden" name="_action" value="archive">
                             <input type="hidden" name="id" value="<?= $e((string) $item['id']) ?>">
-                            <button type="submit">Eliminar</button>
+                            <button type="submit">Archivar</button>
                         </form>
                     </td>
                 </tr>

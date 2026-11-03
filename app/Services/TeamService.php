@@ -79,9 +79,14 @@ final class TeamService
         $this->repository()->toggle($id);
     }
 
+    public function archive(int $id): void
+    {
+        $this->repository()->archive($id);
+    }
+
     public function delete(int $id): void
     {
-        $this->repository()->delete($id);
+        $this->archive($id);
     }
 
     public function activeCount(): int

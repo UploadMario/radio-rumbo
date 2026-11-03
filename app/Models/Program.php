@@ -124,10 +124,19 @@ final class Program
         $statement->execute(['id' => $id]);
     }
 
+    public function archive(int $id): void
+    {
+        $statement = $this->pdo()->prepare('UPDATE programs SET is_active = 0 WHERE id = :id');
+        $statement->execute(['id' => $id]);
+    }
+
+    /**
+     * Backward-compatible alias. Program records are never physically deleted
+     * through the administrative flow; they are archived by deactivation.
+     */
     public function delete(int $id): void
     {
-        $statement = $this->pdo()->prepare('DELETE FROM programs WHERE id = :id');
-        $statement->execute(['id' => $id]);
+        $this->archive($id);
     }
 
     public function activeCount(): int

@@ -152,10 +152,10 @@ final class ProgramController
                     $this->programService()->toggle($id);
                     $this->audit()->record($user['id'], 'program.toggle', 'program', $id);
                     $this->sessions()->flash('success', 'Estado del programa actualizado.');
-                } elseif ($id > 0 && $action === 'delete') {
-                    $this->programService()->delete($id);
-                    $this->audit()->record($user['id'], 'program.delete', 'program', $id);
-                    $this->sessions()->flash('success', 'Programa eliminado correctamente.');
+                } elseif ($id > 0 && ($action === 'archive' || $action === 'delete')) {
+                    $this->programService()->archive($id);
+                    $this->audit()->record($user['id'], 'program.archive', 'program', $id);
+                    $this->sessions()->flash('success', 'Programa archivado correctamente.');
                 }
             } catch (Throwable) {
                 $this->sessions()->flash('success', 'No se pudo completar la accion solicitada.');
