@@ -33,7 +33,16 @@ $videoCardClass = is_string($videoCardClass ?? null) ? $videoCardClass : '';
                 allowfullscreen
                 referrerpolicy="no-referrer-when-downgrade"></iframe>
         </div>
-        <span class="live-video-action">En vivo desde Radio Rumbo</span>
+        <div class="live-video-lower-third" aria-label="Información de transmisión">
+            <div>
+                <span>Ahora en cabina</span>
+                <strong><?= $e((string) ($currentProgram['name'] ?? 'Radio Rumbo en vivo')) ?></strong>
+                <small><?= $e((string) ($currentProgram['schedule'] ?? 'Señal online')) ?></small>
+            </div>
+            <div class="signal-line" aria-hidden="true">
+                <i></i><i></i><i></i><i></i>
+            </div>
+        </div>
     <?php else: ?>
         <p class="embed-fallback">La transmisión de video no está disponible por el momento.</p>
     <?php endif; ?>

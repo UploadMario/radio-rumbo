@@ -24,7 +24,7 @@ final class NewsController
             $error = null;
         } catch (Throwable) {
             $items = [];
-            $error = 'Las noticias dinámicas estarán disponibles cuando la base de datos esté configurada.';
+            $error = null;
         }
 
         View::render('layouts.public', [

@@ -13,7 +13,7 @@
 }
 
 .footer-logo {
-  width: 120px;
+  width: min(190px, 100%);
   height: auto;
   object-fit: contain;
   background: transparent;
@@ -72,6 +72,7 @@
   }
 
   .site-footer {
-    padding-top: var(--space-6);
+    padding-top: var(--space-5);
+    padding-bottom: calc(var(--player-height) + var(--space-5));
   }
 }

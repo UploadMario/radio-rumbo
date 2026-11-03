@@ -6,6 +6,7 @@ html {
 body {
   min-width: 320px;
   overflow-x: clip;
+  font-family: var(--font-ui);
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
 }

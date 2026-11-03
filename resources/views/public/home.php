@@ -13,17 +13,15 @@ $frequencyAm = is_string($station['frequency_am'] ?? null) ? $station['frequency
 $coverage = is_string($station['coverage'] ?? null) ? $station['coverage'] : 'Valle del Mantaro';
 ?>
 <section class="hero-section home-hero">
-    <img class="hero-watermark" src="/assets/img/radio-rumbo-logo.png" alt="" aria-hidden="true">
+    <img class="hero-watermark" src="/assets/img/radio-rumbo-isotype-web.png" alt="" aria-hidden="true">
     <div class="container hero-grid">
         <div class="hero-copy">
             <span class="section-kicker">Huancayo, Perú</span>
             <h1>La radio que se ve</h1>
             <p>Audio, video, noticias y programación desde Huancayo.</p>
-            <div class="hero-signal-row" aria-label="Secciones principales">
-                <span><?= $e($frequencyFm) ?></span>
-                <span><?= $e($frequencyAm) ?></span>
-                <span>Señal online</span>
-                <span>Video en vivo</span>
+            <div class="frequency-lockup" aria-label="Frecuencias de Radio Rumbo">
+                <span><strong>91.1</strong><small>FM</small></span>
+                <span><strong>1560</strong><small>AM</small></span>
             </div>
             <div class="hero-actions">
                 <button class="btn btn-primary" type="button" data-player-toggle>Escuchar en vivo</button>
@@ -48,28 +46,14 @@ $coverage = is_string($station['coverage'] ?? null) ? $station['coverage'] : 'Va
     </div>
 </section>
 
-<section class="container identity-section">
-    <div class="identity-copy">
-        <span class="section-kicker">Medio multiplataforma</span>
-        <h2>Desde 1996 junto al Valle del Mantaro</h2>
-        <p><?= $e($about) ?></p>
-        <p><?= $e($history) ?></p>
-    </div>
-    <div class="identity-facts" aria-label="Frecuencias y cobertura">
-        <article><span>FM</span><strong><?= $e($frequencyFm) ?></strong></article>
-        <article><span>AM</span><strong><?= $e($frequencyAm) ?></strong></article>
-        <article><span>Cobertura</span><strong><?= $e($coverage) ?></strong></article>
-    </div>
-</section>
-
-<section class="container today-strip" aria-label="Hoy en Radio Rumbo">
+<section class="container broadcast-now" aria-label="Ahora en Radio Rumbo">
     <article>
-        <span>Al aire</span>
+        <span>Ahora al aire</span>
         <strong><?= $e((string) ($currentProgram['name'] ?? 'Programación en pausa')) ?></strong>
-        <small><?= $e((string) ($currentProgram['host'] ?? 'Radio Rumbo')) ?></small>
+        <small><?= $e((string) ($currentProgram['schedule'] ?? 'Horario por confirmar')) ?></small>
     </article>
     <article>
-        <span>Próximo</span>
+        <span>Siguiente</span>
         <strong><?= $e((string) ($nextProgram['name'] ?? 'Próximo bloque disponible')) ?></strong>
         <small><?= $e((string) ($nextProgram['schedule'] ?? 'Horario por confirmar')) ?></small>
     </article>
@@ -86,6 +70,29 @@ $coverage = is_string($station['coverage'] ?? null) ? $station['coverage'] : 'Va
 </section>
 
 <?php $bannerPosition = 'home_hero'; require dirname(__DIR__) . '/partials/public-banner.php'; ?>
+
+<section class="container home-schedule-section">
+    <div class="section-heading compact-heading broadcast-heading">
+        <div>
+            <span class="section-kicker">Hoy en cabina</span>
+            <h2>Programación de hoy</h2>
+            <p>Ahora, siguiente y los próximos bloques de la señal.</p>
+        </div>
+        <a class="btn btn-soft" href="/programacion/">Ver programación completa</a>
+    </div>
+    <div class="schedule-list compact home-schedule-list home-schedule-broadcast">
+        <?php foreach (array_slice($schedule, 0, 4) as $program): ?>
+            <article class="<?= (bool) ($program['live'] ?? false) ? 'is-live' : '' ?>">
+                <time><?= $e((string) ($program['time'] ?? '')) ?></time>
+                <div>
+                    <h3><?= $e((string) ($program['name'] ?? 'Bloque Radio Rumbo')) ?></h3>
+                    <p><?= $e((string) ($program['host'] ?? 'Cabina Radio Rumbo')) ?> - <?= $e((string) ($program['category'] ?? 'Radio Rumbo')) ?></p>
+                </div>
+                <?php if ((bool) ($program['live'] ?? false)): ?><span class="live-pill">Ahora</span><?php endif; ?>
+            </article>
+        <?php endforeach; ?>
+    </div>
+</section>
 
 <section class="section-light home-news-section">
     <div class="container section-heading editorial-heading">
@@ -110,43 +117,17 @@ $coverage = is_string($station['coverage'] ?? null) ? $station['coverage'] : 'Va
     </div>
 </section>
 
-<section class="container home-schedule-section">
-    <div class="section-heading compact-heading">
-        <span class="section-kicker">Hoy en cabina</span>
-        <h2>Programación de hoy</h2>
-        <p>Bloques, voces y horarios para acompañar tu día.</p>
+<section class="container identity-section">
+    <div class="identity-copy">
+        <span class="section-kicker">Medio multiplataforma</span>
+        <h2>Desde 1996 junto al Valle del Mantaro</h2>
+        <p><?= $e($about) ?></p>
+        <p><?= $e($history) ?></p>
     </div>
-    <div class="schedule-list compact home-schedule-list">
-        <?php foreach (array_slice($schedule, 0, 5) as $program): ?>
-            <article class="<?= (bool) ($program['live'] ?? false) ? 'is-live' : '' ?>">
-                <time><?= $e((string) ($program['time'] ?? '')) ?></time>
-                <div>
-                    <h3><?= $e((string) ($program['name'] ?? 'Bloque Radio Rumbo')) ?></h3>
-                    <p><?= $e((string) ($program['host'] ?? 'Cabina Radio Rumbo')) ?> - <?= $e((string) ($program['category'] ?? 'Radio Rumbo')) ?></p>
-                </div>
-                <?php if ((bool) ($program['live'] ?? false)): ?><span class="live-pill">Ahora</span><?php endif; ?>
-            </article>
-        <?php endforeach; ?>
-    </div>
-</section>
-
-<section class="home-video-cta">
-    <div class="container split-section">
-        <div>
-            <span class="section-kicker">La radio que se ve</span>
-            <h2>Radio tradicional, redes sociales y video digital en vivo.</h2>
-            <p>Escucha la señal online, mira la transmisión y sigue las noticias locales, regionales y nacionales desde Huancayo.</p>
-            <div class="hero-actions">
-                <a class="btn btn-primary" href="/en-vivo/#video-en-vivo">Ver transmisión</a>
-                <?php if ($facebookUrl !== ''): ?>
-                    <a class="btn btn-soft" href="<?= $e($facebookUrl) ?>" target="_blank" rel="noopener noreferrer">Ver Facebook</a>
-                <?php endif; ?>
-            </div>
-        </div>
-        <aside class="signal-card">
-            <strong>Radio Rumbo en vivo</strong>
-            <span><?= $e((string) ($currentProgram['name'] ?? 'Programación en pausa')) ?></span>
-        </aside>
+    <div class="identity-facts" aria-label="Frecuencias y cobertura">
+        <article><span>FM</span><strong><?= $e($frequencyFm) ?></strong></article>
+        <article><span>AM</span><strong><?= $e($frequencyAm) ?></strong></article>
+        <article><span>Cobertura</span><strong><?= $e($coverage) ?></strong></article>
     </div>
 </section>
 

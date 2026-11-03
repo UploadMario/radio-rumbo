@@ -39,7 +39,7 @@ $descriptions = [
     'advertising-contact' => 'Anuncia con Radio Rumbo y conecta tu marca con Huancayo y la región Junín.',
 ];
 $description = $descriptions[$contentView] ?? 'Radio Rumbo, emisora local de Huancayo, Perú.';
-$logoUrl = $appUrl . '/assets/img/radio-rumbo-logo.png';
+$logoUrl = $appUrl . '/assets/img/radio-rumbo-logo-full-web.png';
 ?>
 <!doctype html>
 <html lang="es">

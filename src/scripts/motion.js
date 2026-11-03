@@ -9,7 +9,7 @@ if (!reducedMotion) {
   if (heroItems.length > 0) {
     animate(
       heroItems,
-      { opacity: [0, 1], y: [18, 0] },
+      { opacity: [1, 1], y: [8, 0] },
       { duration: 0.7, delay: stagger(0.08), easing: 'ease-out' }
     );
   }
@@ -21,7 +21,7 @@ if (!reducedMotion) {
     }
 
     revealed.add(element);
-    animate(element, { opacity: [0, 1] }, { duration: 0.42, easing: 'ease-out' });
+    animate(element, { opacity: [1, 1] }, { duration: 0.42, easing: 'ease-out' });
   }, { margin: '0px 0px -10% 0px' });
 
   document.querySelectorAll('.btn, .player-play, .main-nav a').forEach((element) => {

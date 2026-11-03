@@ -56,6 +56,8 @@
   --font-size-2xl: 2rem;
   --font-size-3xl: 3rem;
   --font-size-hero: clamp(3rem, 8vw, 6.2rem);
+  --font-display: "Aptos Display", "Segoe UI", system-ui, sans-serif;
+  --font-ui: "Aptos", "Segoe UI", system-ui, sans-serif;
   --transition-fast: 140ms ease;
   --transition-normal: 240ms ease;
   --transition-slow: 520ms ease;

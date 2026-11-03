@@ -1,12 +1,21 @@
 .floating-player {
   bottom: max(18px, env(safe-area-inset-bottom));
   grid-template-columns: minmax(240px, 1fr) minmax(116px, auto) minmax(260px, 0.72fr);
-  width: min(820px, calc(100% - 28px));
+  width: min(860px, calc(100% - 28px));
   min-height: calc(var(--player-height) - 12px);
+  border-radius: var(--radius-xl);
+  background:
+    linear-gradient(90deg, rgba(145, 200, 45, 0.16), transparent 18%),
+    linear-gradient(135deg, rgba(255, 255, 255, 0.16), rgba(255, 255, 255, 0.06)),
+    rgba(9, 17, 12, 0.9);
   transform: translate3d(-50%, 0, 0);
   transition: box-shadow var(--transition-normal), border-color var(--transition-normal), opacity var(--transition-normal);
   contain: layout paint;
   will-change: opacity;
+}
+
+.site-main {
+  padding-bottom: calc(var(--player-height) + 72px);
 }
 
 .floating-player.is-compact {
@@ -22,9 +31,15 @@
 }
 
 .player-logo {
+  width: 48px;
+  height: 36px;
   object-fit: contain;
   background: transparent;
   border: 0;
+}
+
+.player-copy strong {
+  letter-spacing: 0.01em;
 }
 
 .player-transmission-link,
@@ -42,6 +57,11 @@
   color: var(--color-white-soft);
   background: rgba(255, 255, 255, 0.09);
   border: 1px solid rgba(255, 255, 255, 0.16);
+  border-radius: var(--radius-pill);
+}
+
+.player-video-toggle,
+.player-transmission-link {
   border-radius: var(--radius-pill);
 }
 
@@ -155,16 +175,56 @@
 @media (max-width: 620px) {
   .floating-player {
     bottom: max(10px, env(safe-area-inset-bottom));
-    grid-template-columns: minmax(0, 1fr) auto;
+    grid-template-columns: minmax(0, 1fr) auto auto;
     width: min(430px, calc(100% - 20px));
+    min-height: 66px;
+    padding: 8px;
+    border-radius: var(--radius-lg);
+  }
+
+  .player-station {
+    min-width: 0;
+  }
+
+  .player-copy strong,
+  .player-copy small {
+    display: block;
+    max-width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .player-copy small {
+    font-size: 0.72rem;
+  }
+
+  .player-center {
+    grid-column: 2;
+  }
+
+  .player-actions {
+    grid-column: 3;
+    display: flex;
+    width: auto;
   }
 
   .volume-control {
-    min-width: 112px;
+    min-width: 38px;
   }
 
   .volume-control input[type="range"] {
-    width: 70px;
+    width: 58px;
+  }
+
+  .player-video-toggle,
+  .player-transmission-link {
+    padding-inline: 8px;
+    font-size: 0.75rem;
+  }
+
+  .player-next {
+    display: none;
   }
 
   .mini-live-video {

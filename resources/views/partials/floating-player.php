@@ -20,7 +20,7 @@ $programSchedule = (string) ($currentProgram['schedule'] ?? 'Horario por confirm
     data-program-schedule="<?= $e($programSchedule) ?>"
 >
     <div class="player-station" aria-label="Programa en vivo">
-        <img class="player-logo" src="/assets/img/radio-rumbo-logo.png" alt="" width="52" height="52">
+        <img class="player-logo" src="/assets/img/radio-rumbo-isotype-web.png" alt="" width="52" height="52">
         <div class="player-copy" aria-live="polite">
             <span class="player-live-badge" data-audio-status-label aria-live="polite">Señal disponible</span>
             <strong data-player-program><?= $e($programName) ?></strong>

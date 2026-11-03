@@ -9,3 +9,13 @@
 .facebook-news-panel--noticias {
   max-width: 860px;
 }
+
+.facebook-news-panel--en-vivo .facebook-embed-frame {
+  height: 500px;
+}
+
+@media (max-width: 620px) {
+  .facebook-news-panel--en-vivo .facebook-embed-frame {
+    height: 420px;
+  }
+}

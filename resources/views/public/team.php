@@ -28,7 +28,7 @@ $publicBio = static function (string $bio): string {
         <article class="person-card large presentation-empty">
             <div class="avatar-placeholder">R</div>
             <h2>Equipo Radio Rumbo</h2>
-            <p>Muy pronto compartiremos más información sobre nuestro equipo.</p>
+            <p>La señal se sostiene desde cabina, prensa, producción y área comercial de Radio Rumbo.</p>
         </article>
     <?php endif; ?>
     <?php foreach ($teamMembers as $member): ?>

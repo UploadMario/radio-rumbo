@@ -15,7 +15,7 @@ $navItems = [
     <a class="skip-link" href="#contenido">Saltar al contenido</a>
     <div class="container header-inner">
         <a class="brand" href="/" aria-label="Radio Rumbo inicio">
-            <img class="brand-logo" src="/assets/img/radio-rumbo-logo.png" alt="Radio Rumbo" width="52" height="52">
+            <img class="brand-logo" src="/assets/img/radio-rumbo-wordmark-web.png" alt="Radio Rumbo" width="182" height="30">
         </a>
         <button class="nav-toggle" type="button" data-nav-toggle aria-expanded="false" aria-controls="main-nav">
             Menú

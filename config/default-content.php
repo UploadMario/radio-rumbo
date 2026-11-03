@@ -101,12 +101,7 @@ return [
         ['day_of_week' => 'domingo', 'time' => '16:00', 'end_time' => '19:00', 'name' => 'Tarde musical', 'host' => 'Equipo Radio Rumbo', 'category' => 'Música', 'summary' => 'Selección musical para la tarde.'],
         ['day_of_week' => 'domingo', 'time' => '19:00', 'end_time' => '22:00', 'name' => 'Noches de Radio', 'host' => 'Equipo Radio Rumbo', 'category' => 'Compañía', 'summary' => 'Cierre de la semana con Radio Rumbo.'],
     ],
-    'news' => [
-        ['category' => 'Huancayo', 'date' => 'Radio Rumbo', 'title' => 'Noticias desde Facebook', 'summary' => 'Las publicaciones recientes se muestran desde la página oficial de Facebook para mantener la información actualizada.', 'featured' => true],
-        ['category' => 'Valle del Mantaro', 'date' => 'Radio Rumbo', 'title' => 'Actualidad local y regional', 'summary' => 'Cobertura de coyuntura política y social de Huancayo, Junín y el Valle del Mantaro.', 'featured' => false],
-        ['category' => 'Música', 'date' => 'Radio Rumbo', 'title' => 'Folclor, cumbia y éxitos populares', 'summary' => 'Segmentos musicales para acompañar la programación informativa y de servicio.', 'featured' => false],
-        ['category' => 'Servicio', 'date' => 'Radio Rumbo', 'title' => 'Información útil para oyentes', 'summary' => 'Avisos ciudadanos y notas de servicio para Huancayo.', 'featured' => false],
-    ],
+    'news' => [],
     'podcasts' => [],
     'team' => [],
     'advertising_services' => [

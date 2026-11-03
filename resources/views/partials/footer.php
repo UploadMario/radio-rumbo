@@ -17,7 +17,7 @@ $hasEmail = $email !== '' && stripos($email, 'pendiente') === false;
     <div class="container footer-grid">
         <div class="footer-about">
             <div class="footer-brand">
-                <img class="footer-logo" src="/assets/img/radio-rumbo-logo.png" alt="Radio Rumbo" width="64" height="64">
+                <img class="footer-logo" src="/assets/img/radio-rumbo-logo-full-web.png" alt="Radio Rumbo" width="180" height="171">
             </div>
             <p><?= $e((string) ($station['tagline'] ?? 'La radio que se ve')) ?></p>
             <p class="footer-note">91.1 FM, 1560 AM, señal online y video digital desde Huancayo para el Valle del Mantaro.</p>

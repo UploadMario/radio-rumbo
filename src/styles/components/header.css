@@ -1,7 +1,15 @@
 .brand-logo {
+  width: clamp(126px, 15vw, 182px);
+  height: auto;
   object-fit: contain;
   background: transparent;
   border: 0;
+}
+
+.brand {
+  display: inline-flex;
+  align-items: center;
+  min-width: 0;
 }
 
 .main-nav a {

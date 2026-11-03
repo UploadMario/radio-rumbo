@@ -46,7 +46,10 @@ $now = (new DateTimeImmutable('now', new DateTimeZone('America/Lima')))->format(
                 && (string) $program['end_time'] > $now;
             ?>
             <article class="<?= $isLive ? 'is-live' : '' ?>">
-                <time><?= $e(substr((string) $program['start_time'], 0, 5)) ?> - <?= $e(substr((string) $program['end_time'], 0, 5)) ?></time>
+                <time>
+                    <span><?= $e(substr((string) $program['start_time'], 0, 5)) ?></span>
+                    <small><?= $e(substr((string) $program['end_time'], 0, 5)) ?></small>
+                </time>
                 <div>
                     <h2><?= $e((string) $program['name']) ?></h2>
                     <p><?= $e((string) ($program['host'] ?? $program['host_name'] ?? 'Cabina Radio Rumbo')) ?> - <?= $e((string) ($program['category'] ?: 'Programación')) ?></p>
