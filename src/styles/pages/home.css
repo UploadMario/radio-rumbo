@@ -27,6 +27,19 @@
   border-color: rgba(242, 242, 242, 0.34);
 }
 
+.home-news-section .btn-soft,
+.facebook-news-panel .btn-soft {
+  color: var(--color-text);
+  background: var(--color-surface-soft);
+  border-color: rgba(9, 17, 12, 0.18);
+}
+
+.home-news-section .btn-soft:hover,
+.facebook-news-panel .btn-soft:hover {
+  background: #e7efdf;
+  border-color: rgba(114, 162, 35, 0.5);
+}
+
 .hero-program-card {
   margin-top: var(--space-4);
 }
