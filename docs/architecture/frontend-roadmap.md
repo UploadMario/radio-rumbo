@@ -4,9 +4,9 @@ La Fase 3.0 no introduce rediseño visual, Motion, shaders, WebGL, React ni depe
 
 ## Estado Actual
 
-- CSS público en `public/assets/css/main.css`.
-- CSS administrativo en `public/assets/css/admin.css`.
-- JavaScript vanilla en `public/assets/js/`.
+- CSS público y administrativo con fuentes en `src/styles/`.
+- JavaScript modular con fuentes en `src/scripts/`.
+- Los bundles generados se sirven desde `public/assets/dist/`.
 - DonWeb recibe assets estáticos ya listos.
 
 ## Implementado En Fase 3.1

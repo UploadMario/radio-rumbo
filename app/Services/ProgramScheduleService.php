@@ -48,22 +48,7 @@ final class ProgramScheduleService
         $programs = $this->publicPrograms();
         $usingDatabase = $programs !== [];
 
-        if (!$usingDatabase) {
-            $weekly = is_array($defaultContent['weekly_schedule'] ?? null) ? $defaultContent['weekly_schedule'] : [];
-            $fallback = $weekly !== [] ? $weekly : (is_array($defaultContent['today_schedule'] ?? null)
-                ? $defaultContent['today_schedule']
-                : []);
-            $programs = $this->normalizeSchedule($fallback, $timezone, $now);
-        }
-
         $context = $this->context($programs, $timezone, $now);
-        if ($usingDatabase && $context['today_schedule'] === []) {
-            $weekly = is_array($defaultContent['weekly_schedule'] ?? null) ? $defaultContent['weekly_schedule'] : [];
-            $programs = $this->normalizeSchedule($weekly, $timezone, $now);
-            $context = $this->context($programs, $timezone, $now);
-            $usingDatabase = false;
-        }
-
         $defaultContent['today_schedule'] = $context['today_schedule'];
         $defaultContent['current_program'] = $context['current_program'];
         $defaultContent['next_program'] = $context['next_program'];
@@ -100,13 +85,19 @@ final class ProgramScheduleService
 
             $time = (string) ($item['time'] ?? $item['start_time'] ?? '00:00');
             $next = is_array($items[$index + 1] ?? null) ? $items[$index + 1] : null;
-            $nextTime = $next !== null ? (string) ($next['time'] ?? $next['start_time'] ?? '') : '';
+            $currentDay = self::normalizeDay((string) ($item['day_of_week'] ?? $today)) ?? $today;
+            $nextDay = $next !== null
+                ? self::normalizeDay((string) ($next['day_of_week'] ?? $currentDay))
+                : null;
+            $nextTime = $next !== null && $nextDay === $currentDay
+                ? (string) ($next['time'] ?? $next['start_time'] ?? '')
+                : '';
 
             $normalized[] = [
                 'name' => $this->presentableProgramName((string) ($item['name'] ?? 'Programación en pausa')),
                 'description' => $this->publicProgramSummary((string) ($item['description'] ?? $item['summary'] ?? '')),
                 'host_name' => (string) ($item['host_name'] ?? $item['host'] ?? 'Cabina Radio Rumbo'),
-                'day_of_week' => self::normalizeDay((string) ($item['day_of_week'] ?? $today)) ?? $today,
+                'day_of_week' => $currentDay,
                 'start_time' => substr($time, 0, 5),
                 'end_time' => substr($nextTime !== '' ? $nextTime : (string) ($item['end_time'] ?? '23:59'), 0, 5),
                 'category' => (string) ($item['category'] ?? 'Radio Rumbo'),

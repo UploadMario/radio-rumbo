@@ -47,7 +47,7 @@ final class TeamService
     public function create(array $input): array
     {
         $data = $this->normalize($input);
-        $errors = $this->teamValidator()->validate($input);
+        $errors = $this->teamValidator()->validate($data);
 
         if ($errors !== []) {
             return ['ok' => false, 'errors' => $errors, 'id' => null, 'data' => $data];
@@ -63,7 +63,7 @@ final class TeamService
     public function update(int $id, array $input): array
     {
         $data = $this->normalize($input);
-        $errors = $this->teamValidator()->validate($input);
+        $errors = $this->teamValidator()->validate($data);
 
         if ($errors !== []) {
             return ['ok' => false, 'errors' => $errors, 'data' => $data];

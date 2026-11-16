@@ -33,13 +33,7 @@ final class ProgramController
             'America/Lima'
         );
         $todayKey = ProgramScheduleService::todayKey('America/Lima');
-        $fallback = is_array($mock['weekly_schedule'] ?? null) ? $mock['weekly_schedule'] : [];
-        $fallbackPrograms = $this->scheduleService()->normalizeSchedule($fallback, 'America/Lima');
         $dayPrograms = $this->scheduleService()->programsForDay($items, $selectedDay);
-
-        if ($dayPrograms === []) {
-            $dayPrograms = $this->scheduleService()->programsForDay($fallbackPrograms, $selectedDay);
-        }
 
         View::render('layouts.public', [
             'active' => 'programacion',

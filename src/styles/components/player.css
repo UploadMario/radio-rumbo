@@ -16,6 +16,15 @@
   will-change: opacity;
 }
 
+.floating-player {
+  border: 1px solid rgba(145, 200, 45, 0.22);
+}
+
+.floating-player:focus-within {
+  border-color: rgba(145, 200, 45, 0.6);
+  box-shadow: var(--shadow-lg), var(--shadow-glow);
+}
+
 .site-main {
   padding-bottom: calc(var(--player-height) + 72px);
 }
@@ -221,6 +230,7 @@
     min-height: 60px;
     padding: 6px 8px;
     border-radius: var(--radius-lg);
+    gap: 6px;
   }
 
   .player-station {
@@ -287,6 +297,11 @@
   .player-transmission-link {
     padding-inline: 6px;
     font-size: 0.7rem;
+  }
+
+  .player-retry {
+    min-height: 38px;
+    padding-inline: 8px;
   }
 
   .player-copy .player-next {

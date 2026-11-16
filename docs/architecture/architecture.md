@@ -19,8 +19,8 @@ La Fase 2.0 incorpora controladores, modelos, servicios y validadores para auten
 - `app/Helpers`: funciones auxiliares seguras.
 - `public`: entrada publica y assets.
 - `public/admin`: entrada publica placeholder para `/admin/`.
-- `public/assets/css`: estilos publicos y administrativos.
-- `public/assets/js`: interacciones vanilla.
+- `src/styles/` y `src/scripts/`: fuentes modulares de estilos e interacciones.
+- `public/assets/dist`: bundles compilados servidos por las vistas.
 - `admin`: carpeta interna protegida para preparacion administrativa futura.
 - `config`: configuracion desacoplada.
 - `config/default-content.php`: contenido base oficial y fallbacks seguros.

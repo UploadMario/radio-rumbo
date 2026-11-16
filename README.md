@@ -137,7 +137,7 @@ La raiz web local y recomendada para DonWeb es siempre `public/`. Las carpetas i
 - La home pública ya es una pantalla presentable con hero, logo real, en vivo, noticias, programación, publicidad, equipo y reproductor flotante visual.
 - `/admin/` muestra un dashboard administrativo protegido; `/admin/login/` muestra el login real.
 - `config/default-content.php` centraliza contenido base oficial y fallbacks seguros. No contiene datos reales sensibles.
-- `public/assets/css/main.css`, `public/assets/css/admin.css`, `public/assets/js/main.js` y `public/assets/js/player.js` concentran estilos e interacciones vanilla.
+- Las fuentes de estilos e interacciones viven en `src/styles/` y `src/scripts/`; Vite genera los bundles públicos en `public/assets/dist/`.
 - El reproductor no conecta aun a un stream real; solo alterna estados visuales.
 - Formularios, botones y modulos futuros estan preparados visualmente, sin comportamiento productivo.
 - Datos reales confirmados: nombre `Radio Rumbo`, lema `La radio que se ve` y ubicación `Huancayo, Perú`.

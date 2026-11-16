@@ -20,8 +20,8 @@ $coverage = is_string($station['coverage'] ?? null) ? $station['coverage'] : 'Va
 
             <div class="program-summary">
                 <span>Programa actual</span>
-                <strong><?= $e((string) ($currentProgram['name'] ?? 'Rumbo Mañanero')) ?></strong>
-                <small><?= $e((string) ($currentProgram['schedule'] ?? '91.1 FM / 1560 AM')) ?> - <?= $e((string) ($currentProgram['host'] ?? 'Cabina Radio Rumbo')) ?></small>
+                <strong><?= $e((string) ($currentProgram['name'] ?? 'Sin programa registrado')) ?></strong>
+                <small><?= $e((string) ($currentProgram['schedule'] ?? 'Horario no disponible')) ?><?= ($currentProgram['host'] ?? '') !== '' ? ' - ' . $e((string) $currentProgram['host']) : '' ?></small>
             </div>
 
             <dl class="meta-row live-meta">

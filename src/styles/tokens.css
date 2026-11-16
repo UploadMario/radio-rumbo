@@ -61,4 +61,6 @@
   --transition-fast: 140ms ease;
   --transition-normal: 240ms ease;
   --transition-slow: 520ms ease;
+  --content-measure: 68ch;
+  --focus-ring: 0 0 0 3px rgba(9, 17, 12, 0.92), 0 0 0 5px rgba(145, 200, 45, 0.9);
 }

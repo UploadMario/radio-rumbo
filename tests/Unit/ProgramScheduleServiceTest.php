@@ -100,6 +100,24 @@ final class ProgramScheduleServiceTest extends TestCase
         self::assertSame('lunes', $programs[0]['day_of_week']);
     }
 
+    public function testNormalizeScheduleDoesNotUseNextDayAsEndTime(): void
+    {
+        $normalized = $this->service()->normalizeSchedule([
+            [
+                'name' => 'Noche de domingo',
+                'day_of_week' => 'domingo',
+                'time' => '22:00',
+            ],
+            [
+                'name' => 'Rumbo Mañanero',
+                'day_of_week' => 'lunes',
+                'time' => '06:00',
+            ],
+        ], 'America/Lima', $this->time('2026-08-16 20:00'));
+
+        self::assertSame('23:59', $normalized[0]['end_time']);
+    }
+
     public function testDefaultWeeklyFallbackCoversSevenDays(): void
     {
         $data = require dirname(__DIR__, 2) . '/config/default-content.php';

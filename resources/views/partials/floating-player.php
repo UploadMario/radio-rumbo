@@ -71,9 +71,9 @@ $programSchedule = (string) ($currentProgram['schedule'] ?? 'Horario por confirm
         </div>
         <button class="player-retry" type="button" data-audio-retry hidden>Reintentar</button>
         <?php if ($videoUrl !== ''): ?>
-            <button class="player-video-toggle" type="button" data-video-dock-toggle aria-expanded="false" aria-controls="mini-live-video">Ver cabina</button>
+            <button class="player-video-toggle" type="button" data-video-dock-toggle aria-expanded="false" aria-controls="mini-live-video">Ver video en vivo</button>
         <?php else: ?>
-            <a class="player-transmission-link" href="/en-vivo/">Ver cabina</a>
+            <a class="player-transmission-link" href="/en-vivo/">Ver video en vivo</a>
         <?php endif; ?>
     </div>
 </aside>

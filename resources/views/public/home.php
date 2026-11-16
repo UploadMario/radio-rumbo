@@ -29,10 +29,10 @@ $coverage = is_string($station['coverage'] ?? null) ? $station['coverage'] : 'Va
             </div>
             <article class="program-summary hero-program-card">
                 <span>Programa actual</span>
-                <strong><?= $e((string) ($currentProgram['name'] ?? 'Rumbo Mañanero')) ?></strong>
-                <small><?= $e((string) ($currentProgram['schedule'] ?? '06:00 - 09:00')) ?> - <?= $e((string) ($currentProgram['host'] ?? 'Cabina Radio Rumbo')) ?></small>
+                <strong><?= $e((string) ($currentProgram['name'] ?? 'Sin programa registrado')) ?></strong>
+                <small><?= $e((string) ($currentProgram['schedule'] ?? 'Horario no disponible')) ?><?= ($currentProgram['host'] ?? '') !== '' ? ' - ' . $e((string) $currentProgram['host']) : '' ?></small>
                 <?php if ($nextProgram !== null): ?>
-                    <small class="player-next">Luego: <?= $e((string) ($nextProgram['name'] ?? 'Próximo bloque disponible')) ?></small>
+                    <small class="player-next">Luego: <?= $e((string) ($nextProgram['name'] ?? '')) ?></small>
                 <?php endif; ?>
             </article>
         </div>
@@ -54,8 +54,8 @@ $coverage = is_string($station['coverage'] ?? null) ? $station['coverage'] : 'Va
     </article>
     <article>
         <span>Siguiente</span>
-        <strong><?= $e((string) ($nextProgram['name'] ?? 'Próximo bloque disponible')) ?></strong>
-        <small><?= $e((string) ($nextProgram['schedule'] ?? 'Horario por confirmar')) ?></small>
+        <strong><?= $e((string) ($nextProgram['name'] ?? 'Sin próximo programa')) ?></strong>
+        <small><?= $e((string) ($nextProgram['schedule'] ?? '')) ?></small>
     </article>
     <article>
         <span>Noticias</span>

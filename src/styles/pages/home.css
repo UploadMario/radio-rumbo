@@ -6,6 +6,27 @@
     linear-gradient(135deg, rgba(9, 17, 12, 0.99), rgba(21, 36, 25, 0.96));
 }
 
+.home-hero .hero-copy {
+  max-width: 600px;
+}
+
+.home-hero .hero-copy h1 {
+  max-width: 12ch;
+  font-size: clamp(2.5rem, 6vw, 5.2rem);
+  line-height: 0.98;
+  text-wrap: balance;
+}
+
+.home-hero .hero-copy p {
+  max-width: var(--content-measure);
+}
+
+.home-news-section .section-heading,
+.home-program-section .section-heading,
+.home-team-section .section-heading {
+  max-width: 58rem;
+}
+
 .home-hero .hero-grid {
   grid-template-columns: minmax(0, 0.82fr) minmax(520px, 1.18fr);
   min-height: min(760px, calc(100vh - 74px));

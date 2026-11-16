@@ -12,6 +12,22 @@
   min-width: 0;
 }
 
+.site-header .header-inner {
+  min-height: 74px;
+}
+
+.site-header a:focus-visible,
+.site-header button:focus-visible {
+  outline: none;
+  box-shadow: var(--focus-ring);
+}
+
+.main-nav a {
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+}
+
 .main-nav a {
   position: relative;
 }

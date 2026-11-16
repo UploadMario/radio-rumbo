@@ -15,7 +15,8 @@ final class SettingService
 
     public function __construct(
         private ?Setting $settings = null,
-        private ?SettingValidator $validator = null
+        private ?SettingValidator $validator = null,
+        private ?LoggerService $logger = null
     ) {
     }
 
@@ -74,7 +75,7 @@ final class SettingService
         try {
             $settings = $this->settingRepository()->all();
         } catch (Throwable $throwable) {
-            (new LoggerService())->warning('No se pudieron cargar settings; se usaran valores por defecto.', [
+            $this->logger()->warning('No se pudieron cargar settings; se usaran valores por defecto.', [
                 'exception' => $throwable,
             ]);
             $settings = [];
@@ -246,5 +247,14 @@ final class SettingService
         }
 
         return $this->validator;
+    }
+
+    private function logger(): LoggerService
+    {
+        if (!$this->logger instanceof LoggerService) {
+            $this->logger = new LoggerService();
+        }
+
+        return $this->logger;
     }
 }
